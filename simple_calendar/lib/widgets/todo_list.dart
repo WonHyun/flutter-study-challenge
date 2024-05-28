@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/model/todo.dart';
+import 'package:simple_calendar/screens/todo_detail_screen.dart';
 import 'package:simple_calendar/widgets/todo_card.dart';
 
 class TodoList extends StatelessWidget {
@@ -10,6 +11,15 @@ class TodoList extends StatelessWidget {
   });
 
   final List<Todo> todoList;
+
+  void _onSelectTodo(BuildContext context, Todo todo) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TodoDetailScreen(todo: todo),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,7 @@ class TodoList extends StatelessWidget {
                   ),
                   child: TodoCard(
                     todo: todoList[index],
-                    onTap: () => {},
+                    onTap: () => _onSelectTodo(context, todoList[index]),
                   ),
                 );
               },

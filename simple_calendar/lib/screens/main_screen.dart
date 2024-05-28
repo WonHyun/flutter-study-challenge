@@ -22,11 +22,14 @@ class _MainScreenState extends State<MainScreen> {
   DateTime _selectedDay = today;
   late final List<Todo> _todoList;
 
-  void _onAddTap() {}
+  void _onAddTap() {
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => ));
+  }
   void _onUserTap() => _scaffoldKey.currentState?.openDrawer();
   void _onScaffoldTap() => _scaffoldKey.currentState?.closeDrawer();
   void _onChangeDay(DateTime day) => setState(() => _selectedDay = day);
   void _toggleTheme() => setState(() => _isDarktheme = !_isDarktheme);
+
   List<Todo> _getSelectedDaysTodoList() => _todoList
       .where((todo) => isSameDay(todo.startTime, _selectedDay))
       .toList();
@@ -40,7 +43,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: _isDarktheme ? ThemeData.dark() : ThemeData.light(),
+      theme: _isDarktheme
+          ? ThemeData.dark(useMaterial3: true)
+          : ThemeData.light(useMaterial3: true),
       home: GestureDetector(
         onTap: _onScaffoldTap,
         child: Scaffold(
