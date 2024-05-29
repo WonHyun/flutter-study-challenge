@@ -48,6 +48,10 @@ class HomeDrawerMenu extends StatelessWidget {
                 children: [
                   const Text("Dark Theme"),
                   Switch(
+                    trackColor: WidgetStateProperty.resolveWith((states) =>
+                        Theme.of(context).colorScheme.inverseSurface),
+                    thumbColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.surface),
                     value: isDarkTheme,
                     onChanged: (value) => onChangeTheme(),
                   ),

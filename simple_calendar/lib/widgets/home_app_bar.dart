@@ -5,13 +5,13 @@ class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
     this.imgPath,
-    this.onUserTap,
-    this.onAddTap,
+    required this.onUserTap,
+    required this.onAddTap,
   });
 
   final String? imgPath;
-  final VoidCallback? onUserTap;
-  final VoidCallback? onAddTap;
+  final VoidCallback onUserTap;
+  final Function(BuildContext context) onAddTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class HomeAppBar extends StatelessWidget {
       leading: CircleImageButton(imgPath: imgPath, onTap: onUserTap),
       actions: [
         IconButton(
-          onPressed: onAddTap,
+          onPressed: () => onAddTap(context),
           icon: const Icon(Icons.add, size: 40),
         ),
       ],

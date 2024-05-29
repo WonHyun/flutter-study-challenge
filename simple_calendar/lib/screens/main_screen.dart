@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:simple_calendar/global/values.dart';
+import 'package:simple_calendar/global/colors.dart';
 import 'package:simple_calendar/model/todo.dart';
+import 'package:simple_calendar/screens/todo_edit_screen.dart';
 import 'package:simple_calendar/test/mock.dart';
 import 'package:simple_calendar/utils/date_util.dart';
 import 'package:simple_calendar/widgets/home_app_bar.dart';
@@ -19,12 +20,18 @@ class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _isDarktheme = true;
-  DateTime _selectedDay = today;
+  DateTime _selectedDay = DateTime.now();
   late final List<Todo> _todoList;
 
-  void _onAddTap() {
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => ));
+  void _onAddTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TodoEditScreen(),
+      ),
+    );
   }
+
   void _onUserTap() => _scaffoldKey.currentState?.openDrawer();
   void _onScaffoldTap() => _scaffoldKey.currentState?.closeDrawer();
   void _onChangeDay(DateTime day) => setState(() => _selectedDay = day);
@@ -37,6 +44,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    todos.sort((a, b) => a.startTime.compareTo(b.startTime));
     _todoList = todos;
   }
 
@@ -44,8 +52,16 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: _isDarktheme
-          ? ThemeData.dark(useMaterial3: true)
-          : ThemeData.light(useMaterial3: true),
+          ? ThemeData(
+              colorScheme: const ColorScheme.dark(
+                primary: ThemeColors.primary,
+              ),
+            )
+          : ThemeData(
+              colorScheme: const ColorScheme.light(
+                primary: ThemeColors.primary,
+              ),
+            ),
       home: GestureDetector(
         onTap: _onScaffoldTap,
         child: Scaffold(
