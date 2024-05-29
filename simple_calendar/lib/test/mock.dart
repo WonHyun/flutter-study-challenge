@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:simple_calendar/global/values.dart';
+import 'package:simple_calendar/global/colors.dart';
 import 'package:simple_calendar/model/todo.dart';
 import 'package:simple_calendar/model/user.dart';
 import 'package:simple_calendar/utils/generator_util.dart';
+
+final today = DateTime.now();
 
 final userInfo = User(
   userId: uuid.v4(),
@@ -16,7 +17,7 @@ final todos = [
     startTime: DateTime(today.year, today.month, today.day, 11, 30),
     endTime: DateTime(today.year, today.month, today.day, 12, 20),
     attendees: ["Alex", "Helena", "Nana"],
-    labelColor: const Color(0xFFFEF754),
+    labelColor: LabelColors.lemon,
   ),
   Todo(
     title: "Daily Project",
@@ -32,7 +33,7 @@ final todos = [
       "Raman",
       "Kumin",
     ],
-    labelColor: const Color(0xFF9C6BCE),
+    labelColor: LabelColors.puple,
   ),
   Todo(
     title: "Weekly Planning",
@@ -40,7 +41,7 @@ final todos = [
     startTime: DateTime(today.year, today.month, today.day, 15, 00),
     endTime: DateTime(today.year, today.month, today.day, 16, 30),
     attendees: ["Den", "Nana", "Mark"],
-    labelColor: const Color(0xFFBBEE4B),
+    labelColor: LabelColors.lime,
   ),
   Todo(
     title: "Enjoy your life",
@@ -48,7 +49,7 @@ final todos = [
     startTime: DateTime(today.year, today.month, today.day + 1, 12, 34),
     endTime: DateTime(today.year, today.month, today.day + 1, 15, 32),
     attendees: ["Nico", "Nana", "Mark"],
-    labelColor: const Color(0xFF11AA4B),
+    labelColor: LabelColors.grass,
   ),
   Todo(
     title: "New Project",
@@ -64,6 +65,6 @@ final todos = [
       "Raman",
       "Kumin",
     ],
-    labelColor: const Color(0xFF9C6BCE),
+    labelColor: LabelColors.pink,
   ),
 ];
