@@ -30,39 +30,34 @@ class _PomodoroMainScreenState extends State<PomodoroMainScreen> {
       onTap: _onScaffoldTap,
       child: Scaffold(
         key: _scaffoldKey,
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Container(
-                height: context.deviceHeight / 12,
-                decoration: const BoxDecoration(
-                  color: ThemeColors.plantGreen,
-                ),
+        body: Stack(
+          children: [
+            Container(
+              height: context.deviceHeight / 12,
+              decoration: const BoxDecoration(
+                color: ThemeColors.plantGreen,
               ),
-              Positioned(
-                top: context.deviceHeight / 12,
-                child: CustomPaint(
-                  painter: CalyxPainter(),
-                  size: Size(context.deviceWidth, 50),
-                ),
+            ),
+            Positioned(
+              top: context.deviceHeight / 12,
+              child: CustomPaint(
+                painter: CalyxPainter(),
+                size: Size(context.deviceWidth, 50),
               ),
-              Column(
-                children: [
-                  PomodoroAppBar(onMenuTap: _onMenuTap),
-                  const SizedBox(height: 20),
-                  const GuideText(),
-                  const SizedBox(height: 30),
-                  const TimerView(),
-                  const SizedBox(height: 30),
-                  const TimerSelector(),
-                  const SizedBox(height: 30),
-                  const TimerControlPanel(),
-                  const SizedBox(height: 30),
-                  const ProgressStatusIndicator(),
-                ],
-              ),
-            ],
-          ),
+            ),
+            PomodoroAppBar(onMenuTap: _onMenuTap),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(height: 20),
+                GuideText(),
+                TimerView(),
+                TimerSelector(),
+                TimerControlPanel(),
+                ProgressStatusIndicator(),
+              ],
+            ),
+          ],
         ),
         drawer: const PomodoroDrawer(),
       ),
