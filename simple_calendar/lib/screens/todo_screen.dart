@@ -12,11 +12,13 @@ class TodoScreen extends StatefulWidget {
     super.key,
     required this.todo,
     required this.onSaveTodo,
+    required this.onRemoveTodo,
     this.isNewTodo = false,
   });
 
   final Todo todo;
   final Function(Todo) onSaveTodo;
+  final Function(Todo) onRemoveTodo;
   final bool isNewTodo;
 
   @override
@@ -86,6 +88,11 @@ class _TodoScreenState extends State<TodoScreen> {
     Navigator.pop(context);
   }
 
+  void _onRemoveTodo(Todo todo) {
+    widget.onRemoveTodo(todo);
+    Navigator.pop(context);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -113,6 +120,12 @@ class _TodoScreenState extends State<TodoScreen> {
           surfaceTintColor: Colors.transparent,
           centerTitle: true,
           title: const Text("TODO"),
+          actions: [
+            IconButton(
+              onPressed: () => _onRemoveTodo(_todo),
+              icon: const Icon(Icons.delete_outline),
+            )
+          ],
         ),
         body: Stack(
           children: [
