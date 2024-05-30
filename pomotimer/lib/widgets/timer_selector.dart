@@ -15,47 +15,9 @@ class TimerSelector extends StatefulWidget {
 class _TimerSelectorState extends State<TimerSelector> {
   final ScrollController _controller = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  // void _scrollToCurrentItem(int index) async {
-  //   double itemSize = 95.0;
-  //   double targetOffset = itemSize * (index.toDouble());
-  //   double maxScrollExtent = _controller.position.maxScrollExtent;
-
-  //   if (targetOffset < 0) {
-  //     await _controller.animateTo(
-  //       0,
-  //       duration: const Duration(milliseconds: 500),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else if (targetOffset > maxScrollExtent) {
-  //     await _controller.animateTo(
-  //       _controller.position.maxScrollExtent,
-  //       duration: const Duration(milliseconds: 500),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //     await _controller.animateTo(
-  //       targetOffset,
-  //       duration: const Duration(milliseconds: 500),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-  // }
-
   void _scrollToCenter(int index) {
     double itemWidth = 95.0;
     double screenWidth = MediaQuery.of(context).size.width;
-    // double totalWidth = itemWidth * totalLength;
 
     double offset = (index * itemWidth) - screenWidth / 2 + itemWidth / 2;
 
@@ -64,15 +26,31 @@ class _TimerSelectorState extends State<TimerSelector> {
 
     offset = offset.clamp(minScrollExtent, maxScrollExtent);
 
-    // if (totalWidth <= screenWidth) {
-    //   offset = 0;
-    // }
-
     _controller.animateTo(
       offset,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final initIndex = Provider.of<PomodoroProvider>(context, listen: false)
+          .selectedIndexNotifier
+          .value;
+      if (_controller.hasClients) {
+        _scrollToCenter(initIndex);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

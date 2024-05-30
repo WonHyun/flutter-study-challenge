@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PomodoroProvider extends ChangeNotifier {
-  final _timeList = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-  final ValueNotifier<int> _selectedIndexNotifier = ValueNotifier<int>(2);
+  final int _minuteInterval = 5;
+  final List<int> _timeList = [];
+  final ValueNotifier<int> _selectedIndexNotifier = ValueNotifier<int>(4);
 
   bool _isRunning = false;
   bool _isRest = false;
@@ -44,6 +45,10 @@ class PomodoroProvider extends ChangeNotifier {
   late Timer timer;
 
   PomodoroProvider() {
+    for (int minute = _minuteInterval; minute < 60; minute += _minuteInterval) {
+      _timeList.add(minute);
+    }
+
     _totalSeconds = _timeList[_selectedIndexNotifier.value] * 60;
     _currentSeconds = _totalSeconds;
   }
