@@ -25,8 +25,8 @@ class _TodoDetailScreenState extends State<TodoDetailScreen> {
         children: [
           Text(widget.todo.title),
           Text(widget.todo.description),
-          Text(widget.todo.startTime.toString()),
-          Text(widget.todo.endTime.toString()),
+          Text(widget.todo.startAt.toString()),
+          Text(widget.todo.endAt.toString()),
           Text(widget.todo.labelColor.toString()),
         ],
       ),

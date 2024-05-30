@@ -54,9 +54,8 @@ class _MainScreenState extends State<MainScreen> {
   void _onChangeDay(DateTime day) => setState(() => _selectedDay = day);
   void _toggleTheme() => setState(() => _isDarktheme = !_isDarktheme);
 
-  List<Todo> _getSelectedDaysTodoList() => _todoList
-      .where((todo) => isSameDay(todo.startTime, _selectedDay))
-      .toList();
+  List<Todo> _getSelectedDaysTodoList() =>
+      _todoList.where((todo) => isSameDay(todo.startAt, _selectedDay)).toList();
 
   void _onSaveTodo(Todo todo) {
     final index = _todoList.indexWhere((element) => element.id == todo.id);
@@ -66,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
       _todoList[index] = todo;
     }
     setState(() {
-      _todoList.sort((a, b) => a.startTime.compareTo(b.startTime));
+      _todoList.sort((a, b) => a.startAt.compareTo(b.startAt));
     });
   }
 

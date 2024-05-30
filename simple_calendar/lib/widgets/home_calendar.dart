@@ -76,11 +76,11 @@ class CalendarListItem extends StatelessWidget {
     final isToday = isSameDay(currentDay, DateTime.now());
     final isSelectedDay = isSameDay(currentDay, selectedDay);
     final currentColor = isSelectedDay ? const Color(0xFFB22580) : Colors.grey;
-    final hasTodo = todoList.lastIndexWhere(
-                (todo) => isSameDay(todo.startTime, currentDay)) <
-            0
-        ? false
-        : true;
+    final hasTodo =
+        todoList.lastIndexWhere((todo) => isSameDay(todo.startAt, currentDay)) <
+                0
+            ? false
+            : true;
     return GestureDetector(
       onTap: () => onTap(currentDay),
       child: isToday

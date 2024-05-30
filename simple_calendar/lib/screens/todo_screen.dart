@@ -95,9 +95,8 @@ class _TodoScreenState extends State<TodoScreen> {
     _minimumDate = getDateTimeFromYearsToMinute(now);
 
     if (widget.isNewTodo) {
-      final startAt = _todo.startTime.isBefore(_minimumDate)
-          ? _minimumDate
-          : _todo.startTime;
+      final startAt =
+          _todo.startAt.isBefore(_minimumDate) ? _minimumDate : _todo.startAt;
 
       final endAt = startAt;
 

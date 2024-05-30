@@ -15,7 +15,7 @@ class TodoTimeView extends StatelessWidget {
     return Column(
       children: [
         Text(
-          getTimeString(todo.startTime.hour),
+          getTimeString(todo.startAt.hour),
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -23,7 +23,7 @@ class TodoTimeView extends StatelessWidget {
           ),
         ),
         Text(
-          getTimeString(todo.startTime.minute),
+          getTimeString(todo.startAt.minute),
           style: const TextStyle(
             color: Colors.black,
             fontSize: 12,
@@ -41,7 +41,7 @@ class TodoTimeView extends StatelessWidget {
           ),
         ),
         Text(
-          getTimeString(todo.endTime.hour),
+          getTimeString(todo.endAt.hour),
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -49,7 +49,7 @@ class TodoTimeView extends StatelessWidget {
           ),
         ),
         Text(
-          getTimeString(todo.endTime.minute),
+          getTimeString(todo.endAt.minute),
           style: const TextStyle(
             color: Colors.black,
             fontSize: 12,

@@ -6,8 +6,8 @@ class Todo {
   final String id;
   final String title;
   final String description;
-  final DateTime startTime;
-  final DateTime endTime;
+  final DateTime startAt;
+  final DateTime endAt;
   final List<String> attendees;
   final Color labelColor;
 
@@ -21,8 +21,8 @@ class Todo {
   })  : id = uuid.v4(),
         title = title ?? "",
         description = description ?? "",
-        startTime = startTime ?? DateTime.now(),
-        endTime = endTime ?? DateTime.now(),
+        startAt = startTime ?? DateTime.now(),
+        endAt = endTime ?? DateTime.now(),
         attendees = attendees ?? const [],
         labelColor = labelColor ?? LabelColors.lemon;
 
@@ -37,8 +37,8 @@ class Todo {
     return Todo(
       title: title ?? this.title,
       description: description ?? this.description,
-      startTime: startTime ?? this.startTime,
-      endTime: endTime ?? this.endTime,
+      startTime: startTime ?? startAt,
+      endTime: endTime ?? endAt,
       attendees: attendees ?? this.attendees,
       labelColor: labelColor ?? this.labelColor,
     );

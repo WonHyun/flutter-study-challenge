@@ -33,7 +33,7 @@ class _DateControllPanelState extends State<DateControllPanel> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
-            getYYYYMMDD(widget.todo.startTime),
+            getYYYYMMDD(widget.todo.startAt),
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -41,7 +41,7 @@ class _DateControllPanelState extends State<DateControllPanel> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LabelTime(
             labelText: "Start At",
-            time: widget.todo.startTime,
+            time: widget.todo.startAt,
             timeColor: widget.todo.labelColor,
             onTap: () => showModalBottomSheet(
               context: context,
@@ -50,7 +50,7 @@ class _DateControllPanelState extends State<DateControllPanel> {
                   height: 200,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.dateAndTime,
-                    initialDateTime: widget.todo.startTime,
+                    initialDateTime: widget.todo.startAt,
                     minimumDate: widget.minimumDate,
                     onDateTimeChanged: (newDateTime) => widget.onChangeDate(
                       startAt: newDateTime,
@@ -67,7 +67,7 @@ class _DateControllPanelState extends State<DateControllPanel> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LabelTime(
             labelText: "End At",
-            time: widget.todo.endTime,
+            time: widget.todo.endAt,
             timeColor: widget.todo.labelColor,
             onTap: () => showModalBottomSheet(
               context: context,
@@ -76,17 +76,17 @@ class _DateControllPanelState extends State<DateControllPanel> {
                   height: 200,
                   child: CupertinoDatePicker(
                     mode: CupertinoDatePickerMode.time,
-                    initialDateTime: widget.todo.startTime,
-                    minimumDate: widget.todo.startTime,
+                    initialDateTime: widget.todo.startAt,
+                    minimumDate: widget.todo.startAt,
                     maximumDate: DateTime(
-                      widget.todo.startTime.year,
-                      widget.todo.startTime.month,
-                      widget.todo.startTime.day,
+                      widget.todo.startAt.year,
+                      widget.todo.startAt.month,
+                      widget.todo.startAt.day,
                       23,
                       60 - widget.minuteInterval,
                     ),
                     onDateTimeChanged: (newDateTime) => widget.onChangeDate(
-                      startAt: widget.todo.startTime,
+                      startAt: widget.todo.startAt,
                       endAt: newDateTime,
                     ),
                     minuteInterval: widget.minuteInterval,
