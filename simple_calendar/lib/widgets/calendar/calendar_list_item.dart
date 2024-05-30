@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_calendar/model/todo.dart';
 import 'package:simple_calendar/utils/date_util.dart';
+import 'package:simple_calendar/widgets/common/sized_dot.dart';
 
 class CalendarListItem extends StatelessWidget {
   const CalendarListItem({
@@ -32,42 +33,47 @@ class CalendarListItem extends StatelessWidget {
       child: isToday
           ? Row(
               children: [
-                Text(
-                  "TODAY",
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 100),
                   style: TextStyle(
                     fontSize: isSelectedDay ? 46 : 30,
-                    fontWeight: FontWeight.w400,
+                    fontWeight:
+                        isSelectedDay ? FontWeight.w600 : FontWeight.w300,
                   ),
+                  child: const Text("TODAY"),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.lens,
+                  child: SizedDot(
+                    size: isSelectedDay ? 12 : 8,
                     color: currentColor,
-                    size: 12,
                   ),
                 ),
               ],
             )
           : Stack(
               children: [
-                hasTodo
-                    ? Positioned(
-                        top: 16,
-                        left: 0,
-                        right: 0,
-                        child: Icon(
-                          Icons.lens,
-                          color: currentColor,
-                          size: 8,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
+                if (hasTodo)
+                  Positioned(
+                    top: 16,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: SizedDot(
+                        size: isSelectedDay ? 4 : 6,
+                        color: currentColor,
+                      ),
+                    ),
+                  ),
                 Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    DateFormat("dd").format(currentDay),
-                    style: TextStyle(fontSize: 30, color: currentColor),
+                  child: AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 100),
+                    style: TextStyle(
+                      fontSize: isSelectedDay ? 40 : 30,
+                      color: currentColor,
+                    ),
+                    child: Text(DateFormat("dd").format(currentDay)),
                   ),
                 ),
               ],
