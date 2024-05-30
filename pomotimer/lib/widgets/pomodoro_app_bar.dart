@@ -11,7 +11,8 @@ class PomodoroAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: false,
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
       leading: IconButton(
         onPressed: onMenuTap,
         icon: const Icon(Icons.menu),
