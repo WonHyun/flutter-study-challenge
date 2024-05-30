@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/global/colors.dart';
 import 'package:simple_calendar/model/todo.dart';
-import 'package:simple_calendar/screens/todo_edit_screen.dart';
+import 'package:simple_calendar/screens/todo_screen.dart';
 import 'package:simple_calendar/test/mock.dart';
 import 'package:simple_calendar/utils/date_util.dart';
 import 'package:simple_calendar/widgets/home_app_bar.dart';
