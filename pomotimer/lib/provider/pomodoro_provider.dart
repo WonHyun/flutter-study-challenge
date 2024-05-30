@@ -42,7 +42,7 @@ class PomodoroProvider extends ChangeNotifier {
 
   String get guideText => _guideText;
 
-  late Timer timer;
+  Timer _timer = Timer(Duration.zero, () => {});
 
   PomodoroProvider() {
     for (int minute = _minuteInterval; minute < 60; minute += _minuteInterval) {
@@ -54,7 +54,7 @@ class PomodoroProvider extends ChangeNotifier {
   }
 
   void onStartTimer() {
-    timer = Timer.periodic(
+    _timer = Timer.periodic(
       const Duration(milliseconds: 500),
       onTick,
     );
@@ -74,7 +74,7 @@ class PomodoroProvider extends ChangeNotifier {
   }
 
   void onPause() {
-    timer.cancel();
+    _timer.cancel();
     _isRunning = false;
     notifyListeners();
   }
