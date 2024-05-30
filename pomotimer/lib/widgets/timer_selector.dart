@@ -57,50 +57,43 @@ class _TimerSelectorState extends State<TimerSelector> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PomodoroProvider>(context);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double width = constraints.maxWidth;
-        const double height = 60.0;
-        return SizedBox(
-          width: width,
-          height: height,
-          child: ShaderMask(
-            shaderCallback: (bounds) {
-              return const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  Colors.transparent,
-                  Colors.white,
-                  Colors.white,
-                  Colors.transparent
-                ],
-                stops: [0.0, 0.3, 0.7, 1.0],
-              ).createShader(bounds);
-            },
-            blendMode: BlendMode.dstIn,
-            child: Center(
-              child: ListView.builder(
-                shrinkWrap: true,
-                controller: _controller,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final length = provider.timeList.length;
-                  return TimerSelectorItem(
-                    time: provider.timeList[index % length],
-                    callback: () {
-                      provider.setTimerTotalSeconds(index % length);
-                      _scrollToCenter(index);
-                    },
-                    isSelected:
-                        index % length == provider.selectedIndexNotifier.value,
-                  );
+    return SizedBox(
+      height: 60,
+      child: ShaderMask(
+        shaderCallback: (bounds) {
+          return const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: <Color>[
+              Colors.transparent,
+              Colors.white,
+              Colors.white,
+              Colors.transparent
+            ],
+            stops: [0.0, 0.3, 0.7, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: Center(
+          child: ListView.builder(
+            shrinkWrap: true,
+            controller: _controller,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final length = provider.timeList.length;
+              return TimerSelectorItem(
+                time: provider.timeList[index % length],
+                callback: () {
+                  provider.setTimerTotalSeconds(index % length);
+                  _scrollToCenter(index);
                 },
-              ),
-            ),
+                isSelected:
+                    index % length == provider.selectedIndexNotifier.value,
+              );
+            },
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
