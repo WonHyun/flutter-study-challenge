@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simple_calendar/global/colors.dart';
 import 'package:simple_calendar/model/todo.dart';
 import 'package:simple_calendar/screens/todo_screen.dart';
-import 'package:simple_calendar/test/mock.dart';
 import 'package:simple_calendar/utils/date_util.dart';
 import 'package:simple_calendar/widgets/home_app_bar.dart';
 import 'package:simple_calendar/widgets/home_calendar.dart';
@@ -21,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
 
   bool _isDarktheme = true;
   DateTime _selectedDay = DateTime.now();
-  late final List<Todo> _todoList;
+  final List<Todo> _todoList = [];
 
   void _onAddTap(BuildContext context) {
     Navigator.push(
@@ -29,7 +28,20 @@ class _MainScreenState extends State<MainScreen> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => TodoScreen(
-          todo: Todo(),
+          todo: Todo(startTime: _selectedDay, endTime: _selectedDay),
+          onSaveTodo: _onSaveTodo,
+        ),
+      ),
+    );
+  }
+
+  void _onTodoTap(BuildContext context, Todo todo) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => TodoScreen(
+          todo: todo,
           onSaveTodo: _onSaveTodo,
         ),
       ),
@@ -66,9 +78,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    // todos.sort((a, b) => a.startTime.compareTo(b.startTime));
-    // _todoList = todos;
-    _todoList = [];
   }
 
   @override
@@ -106,7 +115,9 @@ class _MainScreenState extends State<MainScreen> {
                     todoList: _todoList,
                   ),
                 ),
-                TodoList(todoList: _getSelectedDaysTodoList()),
+                TodoList(
+                  todoList: _getSelectedDaysTodoList(),
+                ),
               ],
             ),
           ),
