@@ -22,8 +22,8 @@ class _TimerViewState extends State<TimerView> {
         TimePanel(time: provider.getCurrentSeconds().substring(0, 2)),
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Text(
-            ":",
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 100),
             style: TextStyle(
               color: provider.tick % 2 == 0
                   ? Colors.white
@@ -31,6 +31,7 @@ class _TimerViewState extends State<TimerView> {
               fontSize: 60,
               fontWeight: FontWeight.bold,
             ),
+            child: const Text(":"),
           ),
         ),
         TimePanel(time: provider.getCurrentSeconds().substring(2)),
