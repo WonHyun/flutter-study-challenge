@@ -23,6 +23,7 @@ class HomeCalendar extends StatefulWidget {
 class _HomeCalendarState extends State<HomeCalendar> {
   @override
   Widget build(BuildContext context) {
+    final today = DateTime.now();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,9 +73,9 @@ class CalendarListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentColor =
-        currentDay == selectedDay ? const Color(0xFFB22580) : Colors.grey;
-    final isSelectedDay = currentDay == selectedDay;
+    final isToday = isSameDay(currentDay, DateTime.now());
+    final isSelectedDay = isSameDay(currentDay, selectedDay);
+    final currentColor = isSelectedDay ? const Color(0xFFB22580) : Colors.grey;
     final hasTodo = todoList.lastIndexWhere(
                 (todo) => isSameDay(todo.startTime, currentDay)) <
             0
@@ -82,7 +83,7 @@ class CalendarListItem extends StatelessWidget {
         : true;
     return GestureDetector(
       onTap: () => onTap(currentDay),
-      child: currentDay == today
+      child: isToday
           ? Row(
               children: [
                 Text(
