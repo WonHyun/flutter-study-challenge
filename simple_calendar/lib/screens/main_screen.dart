@@ -22,13 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   DateTime _selectedDay = DateTime.now();
   final List<Todo> _todoList = [];
 
-  void _onAddTap(BuildContext context) {
+  void _onAddTap(BuildContext context, DateTime selectedDay) {
     Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => TodoScreen(
-          todo: Todo(startTime: _selectedDay, endTime: _selectedDay),
+          todo: Todo(startTime: selectedDay, endTime: selectedDay),
           onSaveTodo: _onSaveTodo,
         ),
       ),
@@ -105,6 +105,7 @@ class _MainScreenState extends State<MainScreen> {
                   child: HomeAppBar(
                     onAddTap: _onAddTap,
                     onUserTap: _onUserTap,
+                    selectedDay: _selectedDay,
                   ),
                 ),
                 Padding(

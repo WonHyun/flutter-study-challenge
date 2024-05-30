@@ -14,7 +14,7 @@ class TodoList extends StatefulWidget {
 
   final List<Todo> todoList;
   final DateTime selectedDay;
-  final Function(BuildContext) onAddTap;
+  final Function(BuildContext, DateTime) onAddTap;
   final Function(BuildContext, Todo) onTodoTap;
 
   @override
@@ -34,7 +34,7 @@ class _TodoListState extends State<TodoList> {
                     "+ Let's create TODO!",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  onPressed: () => widget.onAddTap(context),
+                  onPressed: () => widget.onAddTap(context, widget.selectedDay),
                 ),
               ],
             ),

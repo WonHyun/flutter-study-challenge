@@ -6,12 +6,14 @@ class HomeAppBar extends StatelessWidget {
     super.key,
     this.imgPath,
     required this.onUserTap,
+    required this.selectedDay,
     required this.onAddTap,
   });
 
   final String? imgPath;
   final VoidCallback onUserTap;
-  final Function(BuildContext context) onAddTap;
+  final DateTime selectedDay;
+  final Function(BuildContext, DateTime) onAddTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class HomeAppBar extends StatelessWidget {
       leading: CircleImageButton(imgPath: imgPath, onTap: onUserTap),
       actions: [
         IconButton(
-          onPressed: () => onAddTap(context),
+          onPressed: () => onAddTap(context, selectedDay),
           icon: const Icon(Icons.add, size: 40),
         ),
       ],
