@@ -52,7 +52,16 @@ class _TodoCardState extends State<TodoCard> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      TodoAttendeesListView(todo: widget.todo),
+                      widget.todo.attendees.isEmpty
+                          ? Text(
+                              widget.todo.description,
+                              style: const TextStyle(
+                                color: Colors.black38,
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          : TodoAttendeesListView(todo: widget.todo),
                     ],
                   ),
                 ),
