@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomotimer/global/context_extension.dart';
 import 'package:pomotimer/provider/pomodoro_provider.dart';
 import 'package:pomotimer/widgets/timer_selector_item.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class _TimerSelectorState extends State<TimerSelector> {
 
   void _scrollToCenter(int index) {
     double itemWidth = 95.0;
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = context.deviceWidth;
 
     double offset = (index * itemWidth) - screenWidth / 2 + itemWidth / 2;
 
