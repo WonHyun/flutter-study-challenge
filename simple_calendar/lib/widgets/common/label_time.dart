@@ -18,26 +18,25 @@ class LabelTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          labelText,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(width: 20),
-        GestureDetector(
-          onTap: onTap,
-          child: Text(
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            labelText,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(width: 20),
+          Text(
             getHHMM(time),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: timeColor,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
