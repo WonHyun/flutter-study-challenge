@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 class PomodoroAppBar extends StatelessWidget {
   const PomodoroAppBar({
     super.key,
-    required this.onTapMenu,
+    required this.onMenuTap,
   });
 
-  final Function() onTapMenu;
+  final VoidCallback onMenuTap;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: false,
       leading: IconButton(
-        onPressed: () => {},
+        onPressed: onMenuTap,
         icon: const Icon(Icons.menu),
       ),
       title: const Text(

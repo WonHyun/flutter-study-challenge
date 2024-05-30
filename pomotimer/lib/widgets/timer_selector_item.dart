@@ -32,7 +32,8 @@ class TimerSelectorItem extends StatelessWidget {
             child: Text(
               "$time",
               style: TextStyle(
-                color: isSelected ? const Color(0xFFE64D3D) : Colors.white,
+                color:
+                    isSelected ? Theme.of(context).primaryColor : Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),

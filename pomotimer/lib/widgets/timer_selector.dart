@@ -70,7 +70,7 @@ class _TimerSelectorState extends State<TimerSelector> {
               Colors.white,
               Colors.transparent
             ],
-            stops: [0.0, 0.3, 0.7, 1.0],
+            stops: [0.0, 0.2, 0.8, 1.0],
           ).createShader(bounds);
         },
         blendMode: BlendMode.dstIn,

@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pomotimer/global/colors.dart';
+import 'package:pomotimer/provider/pomodoro_provider.dart';
+import 'package:pomotimer/provider/theme_provider.dart';
 import 'package:pomotimer/screens/pomodoro_main_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => PomodoroProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -11,20 +21,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Color(0xff6200ee),
-          onPrimary: Colors.white,
-          secondary: Color(0xff03dac6),
-          onSecondary: Colors.black,
-          error: Color(0xffb00020),
-          onError: Colors.white,
-          surface: ThemeColors.primary,
-          onSurface: Colors.white,
-        ),
-      ),
+      theme: provider.theme,
       home: const PomodoroMainScreen(),
     );
   }

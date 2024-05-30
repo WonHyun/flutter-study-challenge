@@ -23,8 +23,8 @@ class _ProgressStatusIndicatorState extends State<ProgressStatusIndicator> {
           children: [
             Text(
               "${provider.currentRound}/${provider.totalRound}",
-              style: const TextStyle(
-                color: Color(0xFFF9A59D),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -46,8 +46,8 @@ class _ProgressStatusIndicatorState extends State<ProgressStatusIndicator> {
           children: [
             Text(
               "${provider.currentGoal}/${provider.totalGoal}",
-              style: const TextStyle(
-                color: Color(0xFFF9A59D),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),

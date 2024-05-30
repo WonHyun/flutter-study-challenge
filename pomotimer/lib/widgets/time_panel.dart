@@ -53,8 +53,8 @@ class TimePanel extends StatelessWidget {
           child: Center(
             child: Text(
               time,
-              style: const TextStyle(
-                color: Color(0xFFE64D3D),
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
                 fontSize: 90,
                 fontWeight: FontWeight.bold,
               ),
