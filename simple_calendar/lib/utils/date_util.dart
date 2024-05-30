@@ -23,7 +23,7 @@ bool isSameDay(DateTime date1, DateTime date2) {
 }
 
 DateTime adjustNow(DateTime now, int minuteInterval) {
-  int roundedMinutes = ((now.minute / minuteInterval).round()) * minuteInterval;
+  int roundedMinutes = ((now.minute / minuteInterval).ceil()) * minuteInterval;
 
   if (roundedMinutes == 60 ||
       (now.hour == 23 && now.minute >= 60 - minuteInterval)) {

@@ -12,10 +12,12 @@ class TodoScreen extends StatefulWidget {
     super.key,
     required this.todo,
     required this.onSaveTodo,
+    this.isNewTodo = false,
   });
 
   final Todo todo;
   final Function(Todo) onSaveTodo;
+  final bool isNewTodo;
 
   @override
   State<TodoScreen> createState() => _TodoScreenState();
@@ -89,14 +91,18 @@ class _TodoScreenState extends State<TodoScreen> {
     super.initState();
 
     _todo = widget.todo;
-
     final now = adjustNow(DateTime.now(), minuteInterval);
     _minimumDate = getDateTimeFromYearsToMinute(now);
 
-    final startAt =
-        _todo.startTime.isAfter(_minimumDate) ? _todo.startTime : _minimumDate;
+    if (widget.isNewTodo) {
+      final startAt = _todo.startTime.isBefore(_minimumDate)
+          ? _minimumDate
+          : _todo.startTime;
 
-    updateTodo(startTime: startAt);
+      final endAt = startAt;
+
+      updateTodo(startTime: startAt, endTime: endAt);
+    }
   }
 
   @override

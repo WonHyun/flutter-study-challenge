@@ -30,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
         builder: (context) => TodoScreen(
           todo: Todo(startTime: selectedDay, endTime: selectedDay),
           onSaveTodo: _onSaveTodo,
+          isNewTodo: true,
         ),
       ),
     );
