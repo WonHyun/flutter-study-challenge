@@ -117,7 +117,10 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 TodoList(
                   todoList: _getSelectedDaysTodoList(),
-                ),
+                  selectedDay: _selectedDay,
+                  onAddTap: _onAddTap,
+                  onTodoTap: _onTodoTap,
+                )
               ],
             ),
           ),

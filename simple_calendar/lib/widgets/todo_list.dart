@@ -1,29 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/model/todo.dart';
-import 'package:simple_calendar/screens/todo_detail_screen.dart';
 import 'package:simple_calendar/widgets/todo_card.dart';
 
-class TodoList extends StatelessWidget {
+class TodoList extends StatefulWidget {
   const TodoList({
     super.key,
     required this.todoList,
+    required this.selectedDay,
+    required this.onAddTap,
+    required this.onTodoTap,
   });
 
   final List<Todo> todoList;
-
-  void _onSelectTodo(BuildContext context, Todo todo) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TodoDetailScreen(todo: todo),
-      ),
-    );
-  }
+  final DateTime selectedDay;
+  final Function(BuildContext) onAddTap;
+  final Function(BuildContext, Todo) onTodoTap;
 
   @override
+  State<TodoList> createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  @override
   Widget build(BuildContext context) {
-    return todoList.isEmpty
+    return widget.todoList.isEmpty
         ? Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +34,7 @@ class TodoList extends StatelessWidget {
                     "+ Let's create TODO!",
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  onPressed: () => {},
+                  onPressed: () => widget.onAddTap(context),
                 ),
               ],
             ),
@@ -41,7 +42,7 @@ class TodoList extends StatelessWidget {
         : Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 50),
-              itemCount: todoList.length,
+              itemCount: widget.todoList.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -49,8 +50,9 @@ class TodoList extends StatelessWidget {
                     vertical: 5,
                   ),
                   child: TodoCard(
-                    todo: todoList[index],
-                    onTap: () => _onSelectTodo(context, todoList[index]),
+                    todo: widget.todoList[index],
+                    onTap: () =>
+                        widget.onTodoTap(context, widget.todoList[index]),
                   ),
                 );
               },
