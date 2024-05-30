@@ -98,12 +98,13 @@ class _TodoScreenState extends State<TodoScreen> {
     super.initState();
 
     _todo = widget.todo;
-    final now = adjustNow(DateTime.now(), minuteInterval);
+    final now = adjustMinute(DateTime.now(), minuteInterval);
     _minimumDate = getDateTimeFromYearsToMinute(now);
 
     if (widget.isNewTodo) {
-      final startAt =
-          _todo.startAt.isBefore(_minimumDate) ? _minimumDate : _todo.startAt;
+      final startAt = _todo.startAt.isBefore(_minimumDate)
+          ? _minimumDate
+          : adjustMinute(_todo.startAt, minuteInterval);
 
       final endAt = startAt;
 
