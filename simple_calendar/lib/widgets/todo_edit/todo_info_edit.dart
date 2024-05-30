@@ -25,7 +25,7 @@ class _TodoInfoEditState extends State<TodoInfoEdit> {
   void initState() {
     super.initState();
     _titleController.text = widget.todo.title;
-    _titleController.text = widget.todo.description;
+    _descriptionController.text = widget.todo.description;
   }
 
   @override
