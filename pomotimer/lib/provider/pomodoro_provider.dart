@@ -126,4 +126,14 @@ class PomodoroProvider extends ChangeNotifier {
     _currentSeconds = _totalSeconds;
     notifyListeners();
   }
+
+  void onClearAllProgress() {
+    onPause();
+    _currentRound = 0;
+    _currentGoal = 0;
+    _isRest = false;
+    _guideText = "";
+    onTimerReset();
+    notifyListeners();
+  }
 }
