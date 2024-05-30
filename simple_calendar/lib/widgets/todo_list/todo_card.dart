@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/model/todo.dart';
-import 'package:simple_calendar/widgets/todo_attendees_list_view.dart';
-import 'package:simple_calendar/widgets/todo_time_view.dart';
+import 'package:simple_calendar/widgets/todo_list/todo_attendees_list_view.dart';
+import 'package:simple_calendar/widgets/todo_list/todo_time_view.dart';
 
 class TodoCard extends StatefulWidget {
   final Todo todo;

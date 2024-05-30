@@ -3,10 +3,10 @@ import 'package:simple_calendar/global/colors.dart';
 import 'package:simple_calendar/model/todo.dart';
 import 'package:simple_calendar/screens/todo_screen.dart';
 import 'package:simple_calendar/utils/date_util.dart';
-import 'package:simple_calendar/widgets/home_app_bar.dart';
-import 'package:simple_calendar/widgets/home_calendar.dart';
-import 'package:simple_calendar/widgets/home_drawer_menu.dart';
-import 'package:simple_calendar/widgets/todo_list.dart';
+import 'package:simple_calendar/widgets/calendar/home_calendar.dart';
+import 'package:simple_calendar/widgets/home/home_app_bar.dart';
+import 'package:simple_calendar/widgets/home/home_drawer_menu.dart';
+import 'package:simple_calendar/widgets/todo_list/todo_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

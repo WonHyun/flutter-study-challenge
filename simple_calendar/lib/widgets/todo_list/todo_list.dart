@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/model/todo.dart';
 import 'package:simple_calendar/widgets/common/color_animated_button.dart';
-import 'package:simple_calendar/widgets/todo_card.dart';
+import 'package:simple_calendar/widgets/todo_list/todo_card.dart';
 
 class TodoList extends StatefulWidget {
   const TodoList({
