@@ -37,7 +37,6 @@ class ColorAnimatedButton extends StatelessWidget {
             child: Text(
               text,
               style: const TextStyle(
-                color: Colors.black,
                 fontSize: 18,
               ),
             ),

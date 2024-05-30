@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_calendar/model/todo.dart';
+import 'package:simple_calendar/widgets/common/color_animated_button.dart';
 import 'package:simple_calendar/widgets/todo_card.dart';
 
 class TodoList extends StatefulWidget {
@@ -29,12 +30,12 @@ class _TodoListState extends State<TodoList> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CupertinoButton(
-                  child: Text(
-                    "+ Let's create TODO!",
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  onPressed: () => widget.onAddTap(context, widget.selectedDay),
+                ColorAnimatedButton(
+                  text: "Let's Create!",
+                  width: 350,
+                  height: 60,
+                  color: Theme.of(context).colorScheme.primary,
+                  onTap: () => widget.onAddTap(context, widget.selectedDay),
                 ),
               ],
             ),
