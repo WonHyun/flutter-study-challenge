@@ -36,8 +36,11 @@ class ColorAnimatedButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
+                color: color.computeLuminance() > 0.5
+                    ? Colors.black
+                    : Colors.white,
               ),
             ),
           ),
