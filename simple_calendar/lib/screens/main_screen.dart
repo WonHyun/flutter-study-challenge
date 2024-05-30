@@ -27,7 +27,11 @@ class _MainScreenState extends State<MainScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const TodoEditScreen(),
+        fullscreenDialog: true,
+        builder: (context) => TodoScreen(
+          todo: Todo(),
+          onSaveTodo: _onSaveTodo,
+        ),
       ),
     );
   }
@@ -41,11 +45,30 @@ class _MainScreenState extends State<MainScreen> {
       .where((todo) => isSameDay(todo.startTime, _selectedDay))
       .toList();
 
+  void _onSaveTodo(Todo todo) {
+    final index = _todoList.indexWhere((element) => element.id == todo.id);
+    if (index < 0) {
+      _todoList.add(todo);
+    } else {
+      _todoList[index] = todo;
+    }
+    setState(() {
+      _todoList.sort((a, b) => a.startTime.compareTo(b.startTime));
+    });
+  }
+
+  void _onRemoveTodo(Todo todo) {
+    setState(() {
+      _todoList.removeWhere((element) => element.id == todo.id);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    todos.sort((a, b) => a.startTime.compareTo(b.startTime));
-    _todoList = todos;
+    // todos.sort((a, b) => a.startTime.compareTo(b.startTime));
+    // _todoList = todos;
+    _todoList = [];
   }
 
   @override
@@ -53,14 +76,11 @@ class _MainScreenState extends State<MainScreen> {
     return MaterialApp(
       theme: _isDarktheme
           ? ThemeData(
-              colorScheme: const ColorScheme.dark(
-                primary: ThemeColors.primary,
-              ),
+              colorScheme: const ColorScheme.dark(primary: ThemeColors.primary),
             )
           : ThemeData(
-              colorScheme: const ColorScheme.light(
-                primary: ThemeColors.primary,
-              ),
+              colorScheme:
+                  const ColorScheme.light(primary: ThemeColors.primary),
             ),
       home: GestureDetector(
         onTap: _onScaffoldTap,
