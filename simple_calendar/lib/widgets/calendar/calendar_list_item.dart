@@ -36,9 +36,10 @@ class CalendarListItem extends StatelessWidget {
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 100),
                   style: TextStyle(
-                    fontSize: isSelectedDay ? 46 : 30,
+                    fontSize: isSelectedDay ? 40 : 30,
                     fontWeight:
                         isSelectedDay ? FontWeight.w600 : FontWeight.w300,
+                    color: currentColor,
                   ),
                   child: const Text("TODAY"),
                 ),
