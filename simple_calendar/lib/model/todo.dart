@@ -12,13 +12,14 @@ class Todo {
   final Color labelColor;
 
   Todo({
+    String? id,
     String? title,
     String? description,
     DateTime? startTime,
     DateTime? endTime,
     List<String>? attendees,
     Color? labelColor,
-  })  : id = uuid.v4(),
+  })  : id = id ?? uuid.v4(),
         title = title ?? "",
         description = description ?? "",
         startAt = startTime ?? DateTime.now(),
@@ -35,6 +36,7 @@ class Todo {
     Color? labelColor,
   }) {
     return Todo(
+      id: id,
       title: title ?? this.title,
       description: description ?? this.description,
       startTime: startTime ?? startAt,
