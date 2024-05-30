@@ -17,8 +17,8 @@ class PomodoroProvider extends ChangeNotifier {
   int _currentSeconds = 0;
   int _tick = 0;
 
-  final int _totalRound = 4;
-  final int _totalGoal = 12;
+  int _totalRound = 4;
+  int _totalGoal = 12;
   int _currentRound = 0;
   int _currentGoal = 0;
 
@@ -134,6 +134,20 @@ class PomodoroProvider extends ChangeNotifier {
     _isRest = false;
     _guideText = "";
     onTimerReset();
+    notifyListeners();
+  }
+
+  void onChangeMaxRound(int newValue) {
+    if (newValue > 0) {
+      _totalRound = newValue;
+    }
+    notifyListeners();
+  }
+
+  void onChangeMaxGoal(int newValue) {
+    if (newValue > 0) {
+      _totalGoal = newValue;
+    }
     notifyListeners();
   }
 }

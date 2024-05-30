@@ -45,6 +45,44 @@ class PomodoroDrawer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
+                    "Total Rounds",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  NumberCounter(
+                    number: timerProvider.totalRound,
+                    onUpTap: () => timerProvider
+                        .onChangeMaxRound(timerProvider.totalRound + 1),
+                    onDownTap: () => timerProvider
+                        .onChangeMaxRound(timerProvider.totalRound - 1),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Total Goals",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  NumberCounter(
+                    number: timerProvider.totalGoal,
+                    onUpTap: () => timerProvider
+                        .onChangeMaxGoal(timerProvider.totalGoal + 1),
+                    onDownTap: () => timerProvider
+                        .onChangeMaxGoal(timerProvider.totalGoal - 1),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
                     "Clear All Progress",
                     style: TextStyle(fontSize: 20),
                   ),
@@ -58,6 +96,59 @@ class PomodoroDrawer extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class NumberCounter extends StatelessWidget {
+  const NumberCounter({
+    super.key,
+    required this.number,
+    required this.onUpTap,
+    required this.onDownTap,
+  });
+
+  final int number;
+  final VoidCallback onUpTap;
+  final VoidCallback onDownTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "$number",
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Column(
+          children: [
+            GestureDetector(
+              onTap: onUpTap,
+              child: Text(
+                "▲",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: onDownTap,
+              child: Text(
+                "▼",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
