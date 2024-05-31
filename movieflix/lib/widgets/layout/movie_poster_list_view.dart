@@ -28,7 +28,7 @@ class MoviePosterListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: isShowTitle ? height + 70 : height + 10,
+      height: isShowTitle ? height + 80 : height + 20,
       child: FutureBuilder(
         future: movies,
         builder: (context, snapshot) {
@@ -40,49 +40,57 @@ class MoviePosterListView extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var movie = snapshot.data![index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        CardButton(
-                          width: width,
-                          height: height,
-                          imgUrl: movie.getImgUrl(),
-                          callback: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => MovieDetailInfoScreen(
-                                  movieId: movie.id,
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          CardButton(
+                            width: width,
+                            height: height,
+                            imgUrl: movie.getImgUrl(),
+                            callback: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) => MovieDetailInfoScreen(
+                                    movieId: movie.id,
+                                  ),
+                                ),
+                              )
+                            },
+                          ),
+                          Positioned(
+                            left: -5,
+                            top: -5,
+                            child: Offstage(
+                              offstage: !isRanked,
+                              child: RankLabel(rank: (index + 1).toString()),
+                            ),
+                          ),
+                        ],
+                      ),
+                      isShowTitle
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: SizedBox(
+                                width: width,
+                                child: Text(
+                                  movie.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),
                             )
-                          },
-                        ),
-                        Offstage(
-                          offstage: !isRanked,
-                          child: RankLabel(rank: (index + 1).toString()),
-                        ),
-                      ],
-                    ),
-                    isShowTitle
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: SizedBox(
-                              width: width,
-                              child: Text(
-                                movie.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ],
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
                 );
               },
             );
