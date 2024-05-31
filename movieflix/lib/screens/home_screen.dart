@@ -59,7 +59,8 @@ class HomeScreen extends StatelessWidget {
                 MoviePosterListView(
                   width: 300,
                   height: 200,
-                  isShowTitle: false,
+                  isShowTitle: true,
+                  isRanked: true,
                   endpoint: Endpoint.popular,
                 ),
                 const Padding(

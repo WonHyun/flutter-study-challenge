@@ -5,18 +5,22 @@ import 'package:movieflix/services/api_service.dart';
 import 'package:movieflix/utils/api_endpoints.dart';
 import 'package:movieflix/widgets/component/card_button.dart';
 
+import '../component/rank_label.dart';
+
 class MoviePosterListView extends StatelessWidget {
   MoviePosterListView({
     super.key,
     required this.width,
     required this.height,
-    required this.endpoint,
     this.isShowTitle = false,
+    this.isRanked = false,
+    required this.endpoint,
   });
 
   final double width;
   final double height;
   final bool isShowTitle;
+  final bool isRanked;
   final Endpoint endpoint;
 
   late final Future<List<MovieModel>> movies = ApiService.getMovies(endpoint);
@@ -39,21 +43,30 @@ class MoviePosterListView extends StatelessWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CardButton(
-                      width: width,
-                      height: height,
-                      imgUrl: movie.getImgUrl(),
-                      callback: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => MovieDetailInfoScreen(
-                              movieId: movie.id,
-                            ),
-                          ),
-                        )
-                      },
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        CardButton(
+                          width: width,
+                          height: height,
+                          imgUrl: movie.getImgUrl(),
+                          callback: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => MovieDetailInfoScreen(
+                                  movieId: movie.id,
+                                ),
+                              ),
+                            )
+                          },
+                        ),
+                        Offstage(
+                          offstage: !isRanked,
+                          child: RankLabel(rank: (index + 1).toString()),
+                        ),
+                      ],
                     ),
                     isShowTitle
                         ? Padding(
