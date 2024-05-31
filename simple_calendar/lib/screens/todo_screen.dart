@@ -128,67 +128,60 @@ class _TodoScreenState extends State<TodoScreen> {
             )
           ],
         ),
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 30,
-                  bottom: 80,
-                ),
-                child: Column(
-                  children: [
-                    TodoInfoEdit(
-                      todo: _todo,
-                      onChangeTitle: _onChangeTitle,
-                      onChangeDescription: _onChangeDescription,
-                    ),
-                    const SizedBox(height: 30),
-                    DateControllPanel(
-                      todo: _todo,
-                      minuteInterval: minuteInterval,
-                      minimumDate: _minimumDate,
-                      onChangeDate: _onChangeDate,
-                    ),
-                    AttendeesEditPanel(
-                      todo: _todo,
-                      onAttendeeSubmit: _onAttendeeSubmit,
-                      onAttendeeRemove: _onAttendeeRemove,
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Choose a Label",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: LabelSelector(
-                          onChangeLabelColor: (color) =>
-                              updateTodo(labelColor: color)),
-                    ),
-                  ],
-                ),
-              ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 30,
+              bottom: 80,
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: ColorAnimatedButton(
-                  text: "Save",
-                  width: 350,
+            child: Column(
+              children: [
+                TodoInfoEdit(
+                  todo: _todo,
+                  onChangeTitle: _onChangeTitle,
+                  onChangeDescription: _onChangeDescription,
+                ),
+                const SizedBox(height: 30),
+                DateControllPanel(
+                  todo: _todo,
+                  minuteInterval: minuteInterval,
+                  minimumDate: _minimumDate,
+                  onChangeDate: _onChangeDate,
+                ),
+                AttendeesEditPanel(
+                  todo: _todo,
+                  onAttendeeSubmit: _onAttendeeSubmit,
+                  onAttendeeRemove: _onAttendeeRemove,
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    "Choose a Label",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                SizedBox(
                   height: 60,
-                  color: _todo.labelColor,
-                  onTap: _onTodoSubmit,
+                  child: LabelSelector(
+                      onChangeLabelColor: (color) =>
+                          updateTodo(labelColor: color)),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: ColorAnimatedButton(
+                    text: "Save",
+                    width: 350,
+                    height: 60,
+                    color: _todo.labelColor,
+                    onTap: _onTodoSubmit,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
