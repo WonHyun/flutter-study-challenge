@@ -33,13 +33,13 @@ class _PomodoroMainScreenState extends State<PomodoroMainScreen> {
         body: Stack(
           children: [
             Container(
-              height: context.deviceHeight / 12,
+              height: 72,
               decoration: const BoxDecoration(
                 color: ThemeColors.plantGreen,
               ),
             ),
             Positioned(
-              top: context.deviceHeight / 12,
+              top: 70,
               child: CustomPaint(
                 painter: CalyxPainter(),
                 size: Size(context.deviceWidth, 50),
