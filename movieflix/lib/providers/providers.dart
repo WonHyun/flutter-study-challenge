@@ -4,5 +4,5 @@ import 'package:movieflix/providers/notifiers/theme_notifier.dart';
 import 'package:movieflix/providers/states/theme_state.dart';
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>((ref) {
-  return ThemeNotifier(theme: MovieflixTheme.light);
+  return ThemeNotifier(theme: MovieflixTheme.dark);
 });

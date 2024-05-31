@@ -26,6 +26,10 @@ class HomeDrawer extends ConsumerWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Switch(
+                    trackColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.primary),
+                    thumbColor: WidgetStateProperty.resolveWith(
+                        (states) => Colors.white),
                     value: themeState.theme == MovieflixTheme.dark,
                     onChanged: (value) => themeNotifier.switchTheme(value),
                   ),
