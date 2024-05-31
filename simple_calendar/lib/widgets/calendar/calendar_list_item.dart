@@ -66,8 +66,7 @@ class CalendarListItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                Align(
-                  alignment: Alignment.center,
+                Center(
                   child: AnimatedDefaultTextStyle(
                     duration: const Duration(milliseconds: 100),
                     style: TextStyle(
