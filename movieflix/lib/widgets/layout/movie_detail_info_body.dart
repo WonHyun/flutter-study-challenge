@@ -77,7 +77,10 @@ class MovieDetailInfoBody extends StatelessWidget {
                       fontSize: 30,
                     ),
                   ),
-                  MovieRatingBar(voteAverage: movieInfo.voteAverage),
+                  MovieRatingBar(
+                    voteAverage: movieInfo.voteAverage,
+                    voteCount: movieInfo.voteCount,
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     "${getRunningTime()} | ${getGenres()}",
