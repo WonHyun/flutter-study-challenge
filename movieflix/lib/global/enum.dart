@@ -1,3 +1,9 @@
+enum MovieListType {
+  popular,
+  nowPlaying,
+  comingSoon,
+}
+
 enum Endpoint { popular, nowPlaying, comingSoon, movieInfo }
 
 const Map<Endpoint, String> endpointValues = {

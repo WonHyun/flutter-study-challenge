@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movieflix/global/enum.dart';
 import 'package:movieflix/models/movie_detail_info.dart';
 import 'package:movieflix/services/api_service.dart';
-import 'package:movieflix/global/api_endpoints.dart';
 import 'package:movieflix/utils/path_util.dart';
 import '../widgets/layout/movie_detail_info_body.dart';
 

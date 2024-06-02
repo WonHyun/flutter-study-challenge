@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movieflix/global/colors.dart';
-import 'package:movieflix/global/api_endpoints.dart';
-import 'package:movieflix/widgets/layout/movie_poster_list_view.dart';
+import 'package:movieflix/global/enum.dart';
+import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
+import 'package:movieflix/providers/providers.dart';
+import 'package:movieflix/providers/states/movie_list_state.dart';
+import 'package:movieflix/widgets/component/tab_title.dart';
+import 'package:movieflix/widgets/layout/home_drawer.dart';
+import 'package:movieflix/widgets/layout/movie_list_view.dart';
 
-import '../widgets/component/tab_title.dart';
-import '../widgets/layout/home_drawer.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   HomeScreen({
     super.key,
   });
@@ -17,8 +20,38 @@ class HomeScreen extends StatelessWidget {
   void _onMenuTap() => _scaffoldKey.currentState?.openDrawer();
   void _onScaffoldTap() => _scaffoldKey.currentState?.closeDrawer();
 
+  Future<void> _onRefresh(BuildContext context, WidgetRef ref) async {
+    _getMoviesNotifier(context, ref, MovieListType.popular).fetchMovieList();
+    _getMoviesNotifier(context, ref, MovieListType.nowPlaying).fetchMovieList();
+    _getMoviesNotifier(context, ref, MovieListType.comingSoon).fetchMovieList();
+  }
+
+  MovieListState _getMoviesState(
+      BuildContext context, WidgetRef ref, MovieListType type) {
+    switch (type) {
+      case MovieListType.popular:
+        return ref.watch(popularMoviesProvider);
+      case MovieListType.nowPlaying:
+        return ref.watch(nowPlayingMoviesProvider);
+      case MovieListType.comingSoon:
+        return ref.watch(comingSoonMoviesProvider);
+    }
+  }
+
+  MovieListNotifier _getMoviesNotifier(
+      BuildContext context, WidgetRef ref, MovieListType type) {
+    switch (type) {
+      case MovieListType.popular:
+        return ref.watch(popularMoviesProvider.notifier);
+      case MovieListType.nowPlaying:
+        return ref.watch(nowPlayingMoviesProvider.notifier);
+      case MovieListType.comingSoon:
+        return ref.watch(comingSoonMoviesProvider.notifier);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
@@ -42,48 +75,56 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-              bottom: 50,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: TabTitle(title: "Popular Movies"),
-                ),
-                MoviePosterListView(
-                  width: 300,
-                  height: 200,
-                  isShowTitle: true,
-                  isRanked: true,
-                  endpoint: Endpoint.popular,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: TabTitle(title: "Now in Cinemas"),
-                ),
-                MoviePosterListView(
-                  width: 150,
-                  height: 150,
-                  isShowTitle: true,
-                  endpoint: Endpoint.nowPlaying,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: TabTitle(title: "Coming soon"),
-                ),
-                MoviePosterListView(
-                  width: 150,
-                  height: 150,
-                  isShowTitle: true,
-                  endpoint: Endpoint.comingSoon,
-                ),
-              ],
+        body: RefreshIndicator(
+          onRefresh: () async => _onRefresh(context, ref),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: 50,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: TabTitle(title: "Popular Movies"),
+                  ),
+                  MovieListView(
+                    width: 300,
+                    height: 200,
+                    isRanked: true,
+                    state: _getMoviesState(context, ref, MovieListType.popular),
+                    notifier:
+                        _getMoviesNotifier(context, ref, MovieListType.popular),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: TabTitle(title: "Now in Cinemas"),
+                  ),
+                  MovieListView(
+                    width: 150,
+                    height: 150,
+                    state:
+                        _getMoviesState(context, ref, MovieListType.nowPlaying),
+                    notifier: _getMoviesNotifier(
+                        context, ref, MovieListType.nowPlaying),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: TabTitle(title: "Coming soon"),
+                  ),
+                  MovieListView(
+                    width: 150,
+                    height: 150,
+                    state:
+                        _getMoviesState(context, ref, MovieListType.comingSoon),
+                    notifier: _getMoviesNotifier(
+                        context, ref, MovieListType.comingSoon),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

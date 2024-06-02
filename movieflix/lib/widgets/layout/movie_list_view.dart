@@ -1,45 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:movieflix/global/enum.dart';
-import 'package:movieflix/models/movie_info.dart';
+import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
+import 'package:movieflix/providers/states/movie_list_state.dart';
 import 'package:movieflix/screens/movie_detail_info_screen.dart';
-import 'package:movieflix/services/api_service.dart';
 import 'package:movieflix/utils/path_util.dart';
 import 'package:movieflix/widgets/component/card_button.dart';
 import 'package:movieflix/widgets/component/rank_label.dart';
 
-class MoviePosterListView extends StatelessWidget {
-  MoviePosterListView({
+class MovieListView extends StatelessWidget {
+  const MovieListView({
     super.key,
     required this.width,
     required this.height,
-    this.isShowTitle = false,
+    required this.state,
+    required this.notifier,
+    this.isShowTitle = true,
     this.isRanked = false,
-    required this.endpoint,
   });
 
   final double width;
   final double height;
   final bool isShowTitle;
   final bool isRanked;
-  final Endpoint endpoint;
-
-  late final Future<List<MovieInfo>> movies = ApiService.getMovies(endpoint);
+  final MovieListState state;
+  final MovieListNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: isShowTitle ? height + 80 : height + 20,
-      child: FutureBuilder(
-        future: movies,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+      child: Builder(
+        builder: (context) {
+          if (!state.isLoading && state.errorMsg == null) {
             return ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => const SizedBox(width: 15),
               scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
+              itemCount: state.movies.length,
               itemBuilder: (context, index) {
-                var movie = snapshot.data![index];
+                var movie = state.movies[index];
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(
@@ -83,8 +81,7 @@ class MoviePosterListView extends StatelessWidget {
                                   movie.title,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ),
                             )
@@ -94,10 +91,15 @@ class MoviePosterListView extends StatelessWidget {
                 );
               },
             );
+          } else if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Center(
+                child:
+                    Text(state.errorMsg ?? "Can't loading this movie list!"));
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
         },
       ),
     );
