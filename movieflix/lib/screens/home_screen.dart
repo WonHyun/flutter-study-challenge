@@ -134,6 +134,7 @@ class HomeScreen extends ConsumerWidget {
                       width: 300,
                       height: 200,
                       isRanked: true,
+                      isSlide: true,
                       moviesState:
                           _getMoviesState(context, ref, MovieListType.popular),
                       moviesNotifier: _getMoviesNotifier(
