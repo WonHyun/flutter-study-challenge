@@ -66,9 +66,7 @@ class MovieDetailInfoBody extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   Text(
                     movieInfo.title,
                     style: const TextStyle(

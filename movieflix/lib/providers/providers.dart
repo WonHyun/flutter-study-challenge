@@ -27,3 +27,9 @@ final comingSoonMoviesProvider =
   return MovieListNotifier(
       const MovieListState(movieListType: MovieListType.comingSoon));
 });
+
+final recentlyViewedProvider =
+    StateNotifierProvider<MovieListNotifier, MovieListState>((ref) {
+  return MovieListNotifier(
+      const MovieListState(movieListType: MovieListType.recentlyViewed));
+});

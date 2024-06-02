@@ -2,6 +2,7 @@ enum MovieListType {
   popular,
   nowPlaying,
   comingSoon,
+  recentlyViewed,
 }
 
 enum Endpoint { popular, nowPlaying, comingSoon, movieInfo }

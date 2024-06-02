@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
+import 'package:movieflix/providers/providers.dart';
 import 'package:movieflix/providers/states/movie_list_state.dart';
 import 'package:movieflix/screens/movie_detail_info_screen.dart';
 import 'package:movieflix/utils/path_util.dart';
 import 'package:movieflix/widgets/component/card_button.dart';
 import 'package:movieflix/widgets/component/rank_label.dart';
 
-class MovieListView extends StatelessWidget {
+class MovieListView extends ConsumerWidget {
   const MovieListView({
     super.key,
     required this.width,
     required this.height,
-    required this.state,
-    required this.notifier,
+    required this.moviesState,
+    required this.moviesNotifier,
     this.isShowTitle = true,
     this.isRanked = false,
   });
@@ -21,23 +23,24 @@ class MovieListView extends StatelessWidget {
   final double height;
   final bool isShowTitle;
   final bool isRanked;
-  final MovieListState state;
-  final MovieListNotifier notifier;
+  final MovieListState moviesState;
+  final MovieListNotifier moviesNotifier;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final recentlyNotifier = ref.watch(recentlyViewedProvider.notifier);
     return SizedBox(
       height: isShowTitle ? height + 80 : height + 20,
       child: Builder(
         builder: (context) {
-          if (!state.isLoading && state.errorMsg == null) {
+          if (!moviesState.isLoading && moviesState.errorMsg == null) {
             return ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => const SizedBox(width: 15),
               scrollDirection: Axis.horizontal,
-              itemCount: state.movies.length,
+              itemCount: moviesState.movies.length,
               itemBuilder: (context, index) {
-                var movie = state.movies[index];
+                var movie = moviesState.movies[index];
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(
@@ -50,7 +53,8 @@ class MovieListView extends StatelessWidget {
                             width: width,
                             height: height,
                             imgUrl: getImgUrl(movie.posterPath),
-                            onTap: () => {
+                            onTap: () {
+                              recentlyNotifier.addMovieAtFirst(movie);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -60,7 +64,7 @@ class MovieListView extends StatelessWidget {
                                     posterPath: movie.posterPath,
                                   ),
                                 ),
-                              )
+                              );
                             },
                           ),
                           Positioned(
@@ -92,14 +96,14 @@ class MovieListView extends StatelessWidget {
                 );
               },
             );
-          } else if (state.isLoading) {
+          } else if (moviesState.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
             return Center(
-                child:
-                    Text(state.errorMsg ?? "Can't loading this movie list!"));
+                child: Text(
+                    moviesState.errorMsg ?? "Can't loading this movie list!"));
           }
         },
       ),

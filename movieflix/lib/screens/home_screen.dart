@@ -35,6 +35,8 @@ class HomeScreen extends ConsumerWidget {
         return ref.watch(nowPlayingMoviesProvider);
       case MovieListType.comingSoon:
         return ref.watch(comingSoonMoviesProvider);
+      case MovieListType.recentlyViewed:
+        return ref.watch(recentlyViewedProvider);
     }
   }
 
@@ -47,6 +49,8 @@ class HomeScreen extends ConsumerWidget {
         return ref.watch(nowPlayingMoviesProvider.notifier);
       case MovieListType.comingSoon:
         return ref.watch(comingSoonMoviesProvider.notifier);
+      case MovieListType.recentlyViewed:
+        return ref.watch(recentlyViewedProvider.notifier);
     }
   }
 
@@ -95,9 +99,33 @@ class HomeScreen extends ConsumerWidget {
                     width: 300,
                     height: 200,
                     isRanked: true,
-                    state: _getMoviesState(context, ref, MovieListType.popular),
-                    notifier:
+                    moviesState:
+                        _getMoviesState(context, ref, MovieListType.popular),
+                    moviesNotifier:
                         _getMoviesNotifier(context, ref, MovieListType.popular),
+                  ),
+                  Offstage(
+                    offstage: _getMoviesState(
+                            context, ref, MovieListType.recentlyViewed)
+                        .movies
+                        .isEmpty,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: TabTitle(title: "Recently Viewed"),
+                        ),
+                        MovieListView(
+                          width: 150,
+                          height: 150,
+                          moviesState: _getMoviesState(
+                              context, ref, MovieListType.recentlyViewed),
+                          moviesNotifier: _getMoviesNotifier(
+                              context, ref, MovieListType.recentlyViewed),
+                        ),
+                      ],
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -106,9 +134,9 @@ class HomeScreen extends ConsumerWidget {
                   MovieListView(
                     width: 150,
                     height: 150,
-                    state:
+                    moviesState:
                         _getMoviesState(context, ref, MovieListType.nowPlaying),
-                    notifier: _getMoviesNotifier(
+                    moviesNotifier: _getMoviesNotifier(
                         context, ref, MovieListType.nowPlaying),
                   ),
                   const Padding(
@@ -118,9 +146,9 @@ class HomeScreen extends ConsumerWidget {
                   MovieListView(
                     width: 150,
                     height: 150,
-                    state:
+                    moviesState:
                         _getMoviesState(context, ref, MovieListType.comingSoon),
-                    notifier: _getMoviesNotifier(
+                    moviesNotifier: _getMoviesNotifier(
                         context, ref, MovieListType.comingSoon),
                   ),
                 ],

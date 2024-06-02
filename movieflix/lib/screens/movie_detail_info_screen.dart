@@ -5,8 +5,8 @@ import 'package:movieflix/services/api_service.dart';
 import 'package:movieflix/utils/path_util.dart';
 import '../widgets/layout/movie_detail_info_body.dart';
 
-class MovieDetailInfoScreen extends StatefulWidget {
-  const MovieDetailInfoScreen({
+class MovieDetailInfoScreen extends StatelessWidget {
+  MovieDetailInfoScreen({
     super.key,
     required this.movieId,
     required this.posterPath,
@@ -15,18 +15,8 @@ class MovieDetailInfoScreen extends StatefulWidget {
   final int movieId;
   final String posterPath;
 
-  @override
-  State<MovieDetailInfoScreen> createState() => _MovieDetailInfoScreenState();
-}
-
-class _MovieDetailInfoScreenState extends State<MovieDetailInfoScreen> {
-  late final Future<MovieDetailInfo> movieInfo;
-
-  @override
-  void initState() {
-    super.initState();
-    movieInfo = ApiService.getMovieInfo(Endpoint.movieInfo, widget.movieId);
-  }
+  late final Future<MovieDetailInfo> movieInfo =
+      ApiService.getMovieInfo(Endpoint.movieInfo, movieId);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +26,7 @@ class _MovieDetailInfoScreenState extends State<MovieDetailInfoScreen> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                getImgUrl(widget.posterPath),
+                getImgUrl(posterPath),
               ),
               fit: BoxFit.cover,
             ),

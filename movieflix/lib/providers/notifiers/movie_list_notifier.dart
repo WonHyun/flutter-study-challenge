@@ -20,6 +20,8 @@ class MovieListNotifier extends StateNotifier<MovieListState> {
           movies = await ApiService.getMovies(Endpoint.nowPlaying);
         case MovieListType.comingSoon:
           movies = await ApiService.getMovies(Endpoint.comingSoon);
+        case MovieListType.recentlyViewed:
+          movies = [];
       }
       updateMovies(movies);
       updateLoading(false);
@@ -40,5 +42,17 @@ class MovieListNotifier extends StateNotifier<MovieListState> {
 
   void updateErrorMsg(String? errorMsg) {
     state = state.copyWith(errorMsg: errorMsg);
+  }
+
+  void addMovieAtFirst(MovieInfo movieInfo) {
+    if (state.movies
+            .indexWhere((element) => element.movieId == movieInfo.movieId) <
+        0) {
+      state = state.copyWith(movies: [movieInfo, ...state.movies]);
+    }
+  }
+
+  void clearAllMovies() {
+    state = state.copyWith(movies: []);
   }
 }
