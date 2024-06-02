@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movieflix/models/movie_info.dart';
 import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
 import 'package:movieflix/providers/providers.dart';
 import 'package:movieflix/providers/states/movie_list_state.dart';
@@ -27,6 +28,24 @@ class MovieListView extends ConsumerWidget {
   final bool isShowDDay;
   final MovieListState moviesState;
   final MovieListNotifier moviesNotifier;
+
+  void _onMovieTap(
+    BuildContext context,
+    MovieInfo movie,
+    Function(MovieInfo) callback,
+  ) {
+    callback(movie);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => MovieDetailInfoScreen(
+          movieId: movie.movieId,
+          posterPath: movie.posterPath,
+        ),
+      ),
+    );
+  }
 
   String _getDDay(String targetDateString) {
     try {
@@ -67,19 +86,11 @@ class MovieListView extends ConsumerWidget {
                             width: width,
                             height: height,
                             imgUrl: getImgUrl(movie.posterPath),
-                            onTap: () {
-                              recentlyNotifier.addMovieAtFirst(movie);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (context) => MovieDetailInfoScreen(
-                                    movieId: movie.movieId,
-                                    posterPath: movie.posterPath,
-                                  ),
-                                ),
-                              );
-                            },
+                            onTap: () => _onMovieTap(
+                              context,
+                              movie,
+                              recentlyNotifier.addMovieAtFirst,
+                            ),
                           ),
                           Positioned(
                             left: -5,
