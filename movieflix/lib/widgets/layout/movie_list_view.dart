@@ -17,14 +17,27 @@ class MovieListView extends ConsumerWidget {
     required this.moviesNotifier,
     this.isShowTitle = true,
     this.isRanked = false,
+    this.isShowDDay = false,
   });
 
   final double width;
   final double height;
   final bool isShowTitle;
   final bool isRanked;
+  final bool isShowDDay;
   final MovieListState moviesState;
   final MovieListNotifier moviesNotifier;
+
+  String _getDDay(String targetDateString) {
+    try {
+      final now = DateTime.now();
+      final releaseDate = DateTime.parse(targetDateString);
+      final diffDay = now.difference(releaseDate).inDays;
+      return diffDay < 0 ? "D$diffDay" : "Released";
+    } catch (err) {
+      return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +53,8 @@ class MovieListView extends ConsumerWidget {
               scrollDirection: Axis.horizontal,
               itemCount: moviesState.movies.length,
               itemBuilder: (context, index) {
-                var movie = moviesState.movies[index];
+                final movie = moviesState.movies[index];
+                final dday = _getDDay(movie.releaseDate);
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(
@@ -75,22 +89,46 @@ class MovieListView extends ConsumerWidget {
                               child: RankLabel(rank: (index + 1).toString()),
                             ),
                           ),
+                          Positioned(
+                            left: -5,
+                            top: -5,
+                            child: Offstage(
+                                offstage: !isShowDDay,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 3,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.purple.shade300,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    dday,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
+                                )),
+                          ),
                         ],
                       ),
-                      isShowTitle
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: SizedBox(
-                                width: width,
-                                child: Text(
-                                  movie.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
+                      Offstage(
+                        offstage: !isShowTitle,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                            width: width,
+                            child: Text(
+                              movie.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );

@@ -27,7 +27,11 @@ class RankLabel extends StatelessWidget {
           child: Center(
             child: Text(
               rank,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

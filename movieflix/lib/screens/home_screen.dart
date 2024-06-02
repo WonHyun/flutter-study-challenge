@@ -147,6 +147,7 @@ class HomeScreen extends ConsumerWidget {
                   MovieListView(
                     width: 150,
                     height: 150,
+                    isShowDDay: true,
                     moviesState:
                         _getMoviesState(context, ref, MovieListType.comingSoon),
                     moviesNotifier: _getMoviesNotifier(
