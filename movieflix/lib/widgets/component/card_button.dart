@@ -6,13 +6,13 @@ class CardButton extends StatelessWidget {
     required this.width,
     required this.height,
     required this.imgUrl,
-    required this.callback,
+    required this.onTap,
   });
 
   final double width;
   final double height;
   final String imgUrl;
-  final VoidCallback callback;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CardButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () => callback.call(),
+          onTap: onTap,
         ),
       ),
     );

@@ -9,9 +9,11 @@ class MovieDetailInfoScreen extends StatefulWidget {
   const MovieDetailInfoScreen({
     super.key,
     required this.movieId,
+    required this.posterPath,
   });
 
   final int movieId;
+  final String posterPath;
 
   @override
   State<MovieDetailInfoScreen> createState() => _MovieDetailInfoScreenState();
@@ -28,55 +30,59 @@ class _MovieDetailInfoScreenState extends State<MovieDetailInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: movieInfo,
-        builder: (context, snapShot) {
-          if (snapShot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapShot.hasData) {
-            var movieInfo = snapShot.data!;
-            return Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        getImgUrl(movieInfo.posterPath),
-                      ),
-                      fit: BoxFit.cover,
-                      opacity: 0.7,
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.5),
-                      ],
-                    ),
-                  ),
-                  child: MovieDetailInfoBody(movieInfo: movieInfo),
-                ),
-              ],
-            );
-          } else {
-            return IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                getImgUrl(widget.posterPath),
               ),
-            );
-          }
-        },
-      ),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black.withOpacity(0.2),
+                Colors.black.withOpacity(0.8),
+              ],
+            ),
+          ),
+        ),
+        FutureBuilder(
+          future: movieInfo,
+          builder: (context, snapShot) {
+            if (snapShot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapShot.hasData) {
+              var movieInfo = snapShot.data!;
+              return MovieDetailInfoBody(movieInfo: movieInfo);
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text("Can't find this movie info."),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

@@ -50,13 +50,14 @@ class MovieListView extends StatelessWidget {
                             width: width,
                             height: height,
                             imgUrl: getImgUrl(movie.posterPath),
-                            callback: () => {
+                            onTap: () => {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
                                   builder: (context) => MovieDetailInfoScreen(
                                     movieId: movie.id,
+                                    posterPath: movie.posterPath,
                                   ),
                                 ),
                               )
