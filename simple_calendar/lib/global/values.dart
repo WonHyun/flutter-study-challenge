@@ -1,11 +1,11 @@
 const weekday = [
-  "SUNDAY",
   "MONDAY",
   "TUESDAY",
   "WEDNESDAY",
   "THURSDAY",
   "FRIDAY",
   "SATURDAY",
+  "SUNDAY",
 ];
 
 const maxAfterDay = 30;

@@ -73,7 +73,7 @@ class _HomeCalendarState extends State<HomeCalendar> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${weekday[today.weekday]} ${today.day}",
+          "${weekday[today.weekday - 1]} ${today.day}",
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         SizedBox(
