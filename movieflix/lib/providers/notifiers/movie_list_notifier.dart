@@ -3,6 +3,7 @@ import 'package:movieflix/global/enum.dart';
 import 'package:movieflix/models/movie_info.dart';
 import 'package:movieflix/providers/states/movie_list_state.dart';
 import 'package:movieflix/services/api_service.dart';
+import 'package:movieflix/utils/date_util.dart';
 
 class MovieListNotifier extends StateNotifier<MovieListState> {
   MovieListNotifier(super.state) {
@@ -20,6 +21,8 @@ class MovieListNotifier extends StateNotifier<MovieListState> {
           movies = await ApiService.getMovies(Endpoint.nowPlaying);
         case MovieListType.comingSoon:
           movies = await ApiService.getMovies(Endpoint.comingSoon);
+          movies.sort(
+              (e1, e2) => getDateDiff(e2.releaseDate, e1.releaseDate) ?? 0);
         case MovieListType.recentlyViewed:
           movies = [];
       }

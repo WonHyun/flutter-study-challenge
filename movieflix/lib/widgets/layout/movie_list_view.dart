@@ -7,6 +7,7 @@ import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
 import 'package:movieflix/providers/providers.dart';
 import 'package:movieflix/providers/states/movie_list_state.dart';
 import 'package:movieflix/screens/movie_detail_info_screen.dart';
+import 'package:movieflix/utils/date_util.dart';
 import 'package:movieflix/utils/path_util.dart';
 import 'package:movieflix/widgets/component/card_button.dart';
 import 'package:movieflix/widgets/component/rank_label.dart';
@@ -61,9 +62,8 @@ class _MovieListViewState extends ConsumerState<MovieListView> {
 
   String _getDDay(String targetDateString) {
     try {
-      final now = DateTime.now();
-      final releaseDate = DateTime.parse(targetDateString);
-      final diffDay = now.difference(releaseDate).inDays;
+      final diffDay =
+          getDateDiff(DateTime.now().toString(), targetDateString) ?? 0;
       return diffDay < 0 ? "D$diffDay" : "Released";
     } catch (err) {
       return "";
