@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movieflix/models/movie_model.dart';
+import 'package:movieflix/models/movie_info.dart';
 import 'package:movieflix/screens/movie_detail_info_screen.dart';
 import 'package:movieflix/services/api_service.dart';
-import 'package:movieflix/utils/api_endpoints.dart';
+import 'package:movieflix/global/api_endpoints.dart';
+import 'package:movieflix/utils/path_util.dart';
 import 'package:movieflix/widgets/component/card_button.dart';
-
-import '../component/rank_label.dart';
+import 'package:movieflix/widgets/component/rank_label.dart';
 
 class MoviePosterListView extends StatelessWidget {
   MoviePosterListView({
@@ -23,7 +23,7 @@ class MoviePosterListView extends StatelessWidget {
   final bool isRanked;
   final Endpoint endpoint;
 
-  late final Future<List<MovieModel>> movies = ApiService.getMovies(endpoint);
+  late final Future<List<MovieInfo>> movies = ApiService.getMovies(endpoint);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class MoviePosterListView extends StatelessWidget {
                           CardButton(
                             width: width,
                             height: height,
-                            imgUrl: movie.getImgUrl(),
+                            imgUrl: getImgUrl(movie.posterPath),
                             callback: () => {
                               Navigator.push(
                                 context,

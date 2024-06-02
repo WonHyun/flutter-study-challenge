@@ -1,25 +1,29 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:movieflix/global/url.dart';
 import 'package:movieflix/models/movie_detail_info.dart';
-import 'package:movieflix/models/movie_model.dart';
-import 'package:movieflix/utils/api_endpoints.dart';
+import 'package:movieflix/models/movie_info.dart';
+import 'package:movieflix/global/api_endpoints.dart';
 
 class ApiService {
-  static const String baseUrl = "https://movies-api.nomadcoders.workers.dev";
-
-  static Future<List<MovieModel>> getMovies(Endpoint endpoint) async {
-    List<MovieModel> movieInstances = [];
-    final url = Uri.parse("$baseUrl/${endpointValues[endpoint]}");
-    final res = await http.get(url);
-    if (res.statusCode == 200) {
-      final Map<String, dynamic> movies = jsonDecode(res.body);
-      for (var movie in movies["results"]) {
-        movieInstances.add(MovieModel.fromJson(movie));
+  static Future<List<MovieInfo>> getMovies(Endpoint endpoint) async {
+    try {
+      List<MovieInfo> movieInstances = [];
+      final url = Uri.parse("$baseUrl/${endpointValues[endpoint]}");
+      final res = await http.get(url);
+      if (res.statusCode == 200) {
+        final Map<String, dynamic> movies = jsonDecode(res.body);
+        for (var movie in movies["results"]) {
+          movieInstances.add(MovieInfo.fromJson(movie));
+        }
+        return movieInstances;
       }
-      return movieInstances;
+      throw Error();
+    } catch (err) {
+      print(err);
+      throw Error();
     }
-    throw Error();
   }
 
   static Future<MovieDetailInfo> getMovieInfo(

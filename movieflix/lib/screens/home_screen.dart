@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movieflix/global/colors.dart';
-import 'package:movieflix/utils/api_endpoints.dart';
+import 'package:movieflix/global/api_endpoints.dart';
 import 'package:movieflix/widgets/layout/movie_poster_list_view.dart';
 
 import '../widgets/component/tab_title.dart';
