@@ -56,7 +56,7 @@ class MovieListView extends StatelessWidget {
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
                                   builder: (context) => MovieDetailInfoScreen(
-                                    movieId: movie.id,
+                                    movieId: movie.movieId,
                                     posterPath: movie.posterPath,
                                   ),
                                 ),
