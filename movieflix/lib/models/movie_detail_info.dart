@@ -21,8 +21,6 @@ class MovieDetailInfo {
       tagline,
       title;
 
-  final String imgBaseUrl = "https://image.tmdb.org/t/p/w500";
-
   MovieDetailInfo.fromJson(Map<String, dynamic> json)
       : adult = json["adult"] ?? false,
         video = json["video"] ?? false,
@@ -49,8 +47,4 @@ class MovieDetailInfo {
         genres = json["genres"] ?? [],
         budget = json["budget"] ?? 0,
         title = json["title"] ?? "";
-
-  String getImgUrl() {
-    return "$imgBaseUrl/$posterPath";
-  }
 }

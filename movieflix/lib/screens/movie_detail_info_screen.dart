@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieflix/models/movie_detail_info.dart';
 import 'package:movieflix/services/api_service.dart';
 import 'package:movieflix/global/api_endpoints.dart';
+import 'package:movieflix/utils/path_util.dart';
 import '../widgets/layout/movie_detail_info_body.dart';
 
 class MovieDetailInfoScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _MovieDetailInfoScreenState extends State<MovieDetailInfoScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                        movieInfo.getImgUrl(),
+                        getImgUrl(movieInfo.posterPath),
                       ),
                       fit: BoxFit.cover,
                       opacity: 0.7,
