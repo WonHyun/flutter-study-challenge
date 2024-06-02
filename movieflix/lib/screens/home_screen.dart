@@ -7,6 +7,7 @@ import 'package:movieflix/global/theme.dart';
 import 'package:movieflix/providers/notifiers/movie_list_notifier.dart';
 import 'package:movieflix/providers/providers.dart';
 import 'package:movieflix/providers/states/movie_list_state.dart';
+import 'package:movieflix/providers/states/theme_state.dart';
 import 'package:movieflix/widgets/component/tab_title.dart';
 import 'package:movieflix/widgets/layout/home_drawer.dart';
 import 'package:movieflix/widgets/layout/movie_list_view.dart';
@@ -55,6 +56,36 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 
+  BoxDecoration _selectGradient(ThemeState themeState) {
+    return themeState.theme == MovieflixTheme.dark
+        ? BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment.bottomCenter,
+              radius: 0.8,
+              stops: const [0.2, 0.5, 0.75, 1.0],
+              colors: [
+                Colors.transparent,
+                Colors.purple.shade400,
+                Colors.pink.shade400,
+                Colors.transparent,
+              ],
+            ),
+          )
+        : BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment.bottomCenter,
+              radius: 0.8,
+              stops: const [0.2, 0.5, 0.75, 1.0],
+              colors: [
+                Colors.white,
+                Colors.purple.shade100,
+                Colors.pink.shade100,
+                Colors.white,
+              ],
+            ),
+          );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeProvider);
@@ -82,33 +113,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         body: Container(
-          decoration: themeState.theme == MovieflixTheme.dark
-              ? BoxDecoration(
-                  gradient: RadialGradient(
-                    center: Alignment.bottomCenter,
-                    radius: 0.8,
-                    stops: const [0.2, 0.5, 0.75, 1.0],
-                    colors: [
-                      Colors.transparent,
-                      Colors.purple.shade400,
-                      Colors.pink.shade400,
-                      Colors.transparent,
-                    ],
-                  ),
-                )
-              : BoxDecoration(
-                  gradient: RadialGradient(
-                    center: Alignment.bottomCenter,
-                    radius: 0.8,
-                    stops: const [0.2, 0.5, 0.75, 1.0],
-                    colors: [
-                      Colors.white,
-                      Colors.purple.shade100,
-                      Colors.pink.shade100,
-                      Colors.white,
-                    ],
-                  ),
-                ),
+          decoration: _selectGradient(themeState),
           child: RefreshIndicator(
             onRefresh: () async => _onRefresh(context, ref),
             child: SingleChildScrollView(
