@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 
-class UserAgreementGuide extends StatelessWidget {
-  const UserAgreementGuide({
+class UserAgreementGuideProto extends StatelessWidget {
+  const UserAgreementGuideProto({
     super.key,
     required this.text,
     this.fontSize = 14,

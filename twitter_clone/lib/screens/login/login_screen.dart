@@ -3,10 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/global/path.dart';
+import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
+import 'package:twitter_clone/screens/common/user_agreement_guide.dart';
 import 'package:twitter_clone/screens/login/widgets/logo_button.dart';
-import 'package:twitter_clone/screens/login/widgets/user_agreement_guide.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
@@ -69,7 +70,9 @@ class LoginScreen extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: UserAgreementGuide(text: ""),
+              child: UserAgreementGuide(
+                mdText: userAgreementGuideTextShort,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
