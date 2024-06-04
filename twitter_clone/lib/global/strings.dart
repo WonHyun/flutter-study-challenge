@@ -12,3 +12,6 @@ const userAgreementGuideTextMiddle =
 
 const userAgreementGuideTextFull =
     "By signing up, you agree to our [Terms]($termsUrl), [Privacy Policy]($privacyPolicyUrl), and [Cookie Use]($cookieUseUrl). Twitter may use your contact information, including your email address and phone number for purposes outlined in our Privacy Policy, like keeping your account secure and personalizing our services, including ads. [Learn more]($adsPolicyUrl). Others will be able to find you by email or phone number, when provided, unless you choose otherwise [here]($provideOthersPolicyUrl).";
+
+const dateOfBirthPolicyGuideText =
+    "This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.";

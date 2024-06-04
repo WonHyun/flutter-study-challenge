@@ -6,7 +6,7 @@ import 'package:twitter_clone/global/path.dart';
 import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
-import 'package:twitter_clone/screens/common/user_agreement_guide.dart';
+import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 
@@ -35,7 +35,7 @@ class LoginScreen extends StatelessWidget {
             AppBar(
               title: const FaIcon(
                 FontAwesomeIcons.twitter,
-                color: twitterColor,
+                color: ThemeColors.twitterColor,
               ),
               centerTitle: true,
             ),
@@ -81,7 +81,7 @@ class LoginScreen extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: UserAgreementGuide(
+              child: PolicyGuideText(
                 mdText: userAgreementGuideTextShort,
               ),
             ),

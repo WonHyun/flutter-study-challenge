@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/global/theme.dart';
 import 'package:twitter_clone/screens/login/login_screen.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(colorScheme: const ColorScheme.light()),
+      theme: TwitterTheme.light,
       home: const LoginScreen(),
     );
   }
