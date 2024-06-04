@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class UserAgreementGuide extends StatelessWidget {
-  const UserAgreementGuide({
+class PolicyGuideText extends StatelessWidget {
+  const PolicyGuideText({
     super.key,
     required this.mdText,
     this.fontSize = 14,
