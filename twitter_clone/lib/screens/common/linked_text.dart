@@ -21,40 +21,24 @@ class LinkedText extends StatefulWidget {
 }
 
 class _LinkedTextState extends State<LinkedText> {
-  late Color _textColor;
-
-  void _handleOnTapDown() =>
-      setState(() => _textColor = widget.color.withOpacity(0.4));
-
-  void _handleOnTapUp() => setState(() => _textColor = widget.color);
-
-  void onTapAnimation() {
-    _handleOnTapDown();
-    Future.delayed(const Duration(milliseconds: 100), () => _handleOnTapUp());
-  }
-
-  void _handleOnTap() {
-    onTapAnimation();
-    widget.onTap?.call();
-  }
+  bool _isTapping = false;
 
   @override
   void initState() {
     super.initState();
-    _textColor = widget.color;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _handleOnTap,
-      onTapDown: (details) => _handleOnTapDown(),
-      onTapUp: (details) => _handleOnTapUp(),
-      onTapCancel: _handleOnTapUp,
+      onTap: widget.onTap,
+      onTapDown: (details) => setState(() => _isTapping = true),
+      onTapUp: (details) => setState(() => _isTapping = false),
+      onTapCancel: () => setState(() => _isTapping = false),
       child: AnimatedDefaultTextStyle(
         duration: const Duration(milliseconds: 100),
         style: TextStyle(
-          color: _textColor,
+          color: _isTapping ? widget.color.withOpacity(0.4) : widget.color,
           fontWeight: widget.fontWeight,
           fontSize: widget.fontSize,
         ),
