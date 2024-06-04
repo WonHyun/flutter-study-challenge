@@ -7,12 +7,22 @@ import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/user_agreement_guide.dart';
-import 'package:twitter_clone/screens/login/widgets/logo_button.dart';
+import 'package:twitter_clone/screens/common/rounded_button.dart';
+import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
     super.key,
   });
+
+  void _onSignUpTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CreateAccountScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,27 +54,28 @@ class LoginScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LogoButton(
-                  logo: SvgPicture.asset(
+                RoundedButton(
+                  leading: SvgPicture.asset(
                     googleLogoPath,
                     width: 22,
                   ),
-                  guideText: "Continue with Google",
+                  text: "Continue with Google",
                   onTap: () => {},
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: LogoButton(
-                    logo: const FaIcon(FontAwesomeIcons.apple, size: 24),
-                    guideText: "Continue with Apple",
+                  child: RoundedButton(
+                    leading: const FaIcon(FontAwesomeIcons.apple, size: 24),
+                    text: "Continue with Apple",
                     onTap: () => {},
                   ),
                 ),
                 HorizontalDivider(text: "or", color: Colors.grey.shade300),
-                LogoButton(
-                  guideText: "Create account",
-                  isInversedColor: true,
-                  onTap: () => {},
+                RoundedButton(
+                  text: "Create account",
+                  fontColor: Theme.of(context).colorScheme.surface,
+                  backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+                  onTap: () => _onSignUpTap(context),
                 ),
               ],
             ),
