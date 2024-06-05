@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
+import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/sign_up/personalize_agreement_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/bottom_date_picker_bar.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/user_info_text_field.dart';
 
@@ -22,11 +22,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final TextEditingController _birthController = TextEditingController();
 
   bool _isShowDatePicker = false;
+  bool _isNextActive = false;
 
   final DateTime _initialDate =
       DateTime.now().subtract(const Duration(days: 365 * 12));
-
-  bool _isNextActive = false;
 
   void _onCancelTap(BuildContext context) {
     Navigator.pop(context);
@@ -38,6 +37,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       _isShowDatePicker = false;
     });
   }
+
+  void _onTapNext(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PersonalizeAgreementScreen(),
+      ),
+    );
+  }
+
+  void _onPersonalizeChanged(double isAgree) {}
 
   void _onDateChanged(DateTime date) {
     final formattedDate = DateFormat("MMMM d, y").format(date);
@@ -114,27 +124,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     return GestureDetector(
       onTap: () => _onScaffoldTap(context),
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              surfaceTintColor: Colors.transparent,
-              leading: Center(
-                child: LinkedText(
-                  text: "Cancel",
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.inverseSurface,
-                  onTap: () => _onCancelTap(context),
-                ),
-              ),
-              title: const FaIcon(
-                FontAwesomeIcons.twitter,
-                color: ThemeColors.twitterColor,
-              ),
-              centerTitle: true,
+        appBar: TwitterAppBar(
+          leading: Center(
+            child: LinkedText(
+              text: "Cancel",
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.inverseSurface,
+              onTap: () => _onCancelTap(context),
             ),
           ),
         ),
@@ -217,7 +214,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       backgroundColor:
                           Theme.of(context).colorScheme.inverseSurface,
                       isActive: _isNextActive,
-                      onTap: () => {},
+                      onTap: () => _onTapNext(context),
                     ),
                   ],
                 ),

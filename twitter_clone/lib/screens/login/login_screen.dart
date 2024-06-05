@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/global/path.dart';
 import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
+import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,18 +27,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const TwitterAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppBar(
-              title: const FaIcon(
-                FontAwesomeIcons.twitter,
-                color: ThemeColors.twitterColor,
-              ),
-              centerTitle: true,
-            ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 130),
               child: Center(
