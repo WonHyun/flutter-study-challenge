@@ -23,6 +23,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   bool _isShowDatePicker = false;
   bool _isNextActive = false;
+  bool _isPersonalizeAgree = true;
 
   final DateTime _initialDate =
       DateTime.now().subtract(const Duration(days: 365 * 12));
@@ -38,16 +39,21 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     });
   }
 
-  void _onTapNext(BuildContext context) {
+  void _onNextTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PersonalizeAgreementScreen(),
+        builder: (context) => PersonalizeAgreementScreen(
+          isAgree: _isPersonalizeAgree,
+          onAgreementChanged: _onAgreementChanged,
+        ),
       ),
     );
   }
 
-  void _onPersonalizeChanged(double isAgree) {}
+  void _onAgreementChanged(bool isAgree) {
+    _isPersonalizeAgree = isAgree;
+  }
 
   void _onDateChanged(DateTime date) {
     final formattedDate = DateFormat("MMMM d, y").format(date);
@@ -136,12 +142,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Stack(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 20),
                   const Text(
                     "Create your account",
                     style: TextStyle(
@@ -191,7 +198,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ],
               ),
               Positioned(
-                bottom: 0,
+                bottom: 30,
                 left: 0,
                 right: 0,
                 child: Row(
@@ -214,7 +221,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       backgroundColor:
                           Theme.of(context).colorScheme.inverseSurface,
                       isActive: _isNextActive,
-                      onTap: () => _onTapNext(context),
+                      onTap: () => _onNextTap(context),
                     ),
                   ],
                 ),

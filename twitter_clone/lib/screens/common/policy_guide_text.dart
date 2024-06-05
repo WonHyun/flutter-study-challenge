@@ -8,10 +8,14 @@ class PolicyGuideText extends StatelessWidget {
     required this.mdText,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w300,
+    this.fontColor,
+    this.linkColor,
   });
 
   final double fontSize;
   final FontWeight fontWeight;
+  final Color? fontColor;
+  final Color? linkColor;
   final String mdText;
 
   Future<void> _onTapUrl(String url) async {
@@ -44,6 +48,7 @@ class PolicyGuideText extends StatelessWidget {
             text: linkText,
             fontSize: fontSize,
             fontWeight: fontWeight,
+            color: linkColor ?? Colors.blue,
             onTap: () => _onTapUrl(linkUrl),
           ),
         ),
@@ -64,7 +69,7 @@ class PolicyGuideText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          color: Theme.of(context).colorScheme.inverseSurface,
+          color: fontColor ?? Theme.of(context).colorScheme.inverseSurface,
           fontWeight: fontWeight,
           fontSize: fontSize,
           height: 1.3,
