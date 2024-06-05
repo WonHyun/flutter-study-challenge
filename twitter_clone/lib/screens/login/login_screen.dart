@@ -83,12 +83,12 @@ class LoginScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: RichText(
                 textAlign: TextAlign.start,
-                text: const TextSpan(
+                text: TextSpan(
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.inverseSurface,
                       fontSize: 12,
                       fontWeight: FontWeight.w300),
-                  children: [
+                  children: const [
                     TextSpan(text: "Have an account already? "),
                     WidgetSpan(
                       child: LinkedText(
