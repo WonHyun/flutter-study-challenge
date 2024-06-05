@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:twitter_clone/global/strings.dart';
+import 'package:twitter_clone/providers/notifiers/sign_up_notifier.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
@@ -9,21 +12,21 @@ import 'package:twitter_clone/screens/sign_up/personalize_agreement_screen.dart'
 import 'package:twitter_clone/screens/sign_up/widgets/bottom_date_picker_bar.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/user_info_text_field.dart';
 
-class CreateAccountScreen extends StatefulWidget {
+class CreateAccountScreen extends ConsumerStatefulWidget {
   const CreateAccountScreen({super.key});
 
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  ConsumerState<CreateAccountScreen> createState() =>
+      _CreateAccountScreenState();
 }
 
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
+class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _birthController = TextEditingController();
 
   bool _isShowDatePicker = false;
   bool _isNextActive = false;
-  bool _isPersonalizeAgree = true;
 
   final DateTime _initialDate =
       DateTime.now().subtract(const Duration(days: 365 * 12));
@@ -43,22 +46,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PersonalizeAgreementScreen(
-          isAgree: _isPersonalizeAgree,
-          onAgreementChanged: _onAgreementChanged,
-        ),
+        builder: (context) => const PersonalizeAgreementScreen(),
       ),
     );
   }
 
-  void _onAgreementChanged(bool isAgree) {
-    _isPersonalizeAgree = isAgree;
-  }
-
-  void _onDateChanged(DateTime date) {
-    final formattedDate = DateFormat("MMMM d, y").format(date);
+  void _onDateChanged(DateTime date, UserInfoNotifier notifier) {
+    notifier.updateBirthDate(date);
     setState(() {
-      _birthController.value = TextEditingValue(text: formattedDate);
+      _birthController.value =
+          TextEditingValue(text: DateFormat("MMMM d, y").format(date));
     });
   }
 
@@ -127,6 +124,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userNotifier = ref.watch(userInfoProvider.notifier);
     return GestureDetector(
       onTap: () => _onScaffoldTap(context),
       child: Scaffold(
@@ -231,7 +229,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         ),
         bottomNavigationBar: BottomDatePickerBar(
           showDatePicker: _isShowDatePicker,
-          onDateChanged: _onDateChanged,
+          onDateChanged: (date) => _onDateChanged(date, userNotifier),
           initialDate: _initialDate,
         ),
       ),

@@ -1,42 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/strings.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
 
-class PersonalizeAgreementScreen extends StatefulWidget {
+class PersonalizeAgreementScreen extends ConsumerWidget {
   const PersonalizeAgreementScreen({
     super.key,
-    required this.isAgree,
-    required this.onAgreementChanged,
   });
-
-  final bool isAgree;
-  final Function(bool) onAgreementChanged;
-
-  @override
-  State<PersonalizeAgreementScreen> createState() =>
-      _PersonalizeAgreementScreenState();
-}
-
-class _PersonalizeAgreementScreenState
-    extends State<PersonalizeAgreementScreen> {
-  late bool _isAgree;
 
   void _onBackTap(BuildContext context) {
     Navigator.pop(context);
   }
 
   @override
-  void initState() {
-    super.initState();
-    _isAgree = widget.isAgree;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userState = ref.watch(userInfoProvider);
+    final userNotifier = ref.watch(userInfoProvider.notifier);
     return Scaffold(
       appBar: TwitterAppBar(
         leading: GestureDetector(
@@ -84,11 +69,11 @@ class _PersonalizeAgreementScreenState
                     ),
                     const SizedBox(width: 10),
                     CupertinoSwitch(
-                      value: _isAgree,
-                      onChanged: (value) => setState(() {
-                        _isAgree = value;
-                        widget.onAgreementChanged(value);
-                      }),
+                      value: userState.userInfo
+                              .agreementStatus[PolicyType.personalize] ??
+                          false,
+                      onChanged: (value) => userNotifier.updateAgreementStatus(
+                          PolicyType.personalize, value),
                     ),
                   ],
                 ),
@@ -109,7 +94,9 @@ class _PersonalizeAgreementScreenState
               right: 0,
               child: RoundedButton(
                 text: "Next",
-                isActive: _isAgree,
+                isActive: userState
+                        .userInfo.agreementStatus[PolicyType.personalize] ??
+                    false,
                 fontColor: Theme.of(context).colorScheme.surface,
                 backgroundColor: Theme.of(context).colorScheme.inverseSurface,
                 onTap: () => {},
