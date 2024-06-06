@@ -1,21 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/strings.dart';
+import 'package:twitter_clone/models/user.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 
 class PersonalizeAgreementScreen extends ConsumerWidget {
   const PersonalizeAgreementScreen({
     super.key,
   });
 
-  void _onBackTap(BuildContext context) {
-    Navigator.pop(context);
+  void _onNextTap(BuildContext context, User userInfo) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateAccountScreen(initUserInfo: userInfo),
+      ),
+    );
   }
 
   @override
@@ -23,14 +29,7 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
     final userState = ref.watch(userInfoProvider);
     final userNotifier = ref.watch(userInfoProvider.notifier);
     return Scaffold(
-      appBar: TwitterAppBar(
-        leading: GestureDetector(
-          onTap: () => _onBackTap(context),
-          child: const Align(
-              alignment: Alignment.centerLeft,
-              child: FaIcon(FontAwesomeIcons.arrowLeft, size: 24)),
-        ),
-      ),
+      appBar: const TwitterAppBar(isUseBackArrowLeading: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(
@@ -99,7 +98,7 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
                     false,
                 fontColor: Theme.of(context).colorScheme.surface,
                 backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-                onTap: () => {},
+                onTap: () => _onNextTap(context, userState.userInfo),
               ),
             ),
           ],
