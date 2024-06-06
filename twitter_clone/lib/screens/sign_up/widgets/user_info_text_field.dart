@@ -98,14 +98,20 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
           fontWeight: FontWeight.w400,
           color: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.5),
         ),
-        suffixIcon: Offstage(
-          offstage: _isOff(),
-          child: const Padding(
-            padding: EdgeInsets.only(top: 10, left: 15),
-            child: FaIcon(
-              FontAwesomeIcons.solidCircleCheck,
-              color: ThemeColors.verifyColor,
-            ),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(top: 5, left: 15),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedOpacity(
+                opacity: _isOff() ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 150),
+                child: const FaIcon(
+                  FontAwesomeIcons.solidCircleCheck,
+                  color: ThemeColors.verifyColor,
+                ),
+              ),
+            ],
           ),
         ),
         enabledBorder: UnderlineInputBorder(

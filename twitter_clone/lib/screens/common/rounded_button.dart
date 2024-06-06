@@ -52,7 +52,8 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       width: width,
       height: height,
       decoration: BoxDecoration(
@@ -73,13 +74,14 @@ class RoundedButton extends StatelessWidget {
             children: [
               leading ?? const SizedBox.shrink(),
               SizedBox(width: leading != null ? 15 : 0),
-              Text(
-                text ?? "",
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 150),
                 style: TextStyle(
                   fontSize: fontSize,
                   fontWeight: fontWeight,
                   color: _setFontColor(context),
                 ),
+                child: Text(text ?? ""),
               ),
             ],
           ),
