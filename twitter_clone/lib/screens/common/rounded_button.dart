@@ -16,6 +16,7 @@ class RoundedButton extends StatelessWidget {
     this.backgroundColor,
     this.inactiveColor,
     this.inactiveFontColor,
+    this.centerWidget,
     this.onTap,
   });
 
@@ -32,6 +33,7 @@ class RoundedButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? inactiveColor;
   final Color? inactiveFontColor;
+  final Widget? centerWidget;
   final Function()? onTap;
 
   Color _setBackgroundColor(BuildContext context) {
@@ -73,16 +75,17 @@ class RoundedButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               leading ?? const SizedBox.shrink(),
-              SizedBox(width: leading != null ? 15 : 0),
-              AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 150),
-                style: TextStyle(
-                  fontSize: fontSize,
-                  fontWeight: fontWeight,
-                  color: _setFontColor(context),
-                ),
-                child: Text(text ?? ""),
-              ),
+              if (leading != null) const SizedBox(width: 15),
+              centerWidget ??
+                  AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 150),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      fontWeight: fontWeight,
+                      color: _setFontColor(context),
+                    ),
+                    child: Text(text ?? ""),
+                  ),
             ],
           ),
         ),
