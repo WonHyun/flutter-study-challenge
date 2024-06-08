@@ -10,6 +10,7 @@ import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/sign_up/confirmation_code_screen.dart';
 import 'package:twitter_clone/screens/sign_up/personalize_agreement_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/bottom_date_picker_bar.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/user_info_text_field.dart';
@@ -48,6 +49,11 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
   }
 
   void _onNextTap(BuildContext context) {
+    final notifier = ref.watch(userInfoProvider.notifier);
+    notifier.updateUserName(_nameController.text);
+    notifier.updateEmail(_emailController.text);
+    notifier
+        .updateBirthDate(DateFormat("MMMM d, y").parse(_birthController.text));
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -56,7 +62,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     );
   }
 
-  void _onSignUpTap(BuildContext context) {}
+  void _onSignUpTap(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const ConfirmationCodeScreen()));
+  }
 
   void _onDateChanged(DateTime date, UserInfoNotifier notifier) {
     notifier.updateBirthDate(date);
@@ -111,7 +122,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
     _initTextFieldController();
     if (widget.initUserInfo != null) {
       _isReadyToSignUp =
-          widget.initUserInfo?.agreementStatus[PolicyType.personalize] != null;
+          widget.initUserInfo?.agreementStatus[PolicyType.personalize] ?? false;
     }
   }
 

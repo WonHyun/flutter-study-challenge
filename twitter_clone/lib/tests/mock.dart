@@ -9,4 +9,4 @@ final testUserInfo = User(
   birthDate: DateTime(1991, 9, 4),
 );
 
-const testConfirmationCode = "000000";
+const testConfirmationPin = "000000";

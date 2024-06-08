@@ -1,21 +1,21 @@
-class CodeVerifyState {
-  final String code;
+class PinVerifyState {
+  final String pin;
   final bool isVerified;
   final bool isVerifying;
 
-  const CodeVerifyState({
-    this.code = "",
+  const PinVerifyState({
+    this.pin = "",
     this.isVerified = false,
     this.isVerifying = false,
   });
 
-  CodeVerifyState copyWith({
-    String? code,
+  PinVerifyState copyWith({
+    String? pin,
     bool? isVerified,
     bool? isVerifying,
   }) {
-    return CodeVerifyState(
-      code: code ?? this.code,
+    return PinVerifyState(
+      pin: pin ?? this.pin,
       isVerified: isVerified ?? this.isVerified,
       isVerifying: isVerifying ?? this.isVerifying,
     );

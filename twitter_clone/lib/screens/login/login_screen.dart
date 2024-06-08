@@ -9,6 +9,7 @@ import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
+import 'package:twitter_clone/tests/mock.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
@@ -19,7 +20,9 @@ class LoginScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const CreateAccountScreen(),
+        builder: (context) => CreateAccountScreen(
+          initUserInfo: testUserInfo,
+        ),
       ),
     );
   }
