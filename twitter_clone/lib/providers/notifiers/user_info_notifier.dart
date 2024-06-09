@@ -10,7 +10,7 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
     state = state.copyWith(userInfo: userInfo);
   }
 
-  void updateUserName(String userName) {
+  void updateUserName(String? userName) {
     state = state.copyWith(
       userInfo: state.userInfo.copyWith(
         userName: userName,
@@ -18,7 +18,7 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
     );
   }
 
-  void updateEmail(String email) {
+  void updateEmail(String? email) {
     state = state.copyWith(
       userInfo: state.userInfo.copyWith(
         email: email,
@@ -26,7 +26,7 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
     );
   }
 
-  void updatePhoneNum(String phoneNum) {
+  void updatePhoneNum(String? phoneNum) {
     state = state.copyWith(
       userInfo: state.userInfo.copyWith(
         phoneNum: phoneNum,
@@ -34,7 +34,7 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
     );
   }
 
-  void updateBirthDate(DateTime birthdate) {
+  void updateBirthDate(DateTime? birthdate) {
     state = state.copyWith(
       userInfo: state.userInfo.copyWith(
         birthDate: birthdate,
