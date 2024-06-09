@@ -36,6 +36,23 @@ class _PinTextFieldState extends State<PinTextField> {
     }
   }
 
+  void _handleFocus(String value, int index) {
+    if (value.isEmpty) {
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
+    } else if (value.length > 1) {
+      if (index < _pinLength - 1) {
+        _controllers[index].text = value.substring(0, 1);
+        _controllers[index + 1].text = value.substring(1, 2);
+        _focusNodes[index + 1].requestFocus();
+      } else if (index == _pinLength - 1) {
+        _controllers[index].text = value.substring(1, 2);
+      }
+    }
+    _checkPinInput();
+  }
+
   void _checkPinInput() {
     final pin = _controllers.map((controller) => controller.text).join();
     if (pin.length == _pinLength) {
@@ -79,22 +96,7 @@ class _PinTextFieldState extends State<PinTextField> {
                 controller: _controllers[index],
                 showCursor: false,
                 textAlign: TextAlign.center,
-                onChanged: (value) {
-                  if (value.isEmpty) {
-                    if (index > 0) {
-                      _focusNodes[index - 1].requestFocus();
-                    }
-                  } else if (value.length > 1) {
-                    if (index < _pinLength - 1) {
-                      _controllers[index].text = value.substring(0, 1);
-                      _controllers[index + 1].text = value.substring(1, 2);
-                      _focusNodes[index + 1].requestFocus();
-                    } else if (index == _pinLength - 1) {
-                      _controllers[index].text = value.substring(1, 2);
-                    }
-                  }
-                  _checkPinInput();
-                },
+                onChanged: (value) => _handleFocus(value, index),
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 24,

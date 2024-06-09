@@ -7,6 +7,7 @@ import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/sign_up/password_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/pin_text_field.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 
@@ -24,10 +25,14 @@ class _ConfirmationCodeScreenState
     FocusScope.of(context).unfocus();
   }
 
-  void _onNextTap() {}
-  Future<void> _onSubmit(String pin) async {
-    final codeVerifyNotifier = ref.watch(pinVerifyProvider.notifier);
-    await codeVerifyNotifier.verifyPin(pin);
+  void _onNextTap(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PasswordScreen(),
+      ),
+      (route) => false,
+    );
   }
 
   void _onEmailResend() {}
@@ -65,7 +70,7 @@ class _ConfirmationCodeScreenState
                         ),
                         const SizedBox(height: 20),
                         PinTextField(
-                          onSubmit: _onSubmit,
+                          onSubmit: (pin) => pinVerifyNotifier.verifyPin(pin),
                           isEnabled: !pinVerifyState.isVerifying &&
                               !pinVerifyState.isVerified,
                         ),
@@ -118,7 +123,7 @@ class _ConfirmationCodeScreenState
                       fontColor: Theme.of(context).colorScheme.surface,
                       backgroundColor:
                           Theme.of(context).colorScheme.inverseSurface,
-                      onTap: () => {},
+                      onTap: () => _onNextTap(context),
                     ),
                   ],
                 ),
