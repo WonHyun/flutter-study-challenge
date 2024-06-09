@@ -5,22 +5,26 @@ import 'package:twitter_clone/global/color.dart';
 class UserInfoTextField extends StatefulWidget {
   const UserInfoTextField({
     super.key,
-    this.controller,
     this.labelText,
     this.guideText,
     this.floatingLabelText,
     this.validator,
+    this.onSaved,
     this.isEnabled = true,
+    this.isObscure = false,
     this.textInputType = TextInputType.none,
+    this.controller,
   });
 
-  final TextEditingController? controller;
   final String? labelText;
   final String? floatingLabelText;
   final String? guideText;
   final String? Function(String?)? validator;
+  final Function(String?)? onSaved;
   final bool isEnabled;
+  final bool isObscure;
   final TextInputType textInputType;
+  final TextEditingController? controller;
 
   @override
   State<UserInfoTextField> createState() => _UserInfoTextFieldState();
@@ -67,14 +71,15 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       keyboardType: widget.textInputType,
       enabled: widget.isEnabled,
+      obscureText: widget.isObscure,
       focusNode: _focusNode,
       controller: widget.controller,
-      onChanged: widget.validator != null
-          ? (value) => setState(() => widget.validator!(value))
-          : null,
+      onChanged: (value) => setState(() => widget.validator?.call(value)),
+      validator: widget.validator,
+      onSaved: widget.onSaved,
       style: const TextStyle(
         color: ThemeColors.twitterColor,
         fontWeight: FontWeight.w300,
