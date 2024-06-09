@@ -90,7 +90,7 @@ class _PinTextFieldState extends State<PinTextField> {
           itemBuilder: (context, index) {
             return SizedBox(
               width: 35,
-              child: TextField(
+              child: TextFormField(
                 enabled: widget.isEnabled,
                 focusNode: _focusNodes[index],
                 controller: _controllers[index],

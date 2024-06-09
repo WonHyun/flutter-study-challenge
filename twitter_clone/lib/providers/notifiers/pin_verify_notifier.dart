@@ -11,6 +11,13 @@ class PinVerifyNotifier extends StateNotifier<PinVerifyState> {
     //TODO: verifying code logic (await)
     await Future.delayed(const Duration(seconds: 3));
     updateIsVerifying(false);
+
+    //TODO: This is test code, will be remove
+    if (state.pin != testConfirmationPin) {
+      updateErrMsg("Please verify that the pin has been entered correctly.");
+    } else {
+      updateErrMsg(null);
+    }
     updateIsVerified(state.pin == testConfirmationPin);
   }
 
@@ -30,5 +37,9 @@ class PinVerifyNotifier extends StateNotifier<PinVerifyState> {
 
   void updateIsVerifying(bool isVerifying) {
     state = state.copyWith(isVerifying: isVerifying);
+  }
+
+  void updateErrMsg(String? errMsg) {
+    state = state.copyWith(errMsg: errMsg);
   }
 }

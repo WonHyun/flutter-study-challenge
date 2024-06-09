@@ -88,6 +88,13 @@ class _ConfirmationCodeScreenState
                                   color: ThemeColors.verifyColor,
                                 ),
                               );
+                            } else if (pinVerifyState.errMsg != null) {
+                              return Text(
+                                pinVerifyState.errMsg!,
+                                style: TextStyle(
+                                  color: Colors.red.shade700,
+                                ),
+                              );
                             } else {
                               return const SizedBox.shrink();
                             }
