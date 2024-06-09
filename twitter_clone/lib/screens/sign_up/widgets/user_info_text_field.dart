@@ -32,7 +32,8 @@ class UserInfoTextField extends StatefulWidget {
 
 class _UserInfoTextFieldState extends State<UserInfoTextField> {
   final FocusNode _focusNode = FocusNode();
-  bool hasFocus = false;
+  bool _hasFocus = false;
+  bool _isShowObscure = false;
 
   bool _isOff() {
     if (widget.validator == null) return true;
@@ -46,11 +47,13 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
   String _getLabelText() {
     if (widget.labelText == null) return "";
     if (widget.floatingLabelText == null) return widget.labelText!;
-    if (hasFocus || (widget.controller?.text.isNotEmpty ?? false)) {
+    if (_hasFocus || (widget.controller?.text.isNotEmpty ?? false)) {
       return widget.floatingLabelText!;
     }
     return widget.labelText!;
   }
+
+  void _toggleObscureText() => setState(() => _isShowObscure = !_isShowObscure);
 
   @override
   void initState() {
@@ -58,9 +61,11 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
 
     _focusNode.addListener(() {
       setState(() {
-        hasFocus = _focusNode.hasFocus;
+        _hasFocus = _focusNode.hasFocus;
       });
     });
+
+    _isShowObscure = widget.isObscure;
   }
 
   @override
@@ -74,7 +79,7 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
     return TextFormField(
       keyboardType: widget.textInputType,
       enabled: widget.isEnabled,
-      obscureText: widget.isObscure,
+      obscureText: _isShowObscure,
       focusNode: _focusNode,
       controller: widget.controller,
       onChanged: (value) => setState(() => widget.validator?.call(value)),
@@ -103,17 +108,36 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
           fontWeight: FontWeight.w400,
           color: Theme.of(context).colorScheme.inverseSurface.withOpacity(0.5),
         ),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.only(top: 5, left: 15),
+        suffix: Padding(
+          padding: const EdgeInsets.only(left: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnimatedOpacity(
-                opacity: _isOff() ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 150),
-                child: const FaIcon(
-                  FontAwesomeIcons.solidCircleCheck,
-                  color: ThemeColors.verifyColor,
+              Offstage(
+                offstage: !widget.isObscure,
+                child: GestureDetector(
+                  onTapDown: (details) => _toggleObscureText(),
+                  onTapUp: (details) => _toggleObscureText(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FaIcon(
+                      _isShowObscure
+                          ? FontAwesomeIcons.eye
+                          : FontAwesomeIcons.solidEye,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+              ),
+              Offstage(
+                offstage: _isOff(),
+                child: AnimatedOpacity(
+                  opacity: _isOff() ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 150),
+                  child: const FaIcon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    color: ThemeColors.verifyColor,
+                  ),
                 ),
               ),
             ],
@@ -127,6 +151,11 @@ class _UserInfoTextFieldState extends State<UserInfoTextField> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey.shade300,
+          ),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.red.shade700,
           ),
         ),
       ),
