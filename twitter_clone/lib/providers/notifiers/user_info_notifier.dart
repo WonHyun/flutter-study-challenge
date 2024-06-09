@@ -97,4 +97,12 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
       );
     }
   }
+
+  void resetAllInterests() {
+    state = state.copyWith(
+      userInfo: state.userInfo.copyWith(
+        interests: {},
+      ),
+    );
+  }
 }
