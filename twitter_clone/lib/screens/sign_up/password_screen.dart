@@ -50,51 +50,55 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TwitterAppBar(),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  children: [
-                    const ScreenGuideText(
-                      title: "You'll need a password",
-                      guideText: "Make sure it's 8 characters or more.",
-                    ),
-                    const SizedBox(height: 20),
-                    Form(
-                      onChanged: _isNextValidator,
-                      key: _formKey,
-                      child: UserInfoTextField(
-                        controller: _controller,
-                        labelText: "Password",
-                        floatingLabelText: "Password",
-                        validator: FormValidator.passwordValidator,
-                        guideText: "More than 8 characters",
-                        isObscure: true,
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: Scaffold(
+        appBar: const TwitterAppBar(),
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    children: [
+                      const ScreenGuideText(
+                        title: "You'll need a password",
+                        guideText: "Make sure it's 8 characters or more.",
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Form(
+                        onChanged: _isNextValidator,
+                        key: _formKey,
+                        child: UserInfoTextField(
+                          controller: _controller,
+                          labelText: "Password",
+                          floatingLabelText: "Password",
+                          validator: FormValidator.passwordValidator,
+                          guideText: "More than 8 characters",
+                          isObscure: true,
+                          textInputType: TextInputType.text,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 30,
-            left: 30,
-            right: 30,
-            child: RoundedButton(
-              text: "Next",
-              isActive: _isNextActive,
-              fontColor: Theme.of(context).colorScheme.surface,
-              backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-              onTap: () => _onNextTap(context),
+            Positioned(
+              bottom: 30,
+              left: 30,
+              right: 30,
+              child: RoundedButton(
+                text: "Next",
+                isActive: _isNextActive,
+                fontColor: Theme.of(context).colorScheme.surface,
+                backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+                onTap: () => _onNextTap(context),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

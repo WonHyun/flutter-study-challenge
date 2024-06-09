@@ -25,6 +25,7 @@ class PinVerifyNotifier extends StateNotifier<PinVerifyState> {
     updateCode("");
     updateIsVerified(false);
     updateIsVerifying(false);
+    updateErrMsg(null);
   }
 
   void updateCode(String pin) {
