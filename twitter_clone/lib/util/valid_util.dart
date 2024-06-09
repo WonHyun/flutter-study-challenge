@@ -1,6 +1,6 @@
 class FormValidator {
   static String? nameValidator(String? name) {
-    if (name == null || name.isEmpty) return "Enter your Name.";
+    if (name == null || name.isEmpty) return "Enter your name.";
     return null;
   }
 
@@ -15,7 +15,13 @@ class FormValidator {
   }
 
   static String? birthDateValidator(String? date) {
-    if (date == null || date.isEmpty) return "Enter your Birthday.";
+    if (date == null || date.isEmpty) return "Enter your birthday.";
+    return null;
+  }
+
+  static String? passwordValidator(String? password) {
+    if (password == null || password.isEmpty) return "Enter your password";
+    if (password.length < 8) return "Password is at least over 8";
     return null;
   }
 }
