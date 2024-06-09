@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/sign_up/interests_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/user_info_text_field.dart';
 import 'package:twitter_clone/util/valid_util.dart';
@@ -18,7 +19,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   bool _isNextActive = false;
 
-  void _onNextTap(BuildContext context) {}
+  void _onNextTap(BuildContext context) {
+    //TODO: need to password submit logic.
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InterestsScreen(),
+      ),
+      (route) => false,
+    );
+  }
 
   void _isNextValidator() {
     if (_formKey.currentState?.validate() ?? false) {

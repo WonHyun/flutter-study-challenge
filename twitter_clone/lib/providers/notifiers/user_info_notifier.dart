@@ -52,4 +52,49 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
       ),
     );
   }
+
+  void updateInterests(Map<String, List<String>> interests) {
+    state = state.copyWith(
+      userInfo: state.userInfo.copyWith(
+        interests: interests,
+      ),
+    );
+  }
+
+  void updateDetails(String category, List<String> details) {
+    state = state.copyWith(
+      userInfo: state.userInfo.copyWith(
+        interests: {
+          ...state.userInfo.interests,
+          category: details,
+        },
+      ),
+    );
+  }
+
+  void addDetail(String category, String detail) {
+    state = state.copyWith(
+      userInfo: state.userInfo.copyWith(
+        interests: {
+          ...state.userInfo.interests,
+          category: [...state.userInfo.interests[category] ?? [], detail],
+        },
+      ),
+    );
+  }
+
+  void removeDetail(String category, String detail) {
+    if (state.userInfo.interests[category] != null) {
+      state = state.copyWith(
+        userInfo: state.userInfo.copyWith(
+          interests: {
+            ...state.userInfo.interests,
+            category: state.userInfo.interests[category]!
+                .where((value) => value != detail)
+                .toList(),
+          },
+        ),
+      );
+    }
+  }
 }

@@ -7,6 +7,7 @@ class User {
   final String? phoneNum;
   final DateTime? birthDate;
   final Map<PolicyType, bool> agreementStatus;
+  final Map<String, List<String>> interests;
 
   User({
     required this.id,
@@ -15,6 +16,7 @@ class User {
     this.phoneNum,
     this.birthDate,
     this.agreementStatus = const {},
+    this.interests = const {},
   });
 
   User copyWith({
@@ -23,6 +25,7 @@ class User {
     String? phoneNum,
     DateTime? birthDate,
     Map<PolicyType, bool>? agreementStatus,
+    Map<String, List<String>>? interests,
   }) {
     return User(
       id: id,
@@ -31,6 +34,7 @@ class User {
       phoneNum: phoneNum ?? this.phoneNum,
       birthDate: birthDate ?? this.birthDate,
       agreementStatus: agreementStatus ?? this.agreementStatus,
+      interests: interests ?? this.interests,
     );
   }
 }
