@@ -1,22 +1,28 @@
 import 'package:twitter_clone/global/enum.dart';
 
 class User {
-  final String id;
+  final String userId;
   final String? userName;
   final String? email;
   final String? phoneNum;
   final DateTime? birthDate;
   final Map<PolicyType, bool> agreementStatus;
   final Map<String, List<String>> interests;
+  final String? userImgPath;
+  final bool? isVerifiedUser;
+  final List<User> followUsers;
 
   User({
-    required this.id,
+    required this.userId,
     this.userName,
     this.email,
     this.phoneNum,
     this.birthDate,
     this.agreementStatus = const {},
     this.interests = const {},
+    this.userImgPath,
+    this.isVerifiedUser,
+    this.followUsers = const [],
   });
 
   User copyWith({
@@ -26,15 +32,21 @@ class User {
     DateTime? birthDate,
     Map<PolicyType, bool>? agreementStatus,
     Map<String, List<String>>? interests,
+    String? userImgPath,
+    bool? isVerifiedUser,
+    List<User>? followUsers,
   }) {
     return User(
-      id: id,
+      userId: userId,
       userName: userName ?? this.userName,
       email: email ?? this.email,
       phoneNum: phoneNum ?? this.phoneNum,
       birthDate: birthDate ?? this.birthDate,
       agreementStatus: agreementStatus ?? this.agreementStatus,
       interests: interests ?? this.interests,
+      userImgPath: userImgPath ?? this.userImgPath,
+      isVerifiedUser: isVerifiedUser ?? this.isVerifiedUser,
+      followUsers: followUsers ?? this.followUsers,
     );
   }
 }

@@ -15,7 +15,7 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>((ref) {
 
 final userInfoProvider =
     StateNotifierProvider<UserInfoNotifier, UserInfoState>((ref) {
-  return UserInfoNotifier(UserInfoState(userInfo: User(id: uuid.v4())));
+  return UserInfoNotifier(UserInfoState(userInfo: User(userId: uuid.v4())));
 });
 
 final pinVerifyProvider =
