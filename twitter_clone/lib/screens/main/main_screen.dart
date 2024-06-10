@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/global/enum.dart';
+import 'package:twitter_clone/global/extensions.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/widgets/bottom_navigation_tab.dart';
 
