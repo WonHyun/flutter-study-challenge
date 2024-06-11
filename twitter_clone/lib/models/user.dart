@@ -9,7 +9,7 @@ class User {
   final Map<PolicyType, bool> agreementStatus;
   final Map<String, List<String>> interests;
   final String? userImgPath;
-  final bool? isVerifiedUser;
+  final bool? isCertificatedUser;
   final List<User> followUsers;
 
   User({
@@ -21,7 +21,7 @@ class User {
     this.agreementStatus = const {},
     this.interests = const {},
     this.userImgPath,
-    this.isVerifiedUser,
+    this.isCertificatedUser,
     this.followUsers = const [],
   });
 
@@ -33,7 +33,7 @@ class User {
     Map<PolicyType, bool>? agreementStatus,
     Map<String, List<String>>? interests,
     String? userImgPath,
-    bool? isVerifiedUser,
+    bool? isCertificatedUser,
     List<User>? followUsers,
   }) {
     return User(
@@ -45,7 +45,7 @@ class User {
       agreementStatus: agreementStatus ?? this.agreementStatus,
       interests: interests ?? this.interests,
       userImgPath: userImgPath ?? this.userImgPath,
-      isVerifiedUser: isVerifiedUser ?? this.isVerifiedUser,
+      isCertificatedUser: isCertificatedUser ?? this.isCertificatedUser,
       followUsers: followUsers ?? this.followUsers,
     );
   }

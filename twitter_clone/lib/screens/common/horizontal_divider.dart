@@ -39,7 +39,7 @@ class HorizontalDivider extends StatelessWidget {
         ),
         Expanded(
           child: Divider(
-            color: Colors.grey.shade300,
+            color: color,
             thickness: thickness,
           ),
         ),
