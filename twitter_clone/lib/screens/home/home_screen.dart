@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         ListView.separated(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           primary: false,
           itemCount: PostMock.testPosts.length,
