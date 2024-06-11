@@ -19,31 +19,34 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Offstage(
-            offstage: _currentScreen != MainScreenType.home,
-            child: const HomeScreen(),
-          ),
-          Offstage(
-            offstage: _currentScreen != MainScreenType.search,
-            child: Container(),
-          ),
-          Offstage(
-            offstage: _currentScreen != MainScreenType.post,
-            child: Container(),
-          ),
-          Offstage(
-            offstage: _currentScreen != MainScreenType.likes,
-            child: Container(),
-          ),
-          Offstage(
-            offstage: _currentScreen != MainScreenType.user,
-            child: Container(),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Offstage(
+              offstage: _currentScreen != MainScreenType.home,
+              child: const HomeScreen(),
+            ),
+            Offstage(
+              offstage: _currentScreen != MainScreenType.search,
+              child: Container(),
+            ),
+            Offstage(
+              offstage: _currentScreen != MainScreenType.post,
+              child: Container(),
+            ),
+            Offstage(
+              offstage: _currentScreen != MainScreenType.likes,
+              child: Container(),
+            ),
+            Offstage(
+              offstage: _currentScreen != MainScreenType.user,
+              child: Container(),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
+        height: 70,
         child: Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

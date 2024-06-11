@@ -16,6 +16,8 @@ class HomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10),
           child: AppBar(
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
             title: FaIcon(
               FontAwesomeIcons.threads,
               color: Theme.of(context).colorScheme.inverseSurface,
@@ -23,24 +25,24 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 500,
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: testPosts.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+        ListView.separated(
+          shrinkWrap: true,
+          primary: false,
+          itemCount: PostMock.testPosts.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Expanded(
                 child: PostView(
-                  post: testPosts[index],
+                  post: PostMock.testPosts[index],
                 ),
-              );
-            },
-            separatorBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: HorizontalDivider(
-                color: Colors.grey.shade200,
               ),
+            );
+          },
+          separatorBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: HorizontalDivider(
+              color: Colors.grey.shade200,
             ),
           ),
         ),
