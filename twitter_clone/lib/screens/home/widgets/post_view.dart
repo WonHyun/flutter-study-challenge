@@ -46,10 +46,10 @@ class PostView extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.w300),
                       ),
                       const SizedBox(height: 10),
-                      if (post.media != null)
+                      if (post.media != null && post.media!.isNotEmpty)
                         PostMediaListView(medias: post.media!),
                       const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding: EdgeInsets.symmetric(vertical: 5),
                         child: PostActionButtons(),
                       ),
                     ],
