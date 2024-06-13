@@ -8,10 +8,11 @@ import 'package:twitter_clone/util/generate_util.dart';
 
 final testUserInfo = User(
   userId: uuid.v4(),
-  userName: "Umm Jun Sik",
+  userName: "umm_jun_sick",
   email: "dongtan.sugundoduk@umjun.sick",
   phoneNum: "1577-1577",
   birthDate: DateTime(1991, 9, 4),
+  userImgPath: "https://avatars.githubusercontent.com/u/34933982?v=4",
 );
 
 const testConfirmationPin = "000000";

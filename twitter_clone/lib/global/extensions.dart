@@ -9,7 +9,7 @@ extension MainScreenIcon on MainScreenType {
         return FontAwesomeIcons.house;
       case MainScreenType.search:
         return FontAwesomeIcons.magnifyingGlass;
-      case MainScreenType.post:
+      case MainScreenType.posting:
         return FontAwesomeIcons.penToSquare;
       case MainScreenType.likes:
         return FontAwesomeIcons.solidHeart;
@@ -24,7 +24,7 @@ extension MainScreenIcon on MainScreenType {
         return FontAwesomeIcons.house;
       case MainScreenType.search:
         return FontAwesomeIcons.magnifyingGlass;
-      case MainScreenType.post:
+      case MainScreenType.posting:
         return FontAwesomeIcons.penToSquare;
       case MainScreenType.likes:
         return FontAwesomeIcons.heart;
@@ -75,5 +75,9 @@ extension ContextExtension on BuildContext {
 
   Brightness get platformBrightness {
     return MediaQuery.of(this).platformBrightness;
+  }
+
+  double get viewInsetsBottom {
+    return MediaQuery.of(this).viewInsets.bottom;
   }
 }

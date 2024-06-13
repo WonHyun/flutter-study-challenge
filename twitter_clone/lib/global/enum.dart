@@ -10,7 +10,7 @@ enum PolicyType {
 enum MainScreenType {
   home,
   search,
-  post,
+  posting,
   likes,
   user,
 }
