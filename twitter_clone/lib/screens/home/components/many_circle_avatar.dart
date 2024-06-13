@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/comment.dart';
+import 'package:twitter_clone/providers/providers.dart';
 
 class ManyCircleAvatar extends StatelessWidget {
   const ManyCircleAvatar({
@@ -17,11 +19,23 @@ class ManyCircleAvatar extends StatelessWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
-      child: Builder(
-        builder: (context) {
+      child: Consumer(
+        builder: (context, ref, child) {
+          final userState = ref.watch(userInfoProvider);
           switch (comments.length) {
             case 0:
-              return const SizedBox.shrink();
+              return Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      radius: 15,
+                      foregroundImage:
+                          NetworkImage(userState.userInfo.userImgPath ?? ""),
+                    ),
+                  ),
+                ],
+              );
             case 1:
               return Stack(
                 children: [
