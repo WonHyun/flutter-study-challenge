@@ -82,3 +82,13 @@ const Map<String, List<String>> interestsCategoryMap = {
     "WTF",
   ],
 };
+
+final postReportReasons = [
+  "I just don't like it",
+  "It's unlawful content under NetzDG",
+  "It's spam",
+  "Hate speech or symbols",
+  "Nudity or sexual activity",
+  "Very unuseful",
+  "Etc",
+];
