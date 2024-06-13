@@ -50,9 +50,9 @@ class PostView extends StatelessWidget {
                       const SizedBox(height: 10),
                       if (post.media != null && post.media!.isNotEmpty)
                         PostMediaListView(medias: post.media!),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: PostActionButtons(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: PostActionButtons(post: post),
                       ),
                     ],
                   ),
@@ -64,7 +64,9 @@ class PostView extends StatelessWidget {
                 ManyCircleAvatar(comments: post.comments),
                 const SizedBox(width: 10),
                 Text(
-                  "${post.comments.length} replies · ${post.likes} likes",
+                  post.isAllowedComment
+                      ? "${post.comments.length} replies · ${post.likes} likes"
+                      : "${post.likes} likes",
                   style: TextStyle(
                     color: Theme.of(context)
                         .colorScheme
