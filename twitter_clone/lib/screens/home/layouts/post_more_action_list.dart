@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_clone/models/post.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/drag_handle.dart';
 
-class PostMoreActionList extends StatelessWidget {
+class PostMoreActionList extends ConsumerWidget {
   const PostMoreActionList({
     super.key,
+    required this.post,
     required this.onTapReport,
   });
 
+  final Post post;
   final Function() onTapReport;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final postNotifier = ref.watch(postProvider.notifier);
     return Padding(
       padding: const EdgeInsets.only(
         left: 15,
@@ -83,7 +89,10 @@ class PostMoreActionList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ListTile(
-                        onTap: () => {},
+                        onTap: () {
+                          postNotifier.hidePost(post);
+                          Navigator.pop(context);
+                        },
                         title: const Text(
                           "Hide",
                           style: TextStyle(

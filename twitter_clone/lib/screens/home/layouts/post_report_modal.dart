@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/value.dart';
 import 'package:twitter_clone/models/post.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/drag_handle.dart';
 
-class PostReportModal extends StatelessWidget {
+class PostReportModal extends ConsumerWidget {
   const PostReportModal({
     super.key,
     required this.post,
@@ -13,7 +15,8 @@ class PostReportModal extends StatelessWidget {
   final Post post;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final postNotifier = ref.watch(postProvider.notifier);
     return Padding(
       padding: const EdgeInsets.only(
         top: 15,
@@ -82,7 +85,10 @@ class PostReportModal extends StatelessWidget {
                       horizontal: 20,
                       vertical: 5,
                     ),
-                    onTap: () => {},
+                    onTap: () {
+                      postNotifier.reportPost(post, postReportReasons[index]);
+                      Navigator.pop(context);
+                    },
                     title: Text(postReportReasons[index]),
                     trailing: FaIcon(
                       FontAwesomeIcons.chevronRight,

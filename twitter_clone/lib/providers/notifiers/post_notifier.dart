@@ -13,4 +13,14 @@ class PostNotifier extends StateNotifier<PostState> {
     final newPosts = [post, ...state.posts, post];
     updatePosts(newPosts);
   }
+
+  void hidePost(Post post) {
+    final newPosts = state.posts.where((e) => e.postId != post.postId).toList();
+    updatePosts(newPosts);
+  }
+
+  void reportPost(Post post, String reason) {
+    //TODO: send report
+    hidePost(post);
+  }
 }

@@ -32,7 +32,10 @@ class _PostMoreActionModalState extends State<PostMoreActionModal> {
         if (_isReportScreen) {
           return PostReportModal(post: widget.post);
         } else {
-          return PostMoreActionList(onTapReport: _goToReportAction);
+          return PostMoreActionList(
+            post: widget.post,
+            onTapReport: _goToReportAction,
+          );
         }
       }),
     );
