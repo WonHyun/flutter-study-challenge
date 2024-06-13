@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/screens/home/widgets/author_profile_image.dart';
-import 'package:twitter_clone/screens/home/widgets/many_circle_avatar.dart';
-import 'package:twitter_clone/screens/home/widgets/post_action_buttons.dart';
-import 'package:twitter_clone/screens/home/widgets/post_header.dart';
-import 'package:twitter_clone/screens/home/widgets/post_media_list_view.dart';
+import 'package:twitter_clone/screens/home/components/author_profile_image.dart';
+import 'package:twitter_clone/screens/home/components/many_circle_avatar.dart';
+import 'package:twitter_clone/screens/home/layouts/post_action_buttons.dart';
+import 'package:twitter_clone/screens/home/layouts/post_header.dart';
+import 'package:twitter_clone/screens/home/layouts/post_media_list_view.dart';
 
 class PostView extends StatelessWidget {
   const PostView({

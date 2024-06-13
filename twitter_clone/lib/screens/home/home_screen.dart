@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
-import 'package:twitter_clone/screens/home/widgets/post_view.dart';
+import 'package:twitter_clone/screens/home/layouts/post_view.dart';
 import 'package:twitter_clone/tests/mock.dart';
 
 class HomeScreen extends StatelessWidget {
