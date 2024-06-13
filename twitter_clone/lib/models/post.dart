@@ -33,6 +33,11 @@ class Post {
   });
 
   Post copyWith({
+    String? postId,
+    String? authorId,
+    String? authorName,
+    String? authorImgPath,
+    bool? isCertificatedUser,
     String? content,
     List<MediaItem>? media,
     DateTime? timestamp,
@@ -43,11 +48,11 @@ class Post {
     bool? isAllowedComment,
   }) {
     return Post(
-      postId: postId,
-      authorId: authorId,
-      authorName: authorName,
-      authorImgPath: authorImgPath,
-      isCertificatedUser: isCertificatedUser,
+      postId: postId ?? this.postId,
+      authorId: authorId ?? this.authorId,
+      authorName: authorName ?? this.authorName,
+      authorImgPath: authorImgPath ?? this.authorImgPath,
+      isCertificatedUser: isCertificatedUser ?? this.isCertificatedUser,
       content: content ?? this.content,
       media: media ?? this.media,
       timestamp: timestamp ?? this.timestamp,

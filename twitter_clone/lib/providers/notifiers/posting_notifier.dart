@@ -3,6 +3,7 @@ import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/providers/states/posting_state.dart';
+import 'package:twitter_clone/util/generate_util.dart';
 
 class PostingNotifier extends StateNotifier<PostingState> {
   PostingNotifier({
@@ -48,7 +49,16 @@ class PostingNotifier extends StateNotifier<PostingState> {
     );
   }
 
+  void updatePostId(String postId) {
+    updatePost(
+      state.post.copyWith(
+        postId: postId,
+      ),
+    );
+  }
+
   void completePosting() {
+    updatePostId(uuid.v4());
     updateTimestamp(DateTime.now());
     //TODO: will be posting to server
     notifier.addPost(state.post);
