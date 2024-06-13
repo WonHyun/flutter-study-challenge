@@ -5,6 +5,8 @@ class Post {
   final String postId;
   final String authorId;
   final String authorName;
+  final String authorImgPath;
+  final bool isCertificatedUser;
   final String content;
   final List<MediaItem>? media;
   final DateTime? timestamp;
@@ -12,21 +14,48 @@ class Post {
   final List<Comment> comments;
   final int likes;
   final int shares;
-  final bool isCertificatedUser;
-  final String authorImgPath;
+  final bool isAllowedComment;
 
   const Post({
     required this.postId,
     required this.authorId,
-    required this.content,
     this.authorName = "",
+    this.authorImgPath = "",
+    this.isCertificatedUser = false,
+    this.content = "",
     this.media = const [],
     this.timestamp,
     this.isLiked = false,
     this.comments = const [],
     this.likes = 0,
     this.shares = 0,
-    this.isCertificatedUser = false,
-    this.authorImgPath = "",
+    this.isAllowedComment = true,
   });
+
+  Post copyWith({
+    String? content,
+    List<MediaItem>? media,
+    DateTime? timestamp,
+    bool? isLiked,
+    List<Comment>? comments,
+    int? likes,
+    int? shares,
+    bool? isAllowedComment,
+  }) {
+    return Post(
+      postId: postId,
+      authorId: authorId,
+      authorName: authorName,
+      authorImgPath: authorImgPath,
+      isCertificatedUser: isCertificatedUser,
+      content: content ?? this.content,
+      media: media ?? this.media,
+      timestamp: timestamp ?? this.timestamp,
+      isLiked: isLiked ?? this.isLiked,
+      comments: comments ?? this.comments,
+      likes: likes ?? this.likes,
+      shares: shares ?? this.shares,
+      isAllowedComment: isAllowedComment ?? this.isAllowedComment,
+    );
+  }
 }

@@ -27,6 +27,7 @@ class MainScreen extends ConsumerWidget {
           return const PostingModal();
         },
       );
+      ref.watch(postingProvider.notifier).resetPostingInfo();
       screenNotifier.updateCurrentScreen(MainScreenType.home);
     } else {
       screenNotifier.updateCurrentScreen(type);
