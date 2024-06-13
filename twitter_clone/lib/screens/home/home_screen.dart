@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/home/layouts/post_view.dart';
-import 'package:twitter_clone/tests/mock.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final postState = ref.watch(postProvider);
     return Column(
       children: [
         Padding(
@@ -29,13 +31,13 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           primary: false,
-          itemCount: PostMock.testPosts.length,
+          itemCount: postState.posts.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Expanded(
                 child: PostView(
-                  post: PostMock.testPosts[index],
+                  post: postState.posts[index],
                 ),
               ),
             );
