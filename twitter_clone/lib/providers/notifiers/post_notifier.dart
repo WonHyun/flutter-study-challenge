@@ -27,7 +27,7 @@ class PostNotifier extends StateNotifier<PostState> {
   }
 
   void addPost(Post post) {
-    final newPosts = [post, ...state.posts, post];
+    final newPosts = [post, ...state.posts];
     updatePosts(newPosts);
   }
 
