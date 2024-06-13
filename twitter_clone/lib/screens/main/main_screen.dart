@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/widgets/bottom_navigation_tab.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  MainScreenType _currentScreen = MainScreenType.home;
-
-  void _onTapNav(MainScreenType type) => setState(() => _currentScreen = type);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final screenState = ref.watch(mainScreenProvider);
+    final screenNotifier = ref.watch(mainScreenProvider.notifier);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             Offstage(
-              offstage: _currentScreen != MainScreenType.home,
+              offstage: screenState.currentScreen != MainScreenType.home,
               child: const HomeScreen(),
             ),
             Offstage(
-              offstage: _currentScreen != MainScreenType.search,
+              offstage: screenState.currentScreen != MainScreenType.search,
               child: Container(),
             ),
             Offstage(
-              offstage: _currentScreen != MainScreenType.post,
+              offstage: screenState.currentScreen != MainScreenType.post,
               child: Container(),
             ),
             Offstage(
-              offstage: _currentScreen != MainScreenType.likes,
+              offstage: screenState.currentScreen != MainScreenType.likes,
               child: Container(),
             ),
             Offstage(
-              offstage: _currentScreen != MainScreenType.user,
+              offstage: screenState.currentScreen != MainScreenType.user,
               child: Container(),
             ),
           ],
@@ -55,8 +50,8 @@ class _MainScreenState extends State<MainScreen> {
                   (type) => BottomNavigationTab(
                     selectedIcon: type.selectedIcon,
                     unselectedIcon: type.unselectedIcon,
-                    isSelected: _currentScreen == type,
-                    onTap: () => _onTapNav(type),
+                    isSelected: screenState.currentScreen == type,
+                    onTap: () => screenNotifier.updateCurrentScreen(type),
                   ),
                 )
                 .toList(),
