@@ -9,6 +9,23 @@ class PostNotifier extends StateNotifier<PostState> {
     state = state.copyWith(posts: posts);
   }
 
+  void toggleLike(String postId) {
+    //TODO: will be send like info to server
+    updatePosts(
+      state.posts.map(
+        (post) {
+          if (post.postId == postId) {
+            return post.copyWith(
+              isLiked: !post.isLiked,
+              likes: !post.isLiked ? post.likes + 1 : post.likes - 1,
+            );
+          }
+          return post;
+        },
+      ).toList(),
+    );
+  }
+
   void addPost(Post post) {
     final newPosts = [post, ...state.posts, post];
     updatePosts(newPosts);
