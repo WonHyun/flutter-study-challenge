@@ -6,6 +6,7 @@ import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/widgets/bottom_navigation_tab.dart';
 import 'package:twitter_clone/screens/posting/posting_modal.dart';
+import 'package:twitter_clone/screens/search/search_screen.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -47,7 +48,7 @@ class MainScreen extends ConsumerWidget {
             ),
             Offstage(
               offstage: screenState.currentScreen != MainScreenType.search,
-              child: Container(),
+              child: const Searchscreen(),
             ),
             Offstage(
               offstage: screenState.currentScreen != MainScreenType.likes,

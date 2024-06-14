@@ -35,30 +35,30 @@ class UserGenerator {
   }
 
   static List<User> getRandomUsers({int userCount = 10}) {
-    final name = faker.person.name();
-    final company = faker.company.name();
-    final animal = faker.animal.name();
-    final color = faker.color.color();
-    final selector = faker.randomGenerator.integer(5);
-    late final String randomId;
-    switch (selector) {
-      case 0:
-        randomId = name;
-      case 1:
-        randomId = company;
-      case 2:
-        randomId = name + company;
-      case 3:
-        randomId = animal;
-      case 4:
-        randomId = color + animal;
-      default:
-        randomId = color + name;
-    }
-
     return List.generate(
       userCount,
       (index) {
+        final name = faker.person.name();
+        final company = faker.company.name();
+        final animal = faker.animal.name();
+        final color = faker.color.color();
+        final selector = faker.randomGenerator.integer(5);
+        late final String randomId;
+        switch (selector) {
+          case 0:
+            randomId = name;
+          case 1:
+            randomId = company;
+          case 2:
+            randomId = name + company;
+          case 3:
+            randomId = animal;
+          case 4:
+            randomId = color + animal;
+          default:
+            randomId = color + name;
+        }
+
         return User(
           userId: UserGenerator.generateUserId(baseId: randomId),
           userName: name,
@@ -93,7 +93,7 @@ class PostGenerator {
         String postId = uuid.v4();
         String authorId = user.userId;
         String authorName = user.userName ?? user.userId;
-        String authorImgPath =
+        String authorImgPath = user.userImgPath ??
             "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}";
         bool isCertificatedUser = user.isCertificatedUser ?? false;
 
@@ -149,8 +149,12 @@ class PostGenerator {
             },
           );
         }
-        int likes = faker.randomGenerator.integer(1000);
-        int shares = faker.randomGenerator.integer(500);
+        int likes = faker.randomGenerator.boolean()
+            ? faker.randomGenerator.integer(1000)
+            : faker.randomGenerator.integer(100);
+        int shares = faker.randomGenerator.boolean()
+            ? faker.randomGenerator.integer(500)
+            : faker.randomGenerator.integer(50);
 
         return Post(
           postId: postId,
