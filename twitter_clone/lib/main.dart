@@ -1,10 +1,21 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/screens/main/main_screen.dart';
 import 'package:twitter_clone/screens/login/login_screen.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MainApp()));
+  runApp(
+    DevicePreview(
+      // enabled: !kReleaseMode,
+      enabled: false,
+      builder: (context) => const ProviderScope(
+        child: MainApp(),
+      ),
+    ),
+  );
 }
 
 class MainApp extends ConsumerWidget {
@@ -15,7 +26,8 @@ class MainApp extends ConsumerWidget {
     final themeState = ref.watch(themeProvider);
     return MaterialApp(
       theme: themeState.theme,
-      home: const LoginScreen(),
+      // home: const LoginScreen(),
+      home: const MainScreen(),
     );
   }
 }
