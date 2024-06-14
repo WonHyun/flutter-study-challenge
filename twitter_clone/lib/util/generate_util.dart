@@ -10,7 +10,7 @@ const uuid = Uuid();
 final faker = Faker();
 
 class UserGenerator {
-  static String generateTestUserId({
+  static String generateUserId({
     String? baseId,
   }) {
     late final String spaceSeperator;
@@ -27,18 +27,16 @@ class UserGenerator {
 
     return baseId == null
         ? faker.person.name().toLowerCase().replaceAll(" ", spaceSeperator)
-        : baseId.toLowerCase().replaceAll(" ", spaceSeperator);
+        : baseId
+            .replaceAll(RegExp(r'[.,_-]'), "")
+            .replaceAll("'", "")
+            .toLowerCase()
+            .replaceAll(" ", spaceSeperator);
   }
 
   static List<User> getRandomUsers({int userCount = 10}) {
-    final name = faker.person
-        .name()
-        .replaceAll(RegExp(r'[.,_-]'), "")
-        .replaceAll("'", "");
-    final company = faker.company
-        .name()
-        .replaceAll(RegExp(r'[.,_-]'), "")
-        .replaceAll("'", "");
+    final name = faker.person.name();
+    final company = faker.company.name();
     final animal = faker.animal.name();
     final color = faker.color.color();
     final selector = faker.randomGenerator.integer(5);
@@ -62,7 +60,7 @@ class UserGenerator {
       userCount,
       (index) {
         return User(
-          userId: UserGenerator.generateTestUserId(baseId: randomId),
+          userId: UserGenerator.generateUserId(baseId: randomId),
           userName: name,
           email: faker.internet.email(),
           phoneNum: faker.phoneNumber.us(),

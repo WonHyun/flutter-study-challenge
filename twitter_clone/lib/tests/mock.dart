@@ -7,7 +7,7 @@ class UserMock {
   static final List<User> users = UserGenerator.getRandomUsers(userCount: 30);
 
   static final me = User(
-    userId: UserGenerator.generateTestUserId(baseId: "Umm Jun Sick"),
+    userId: UserGenerator.generateUserId(baseId: "Umm Jun Sick"),
     userName: "Umm Jun Sick",
     email: "dongtan.sugundoduk@umjun.sick",
     phoneNum: "1577-1577",
