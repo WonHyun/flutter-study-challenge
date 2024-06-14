@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => CreateAccountScreen(
-          initUserInfo: testUserInfo,
+          initUserInfo: UserMock.me,
         ),
       ),
     );

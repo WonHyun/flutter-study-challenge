@@ -29,7 +29,7 @@ final userInfoProvider =
   return UserInfoNotifier(
     UserInfoState(
       // TODO: should be replace to login user info
-      userInfo: testUserInfo,
+      userInfo: UserMock.me,
     ),
   );
 });
