@@ -121,12 +121,15 @@ class PostGenerator {
             ),
           );
         }
-        bool isAllowedComment = faker.randomGenerator.boolean();
+        bool isAllowedComment =
+            faker.randomGenerator.boolean() || faker.randomGenerator.boolean();
         bool isLiked = false;
         List<Comment> comments = [];
         if (isAllowedComment) {
           comments = List.generate(
-            faker.randomGenerator.integer(300),
+            faker.randomGenerator.boolean()
+                ? faker.randomGenerator.integer(300)
+                : faker.randomGenerator.integer(10),
             (index) {
               late final User commentUser;
               if (users != null && users.isEmpty) {

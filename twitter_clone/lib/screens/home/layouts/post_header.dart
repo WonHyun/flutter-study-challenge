@@ -32,17 +32,31 @@ class PostHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          children: [
-            Text(
-              maxLines: 1,
-              post.authorId,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(width: 5),
-            if (post.isCertificatedUser) const CertificationMark(),
-          ],
+        Expanded(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 8,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Text(
+                    maxLines: 1,
+                    post.authorId,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              if (post.isCertificatedUser)
+                const Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: CertificationMark(),
+                  ),
+                ),
+            ],
+          ),
         ),
         Row(
           children: [
