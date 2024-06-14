@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/providers/states/posting_state.dart';
 import 'package:twitter_clone/util/generate_util.dart';
 
 class PostingNotifier extends StateNotifier<PostingState> {
   PostingNotifier({
     required PostingState state,
-    required this.notifier,
+    required this.ref,
   }) : super(state);
 
-  final PostNotifier notifier;
+  final Ref ref;
 
   void updatePost(Post post) {
     state = state.copyWith(post: post);
@@ -58,10 +58,22 @@ class PostingNotifier extends StateNotifier<PostingState> {
   }
 
   void completePosting() {
-    updatePostId(uuid.v4());
-    updateTimestamp(DateTime.now());
+    final userInfo = ref.watch(userInfoProvider).userInfo;
+    final postNotifier = ref.watch(postProvider.notifier);
+
+    state = state.copyWith(
+      post: state.post.copyWith(
+        postId: uuid.v4(),
+        authorId: userInfo.userId,
+        authorName: userInfo.userName,
+        authorImgPath: userInfo.userImgPath,
+        isCertificatedUser: userInfo.isCertificatedUser,
+        timestamp: DateTime.now(),
+      ),
+    );
+
     //TODO: will be posting to server
-    notifier.addPost(state.post);
+    postNotifier.addPost(state.post);
   }
 
   void resetPostingInfo() {

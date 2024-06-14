@@ -70,7 +70,7 @@ final postingProvider = StateNotifierProvider<PostingNotifier, PostingState>(
           authorImgPath: ref.watch(userInfoProvider).userInfo.userImgPath ?? "",
         ),
       ),
-      notifier: ref.watch(postProvider.notifier),
+      ref: ref,
     );
   },
 );
