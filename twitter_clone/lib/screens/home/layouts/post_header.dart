@@ -35,7 +35,9 @@ class PostHeader extends StatelessWidget {
         Row(
           children: [
             Text(
-              post.authorName,
+              maxLines: 1,
+              post.authorId,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
             const SizedBox(width: 5),

@@ -68,7 +68,7 @@ class _PostingViewState extends State<PostingView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userState.userInfo.userName ?? "",
+                          userState.userInfo.userId,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
