@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/search/components/search_user_list_item.dart';
-import 'package:twitter_clone/tests/mock.dart';
 
 class Searchscreen extends StatefulWidget {
   const Searchscreen({super.key});
@@ -22,58 +23,80 @@ class _SearchscreenState extends State<Searchscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBar(
-          centerTitle: false,
-          surfaceTintColor: Colors.transparent,
-          title: const Text(
-            "Search",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 26,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: CupertinoTextField(
-            controller: _controller,
-            placeholder: "Search",
-            placeholderStyle: TextStyle(color: Colors.grey.shade500),
-            prefix: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 5),
-              child: FaIcon(
-                FontAwesomeIcons.magnifyingGlass,
-                size: 16,
-                color: Colors.grey.shade500,
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        ListView.builder(
-          shrinkWrap: true,
-          primary: false,
-          itemCount: UserMock.users.length,
-          itemBuilder: (context, index) {
-            final user = UserMock.users[index];
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 10,
-                  left: 15,
+    return Consumer(
+      builder: (context, ref, child) {
+        final searchState = ref.watch(searchProvider);
+        final searchNotifier = ref.watch(searchProvider.notifier);
+        return Column(
+          children: [
+            AppBar(
+              centerTitle: false,
+              surfaceTintColor: Colors.transparent,
+              title: const Text(
+                "Search",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26,
                 ),
-                child: SearchUserListItem(user: user),
               ),
-            );
-          },
-        ),
-      ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: CupertinoTextField(
+                onChanged: (value) => searchNotifier.searchUser(value),
+                controller: _controller,
+                placeholder: "Search",
+                placeholderStyle: TextStyle(color: Colors.grey.shade500),
+                prefix: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 5),
+                  child: FaIcon(
+                    FontAwesomeIcons.magnifyingGlass,
+                    size: 16,
+                    color: Colors.grey.shade500,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Builder(
+              builder: (context) {
+                if (searchState.isSearching) {
+                  return const CupertinoActivityIndicator();
+                } else if (searchState.result.isNotEmpty) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: searchState.result.length,
+                    itemBuilder: (context, index) {
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 10,
+                            left: 15,
+                          ),
+                          child: SearchUserListItem(
+                              user: searchState.result[index]),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Text(
+                    "Cannot Found '${searchState.keyword}' user",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -99,7 +99,7 @@ class ActivityListItem extends StatelessWidget {
                   ),
                   if (activity.type == ActivityType.follow)
                     const Padding(
-                      padding: EdgeInsets.only(right: 15),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
                       child: FollowingButton(isAlreadyFollowing: true),
                     ),
                 ],
