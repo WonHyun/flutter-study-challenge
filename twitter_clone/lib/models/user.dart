@@ -10,7 +10,10 @@ class User {
   final Map<String, List<String>> interests;
   final String? userImgPath;
   final bool? isCertificatedUser;
-  final List<User> followUsers;
+  final List<User> followers;
+  final List<User> followings;
+  final int followerTotalCounts;
+  final int follwingTotalCounts;
 
   User({
     required this.userId,
@@ -22,7 +25,10 @@ class User {
     this.interests = const {},
     this.userImgPath,
     this.isCertificatedUser,
-    this.followUsers = const [],
+    this.followers = const [],
+    this.followings = const [],
+    this.followerTotalCounts = 0,
+    this.follwingTotalCounts = 0,
   });
 
   User copyWith({
@@ -34,7 +40,10 @@ class User {
     Map<String, List<String>>? interests,
     String? userImgPath,
     bool? isCertificatedUser,
-    List<User>? followUsers,
+    List<User>? followers,
+    List<User>? followings,
+    int? followerTotalCounts,
+    int? follwingTotalCounts,
   }) {
     return User(
       userId: userId,
@@ -46,7 +55,10 @@ class User {
       interests: interests ?? this.interests,
       userImgPath: userImgPath ?? this.userImgPath,
       isCertificatedUser: isCertificatedUser ?? this.isCertificatedUser,
-      followUsers: followUsers ?? this.followUsers,
+      followers: followers ?? this.followers,
+      followings: followings ?? this.followings,
+      followerTotalCounts: followerTotalCounts ?? this.followerTotalCounts,
+      follwingTotalCounts: follwingTotalCounts ?? this.follwingTotalCounts,
     );
   }
 }

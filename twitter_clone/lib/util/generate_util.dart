@@ -70,7 +70,7 @@ class UserGenerator {
           userImgPath:
               "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}",
           isCertificatedUser: faker.randomGenerator.boolean(),
-          followUsers: [],
+          followers: [],
         );
       },
     );
@@ -125,11 +125,14 @@ class PostGenerator {
             faker.randomGenerator.boolean() || faker.randomGenerator.boolean();
         bool isLiked = false;
         List<Comment> comments = [];
+        int commentCounts = 0;
         if (isAllowedComment) {
+          final counts = faker.randomGenerator.boolean()
+              ? faker.randomGenerator.integer(300)
+              : faker.randomGenerator.integer(10);
+          commentCounts = counts;
           comments = List.generate(
-            faker.randomGenerator.boolean()
-                ? faker.randomGenerator.integer(300)
-                : faker.randomGenerator.integer(10),
+            commentCounts > 5 ? 5 : commentCounts,
             (index) {
               late final User commentUser;
               if (users != null && users.isEmpty) {
@@ -170,6 +173,7 @@ class PostGenerator {
           likes: likes,
           shares: shares,
           isAllowedComment: isAllowedComment,
+          commentTotalCounts: commentCounts,
         );
       },
     );

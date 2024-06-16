@@ -15,6 +15,7 @@ class Post {
   final int likes;
   final int shares;
   final bool isAllowedComment;
+  final int commentTotalCounts;
 
   const Post({
     required this.postId,
@@ -30,6 +31,7 @@ class Post {
     this.likes = 0,
     this.shares = 0,
     this.isAllowedComment = true,
+    this.commentTotalCounts = 0,
   });
 
   Post copyWith({
@@ -46,6 +48,7 @@ class Post {
     int? likes,
     int? shares,
     bool? isAllowedComment,
+    int? commentTotalCounts,
   }) {
     return Post(
       postId: postId ?? this.postId,
@@ -61,6 +64,7 @@ class Post {
       likes: likes ?? this.likes,
       shares: shares ?? this.shares,
       isAllowedComment: isAllowedComment ?? this.isAllowedComment,
+      commentTotalCounts: commentTotalCounts ?? this.commentTotalCounts,
     );
   }
 }

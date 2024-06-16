@@ -39,27 +39,29 @@ class MainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final screenState = ref.watch(mainScreenProvider);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Offstage(
-              offstage: screenState.currentScreen != MainScreenType.home,
-              child: const HomeScreen(),
-            ),
-            Offstage(
-              offstage: screenState.currentScreen != MainScreenType.search,
-              child: const Searchscreen(),
-            ),
-            Offstage(
-              offstage: screenState.currentScreen != MainScreenType.likes,
-              child: Container(),
-            ),
-            Offstage(
-              offstage: screenState.currentScreen != MainScreenType.user,
-              child: Container(),
-            ),
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: screenState.currentScreen == MainScreenType.home
+                ? const HomeScreen()
+                : const SizedBox.shrink(),
+          ),
+          SliverToBoxAdapter(
+            child: screenState.currentScreen == MainScreenType.search
+                ? const Searchscreen()
+                : const SizedBox.shrink(),
+          ),
+          SliverToBoxAdapter(
+            child: screenState.currentScreen == MainScreenType.likes
+                ? Container()
+                : const SizedBox.shrink(),
+          ),
+          SliverToBoxAdapter(
+            child: screenState.currentScreen == MainScreenType.user
+                ? Container()
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,

@@ -106,7 +106,7 @@ class SearchUserListItem extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text("${user.followUsers.length} followers"),
+                  child: Text("${user.followers.length} followers"),
                 ),
               ],
             ),

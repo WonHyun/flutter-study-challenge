@@ -26,6 +26,7 @@ class _SearchscreenState extends State<Searchscreen> {
       children: [
         AppBar(
           centerTitle: false,
+          surfaceTintColor: Colors.transparent,
           title: const Text(
             "Search",
             style: TextStyle(

@@ -68,7 +68,7 @@ class PostView extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     post.isAllowedComment
-                        ? "${post.comments.length} replies · ${post.likes} likes"
+                        ? "${post.commentTotalCounts} replies · ${post.likes} likes"
                         : "${post.likes} likes",
                     style: TextStyle(
                       color: Theme.of(context)
