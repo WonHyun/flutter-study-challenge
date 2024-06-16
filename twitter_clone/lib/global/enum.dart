@@ -11,11 +11,22 @@ enum MainScreenType {
   home,
   search,
   posting,
-  likes,
+  activity,
   user,
 }
 
 enum PostVisiblity {
   public,
   private,
+}
+
+enum ActivityType {
+  all,
+  replies,
+  mentions,
+  verified,
+  follow,
+  like,
+  repost,
+  quote,
 }

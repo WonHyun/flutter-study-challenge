@@ -17,7 +17,7 @@ class TwitterTheme {
   );
   static final dark = ThemeData(
     colorScheme: const ColorScheme(
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
       primary: ThemeColors.twitterColor,
       onPrimary: Colors.white,
       secondary: Color(0xFF2C5EAD),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
 import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/widgets/bottom_navigation_tab.dart';
 import 'package:twitter_clone/screens/posting/posting_modal.dart';
@@ -52,8 +53,8 @@ class MainScreen extends ConsumerWidget {
                 : const SizedBox.shrink(),
           ),
           SliverToBoxAdapter(
-            child: screenState.currentScreen == MainScreenType.likes
-                ? Container()
+            child: screenState.currentScreen == MainScreenType.activity
+                ? const ActivityScreen()
                 : const SizedBox.shrink(),
           ),
           SliverToBoxAdapter(

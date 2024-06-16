@@ -11,7 +11,7 @@ extension MainScreenIcon on MainScreenType {
         return FontAwesomeIcons.magnifyingGlass;
       case MainScreenType.posting:
         return FontAwesomeIcons.penToSquare;
-      case MainScreenType.likes:
+      case MainScreenType.activity:
         return FontAwesomeIcons.solidHeart;
       case MainScreenType.user:
         return FontAwesomeIcons.solidUser;
@@ -26,10 +26,33 @@ extension MainScreenIcon on MainScreenType {
         return FontAwesomeIcons.magnifyingGlass;
       case MainScreenType.posting:
         return FontAwesomeIcons.penToSquare;
-      case MainScreenType.likes:
+      case MainScreenType.activity:
         return FontAwesomeIcons.heart;
       case MainScreenType.user:
         return FontAwesomeIcons.user;
+    }
+  }
+}
+
+extension ActivityTypeExtension on ActivityType {
+  String get labelName {
+    switch (this) {
+      case ActivityType.all:
+        return "All";
+      case ActivityType.replies:
+        return "Replies";
+      case ActivityType.mentions:
+        return "Mentions";
+      case ActivityType.verified:
+        return "Verified";
+      case ActivityType.follow:
+        return "Follow";
+      case ActivityType.like:
+        return "Like";
+      case ActivityType.repost:
+        return "Repost";
+      case ActivityType.quote:
+        return "Quote";
     }
   }
 }
