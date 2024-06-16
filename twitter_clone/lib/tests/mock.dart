@@ -25,5 +25,6 @@ class PostMock {
 }
 
 class ActivityMock {
-  static final testActivitys = ActivityGenerator.getRandomActivitys();
+  static final testActivitys =
+      ActivityGenerator.getRandomActivitys(activityCount: 20);
 }
