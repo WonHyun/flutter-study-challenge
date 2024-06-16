@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/user.dart';
 import 'package:twitter_clone/screens/home/components/certification_mark.dart';
+import 'package:twitter_clone/util/format_util.dart';
 
 class SearchUserListItem extends StatelessWidget {
   const SearchUserListItem({
@@ -106,7 +107,8 @@ class SearchUserListItem extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text("${user.followers.length} followers"),
+                  child: Text(
+                      "${formatNumberWithSuffix(user.followerTotalCounts)} followers"),
                 ),
               ],
             ),

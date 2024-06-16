@@ -43,6 +43,11 @@ class UserGenerator {
         final animal = faker.animal.name();
         final color = faker.color.color();
         final selector = faker.randomGenerator.integer(5);
+        final followerTotalCounts = faker.randomGenerator.boolean()
+            ? faker.randomGenerator.integer(1000000)
+            : faker.randomGenerator.integer(20000);
+        final followingTotalCounts = faker.randomGenerator.integer(1000);
+
         late final String randomId;
         switch (selector) {
           case 0:
@@ -71,6 +76,8 @@ class UserGenerator {
               "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}",
           isCertificatedUser: faker.randomGenerator.boolean(),
           followers: [],
+          followerTotalCounts: followerTotalCounts,
+          follwingTotalCounts: followingTotalCounts,
         );
       },
     );
