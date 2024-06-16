@@ -6,6 +6,7 @@ import 'package:twitter_clone/models/comment.dart';
 import 'package:twitter_clone/models/image_item.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/tests/mock.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -223,7 +224,7 @@ class ActivityGenerator {
             .sentences(faker.randomGenerator.integer(2, min: 1))
             .join(" ");
         if (type == ActivityType.mentions) {
-          content = "$content@${user.userId}";
+          content = "$content@${UserMock.me.userId}";
         }
         final originalPostContent = faker.lorem
             .sentences(faker.randomGenerator.integer(2, min: 1))
