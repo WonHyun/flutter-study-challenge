@@ -47,26 +47,22 @@ class _SearchscreenState extends State<Searchscreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                      child: CupertinoTextField(
-                        onChanged: (value) => searchNotifier.searchUser(value),
-                        controller: _controller,
-                        placeholder: "Search",
-                        placeholderStyle:
-                            TextStyle(color: Colors.grey.shade500),
-                        prefix: Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 5),
-                          child: FaIcon(
-                            FontAwesomeIcons.magnifyingGlass,
-                            size: 16,
-                            color: Colors.grey.shade500,
-                          ),
+                    CupertinoTextField(
+                      onChanged: (value) => searchNotifier.searchUser(value),
+                      controller: _controller,
+                      placeholder: "Search",
+                      placeholderStyle: TextStyle(color: Colors.grey.shade500),
+                      prefix: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 5),
+                        child: FaIcon(
+                          FontAwesomeIcons.magnifyingGlass,
+                          size: 16,
+                          color: Colors.grey.shade500,
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ],
@@ -82,6 +78,7 @@ class _SearchscreenState extends State<Searchscreen> {
                           return const CupertinoActivityIndicator();
                         } else if (searchState.result.isNotEmpty) {
                           return ListView.builder(
+                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             primary: false,
                             itemCount: searchState.result.length,

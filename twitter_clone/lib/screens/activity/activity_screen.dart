@@ -56,6 +56,7 @@ class ActivityScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 20),
               ListView.builder(
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 primary: false,
                 itemCount: activityState.filteredActivitys.length,
