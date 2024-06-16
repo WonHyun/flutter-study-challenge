@@ -41,6 +41,6 @@ class UserSearchNotifier extends StateNotifier<UserSearchState> {
           .toList(),
     );
     updateIsSearching(false);
-    addRecentlyKeyword(keyword);
+    // addRecentlyKeyword(keyword);
   }
 }

@@ -12,58 +12,71 @@ class ActivityScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activityState = ref.watch(activityProvider);
     final activityNotifier = ref.watch(activityProvider.notifier);
-    return Column(
-      children: [
-        AppBar(
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          floating: true,
+          toolbarHeight: 100,
           centerTitle: false,
           surfaceTintColor: Colors.transparent,
-          title: const Text(
-            "Activity",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 26,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 35,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            scrollDirection: Axis.horizontal,
-            children: ActivityType.values
-                .map(
-                  (value) => Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: ActivityTypeListItem(
-                      type: value,
-                      isSelected: value == activityState.currentType,
-                      onTap: () => activityNotifier.changeFilter(value),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-        const SizedBox(height: 20),
-        ListView.builder(
-          shrinkWrap: true,
-          primary: false,
-          itemCount: activityState.filteredActivitys.length,
-          itemBuilder: (context, index) {
-            final activity = activityState.filteredActivitys[index];
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  bottom: 10,
-                ),
-                child: ActivityListItem(
-                  activity: activity,
-                  onDismissed: activityNotifier.removeActivity,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Activity",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26,
                 ),
               ),
-            );
-          },
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 35,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: ActivityType.values
+                      .map(
+                        (value) => Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: ActivityTypeListItem(
+                            type: value,
+                            isSelected: value == activityState.currentType,
+                            onTap: () => activityNotifier.changeFilter(value),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: activityState.filteredActivitys.length,
+                itemBuilder: (context, index) {
+                  final activity = activityState.filteredActivitys[index];
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        bottom: 10,
+                      ),
+                      child: ActivityListItem(
+                        activity: activity,
+                        onDismissed: activityNotifier.removeActivity,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
