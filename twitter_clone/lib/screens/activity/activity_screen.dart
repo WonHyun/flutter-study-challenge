@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/activity/components/activity_list_item.dart';
 import 'package:twitter_clone/screens/activity/components/activity_type_list_item.dart';
-import 'package:twitter_clone/tests/mock.dart';
 
-class ActivityScreen extends StatefulWidget {
+class ActivityScreen extends ConsumerWidget {
   const ActivityScreen({super.key});
 
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
-}
-
-class _ActivityScreenState extends State<ActivityScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activityState = ref.watch(activityProvider);
+    final activityNotifier = ref.watch(activityProvider.notifier);
     return Column(
       children: [
         AppBar(
@@ -38,8 +36,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     padding: const EdgeInsets.only(right: 5),
                     child: ActivityTypeListItem(
                       type: value,
-                      isSelected: false,
-                      onTap: () => {},
+                      isSelected: value == activityState.currentType,
+                      onTap: () => activityNotifier.changeFilter(value),
                     ),
                   ),
                 )
@@ -50,9 +48,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ListView.builder(
           shrinkWrap: true,
           primary: false,
-          itemCount: ActivityMock.testActivitys.length,
+          itemCount: activityState.filteredActivitys.length,
           itemBuilder: (context, index) {
-            final activity = ActivityMock.testActivitys[index];
+            final activity = activityState.filteredActivitys[index];
             return Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(

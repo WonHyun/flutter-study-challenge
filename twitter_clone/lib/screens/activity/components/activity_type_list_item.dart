@@ -28,7 +28,11 @@ class ActivityTypeListItem extends StatelessWidget {
               ? Theme.of(context).colorScheme.inverseSurface
               : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(
+            color: isSelected
+                ? Theme.of(context).colorScheme.inverseSurface
+                : Colors.grey.shade300,
+          ),
         ),
         child: Center(
           child: AnimatedDefaultTextStyle(
