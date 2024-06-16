@@ -23,3 +23,7 @@ class PostMock {
     users: UserMock.users,
   );
 }
+
+class ActivityMock {
+  static final testActivitys = ActivityGenerator.getRandomActivitys();
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/screens/activity/components/activity_list_item.dart';
+import 'package:twitter_clone/screens/activity/components/activity_type_list_item.dart';
+import 'package:twitter_clone/tests/mock.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
@@ -26,7 +28,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
           ),
         ),
         SizedBox(
-          height: 40,
+          height: 35,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             scrollDirection: Axis.horizontal,
@@ -44,53 +46,25 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 .toList(),
           ),
         ),
+        const SizedBox(height: 20),
+        ListView.builder(
+          shrinkWrap: true,
+          primary: false,
+          itemCount: ActivityMock.testActivitys.length,
+          itemBuilder: (context, index) {
+            final activity = ActivityMock.testActivitys[index];
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  bottom: 10,
+                ),
+                child: ActivityListItem(activity: activity),
+              ),
+            );
+          },
+        ),
       ],
-    );
-  }
-}
-
-class ActivityTypeListItem extends StatelessWidget {
-  const ActivityTypeListItem({
-    super.key,
-    required this.type,
-    required this.isSelected,
-    required this.onTap,
-    this.width = 100,
-  });
-
-  final ActivityType type;
-  final bool isSelected;
-  final Function() onTap;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        width: width,
-        duration: const Duration(milliseconds: 150),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.inverseSurface
-              : Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey.shade300),
-        ),
-        child: Center(
-          child: AnimatedDefaultTextStyle(
-            duration: const Duration(milliseconds: 150),
-            style: TextStyle(
-              color: isSelected
-                  ? Theme.of(context).colorScheme.surface
-                  : Theme.of(context).colorScheme.inverseSurface,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-            child: Text(type.labelName),
-          ),
-        ),
-      ),
     );
   }
 }

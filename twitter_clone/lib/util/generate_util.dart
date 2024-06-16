@@ -1,4 +1,6 @@
 import 'package:faker/faker.dart';
+import 'package:twitter_clone/global/enum.dart';
+import 'package:twitter_clone/models/activity.dart';
 import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/comment.dart';
 import 'package:twitter_clone/models/image_item.dart';
@@ -181,6 +183,56 @@ class PostGenerator {
           shares: shares,
           isAllowedComment: isAllowedComment,
           commentTotalCounts: commentCounts,
+        );
+      },
+    );
+  }
+}
+
+class ActivityGenerator {
+  static List<Activity> getRandomActivitys({int activityCount = 10}) {
+    return List.generate(
+      activityCount,
+      (index) {
+        final now = DateTime.now();
+        final testActivityTypeList = ActivityType.values.where((value) {
+          switch (value) {
+            case ActivityType.mentions:
+            case ActivityType.follow:
+            case ActivityType.like:
+            case ActivityType.repost:
+              return true;
+            default:
+              return false;
+          }
+        }).toList();
+        final type = testActivityTypeList[
+            faker.randomGenerator.integer(testActivityTypeList.length)];
+        final timestamp = faker.date.dateTimeBetween(
+          now.subtract(
+            Duration(
+              hours: faker.randomGenerator.integer(5),
+              minutes: faker.randomGenerator.integer(59),
+            ),
+          ),
+          now,
+        );
+        final user = UserGenerator.getRandomUsers(userCount: 1).first;
+        var content = faker.lorem
+            .sentences(faker.randomGenerator.integer(2, min: 1))
+            .join(" ");
+        if (type == ActivityType.mentions) {
+          content = "$content@${user.userId}";
+        }
+        final originalPostContent = faker.lorem
+            .sentences(faker.randomGenerator.integer(2, min: 1))
+            .join(" ");
+        return Activity(
+          type: type,
+          timestamp: timestamp,
+          user: user,
+          content: content,
+          originalPostContent: originalPostContent,
         );
       },
     );
