@@ -57,7 +57,10 @@ class ActivityScreen extends ConsumerWidget {
                   left: 15,
                   bottom: 10,
                 ),
-                child: ActivityListItem(activity: activity),
+                child: ActivityListItem(
+                  activity: activity,
+                  onDismissed: activityNotifier.removeActivity,
+                ),
               ),
             );
           },

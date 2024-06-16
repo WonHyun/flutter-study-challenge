@@ -27,4 +27,14 @@ class ActivityNotifier extends StateNotifier<ActivityState> {
     }
     updateCurrentType(type);
   }
+
+  void removeActivity(Activity activity) {
+    final newActivitys = state.activitys
+        .where(
+          (value) => value.activityId != activity.activityId,
+        )
+        .toList();
+    updateActivitys(newActivitys);
+    changeFilter(state.currentType);
+  }
 }

@@ -2,6 +2,7 @@ import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/models/user.dart';
 
 class Activity {
+  final String activityId;
   final ActivityType type;
   final DateTime timestamp;
   final User user;
@@ -9,6 +10,7 @@ class Activity {
   final String originalPostContent;
 
   const Activity({
+    required this.activityId,
     required this.type,
     required this.timestamp,
     required this.user,
@@ -17,6 +19,7 @@ class Activity {
   });
 
   Activity copyWith({
+    String? activityId,
     ActivityType? type,
     DateTime? timestamp,
     User? user,
@@ -24,6 +27,7 @@ class Activity {
     String? originalPostContent,
   }) {
     return Activity(
+      activityId: activityId ?? this.activityId,
       type: type ?? this.type,
       timestamp: timestamp ?? this.timestamp,
       user: user ?? this.user,

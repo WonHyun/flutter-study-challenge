@@ -194,6 +194,7 @@ class ActivityGenerator {
     return List.generate(
       activityCount,
       (index) {
+        final activityId = uuid.v4();
         final now = DateTime.now();
         final testActivityTypeList = ActivityType.values.where((value) {
           switch (value) {
@@ -228,6 +229,7 @@ class ActivityGenerator {
             .sentences(faker.randomGenerator.integer(2, min: 1))
             .join(" ");
         return Activity(
+          activityId: activityId,
           type: type,
           timestamp: timestamp,
           user: user,
