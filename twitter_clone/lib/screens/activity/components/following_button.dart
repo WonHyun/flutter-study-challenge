@@ -16,8 +16,9 @@ class FollowingButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        width: 90,
+        height: 30,
         duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         decoration: BoxDecoration(
           color: isAlreadyFollowing
               ? Theme.of(context).colorScheme.surface
@@ -30,15 +31,17 @@ class FollowingButton extends StatelessWidget {
                 : ThemeColors.twitterColor,
           ),
         ),
-        child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 150),
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: isAlreadyFollowing
-                ? Colors.grey.shade500
-                : Theme.of(context).colorScheme.surface,
+        child: Center(
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 150),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: isAlreadyFollowing
+                  ? Colors.grey.shade500
+                  : Theme.of(context).colorScheme.surface,
+            ),
+            child: const Text("Following"),
           ),
-          child: const Text("Following"),
         ),
       ),
     );

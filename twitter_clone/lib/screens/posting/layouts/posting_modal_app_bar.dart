@@ -9,6 +9,7 @@ class PostingModalAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       surfaceTintColor: Colors.transparent,
       leading: Center(
         child: LinkedText(

@@ -41,7 +41,6 @@ class PostView extends StatelessWidget {
                   ),
                   Expanded(
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PostHeader(post: post),

@@ -58,20 +58,18 @@ class MainScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,
-        child: Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: MainScreenType.values
-                .map(
-                  (type) => BottomNavigationTab(
-                    selectedIcon: type.selectedIcon,
-                    unselectedIcon: type.unselectedIcon,
-                    isSelected: screenState.currentScreen == type,
-                    onTap: () => _onChangeScreens(context, ref, type),
-                  ),
-                )
-                .toList(),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: MainScreenType.values
+              .map(
+                (type) => BottomNavigationTab(
+                  selectedIcon: type.selectedIcon,
+                  unselectedIcon: type.unselectedIcon,
+                  isSelected: screenState.currentScreen == type,
+                  onTap: () => _onChangeScreens(context, ref, type),
+                ),
+              )
+              .toList(),
         ),
       ),
     );

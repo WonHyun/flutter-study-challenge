@@ -62,16 +62,14 @@ class ActivityScreen extends ConsumerWidget {
                 itemCount: activityState.filteredActivitys.length,
                 itemBuilder: (context, index) {
                   final activity = activityState.filteredActivitys[index];
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 15,
-                        bottom: 10,
-                      ),
-                      child: ActivityListItem(
-                        activity: activity,
-                        onDismissed: activityNotifier.removeActivity,
-                      ),
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      bottom: 10,
+                    ),
+                    child: ActivityListItem(
+                      activity: activity,
+                      onDismissed: activityNotifier.removeActivity,
                     ),
                   );
                 },

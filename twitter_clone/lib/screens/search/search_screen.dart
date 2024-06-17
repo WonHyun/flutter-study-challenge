@@ -83,15 +83,11 @@ class _SearchscreenState extends State<Searchscreen> {
                             primary: false,
                             itemCount: searchState.result.length,
                             itemBuilder: (context, index) {
-                              return Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 10,
-                                    left: 15,
-                                  ),
-                                  child: SearchUserListItem(
-                                      user: searchState.result[index]),
-                                ),
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 10, left: 15),
+                                child: SearchUserListItem(
+                                    user: searchState.result[index]),
                               );
                             },
                           );

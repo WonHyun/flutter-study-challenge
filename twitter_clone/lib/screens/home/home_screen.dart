@@ -15,34 +15,25 @@ class HomeScreen extends ConsumerWidget {
     final postState = ref.watch(postProvider);
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: AppBar(
-              surfaceTintColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              title: FaIcon(
-                FontAwesomeIcons.threads,
-                color: Theme.of(context).colorScheme.inverseSurface,
-                size: 36,
-              ),
-            ),
+        SliverAppBar(
+          centerTitle: true,
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          title: FaIcon(
+            FontAwesomeIcons.threads,
+            color: Theme.of(context).colorScheme.inverseSurface,
+            size: 36,
           ),
         ),
         SliverToBoxAdapter(
           child: ListView.separated(
-            padding: EdgeInsets.zero,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             shrinkWrap: true,
             primary: false,
             itemCount: postState.posts.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Expanded(
-                  child: PostView(
-                    post: postState.posts[index],
-                  ),
-                ),
+              return PostView(
+                post: postState.posts[index],
               );
             },
             separatorBuilder: (context, index) => Padding(

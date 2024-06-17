@@ -57,10 +57,11 @@ class SearchUserListItem extends StatelessWidget {
                                 ),
                               ),
                               if (user.isCertificatedUser ?? false)
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Flexible(
-                                    flex: 1,
+                                const Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
                                     child: CertificationMark(),
                                   ),
                                 ),
