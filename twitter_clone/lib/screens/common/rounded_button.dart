@@ -70,7 +70,7 @@ class RoundedButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: isActive ? onTap : null,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(borderRadius),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/models/comment.dart';
 import 'package:twitter_clone/providers/providers.dart';
 
 class ManyCircleAvatar extends StatelessWidget {
   const ManyCircleAvatar({
     super.key,
-    required this.comments,
+    required this.imgPaths,
   });
 
-  final List<Comment> comments;
+  final List<String> imgPaths;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class ManyCircleAvatar extends StatelessWidget {
       child: Consumer(
         builder: (context, ref, child) {
           final userState = ref.watch(userInfoProvider);
-          switch (comments.length) {
+          switch (imgPaths.length) {
             case 0:
               return Stack(
                 children: [
@@ -43,7 +42,7 @@ class ManyCircleAvatar extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CircleAvatar(
                       radius: 15,
-                      foregroundImage: NetworkImage(comments[0].authorImgPath),
+                      foregroundImage: NetworkImage(imgPaths[0]),
                     ),
                   ),
                 ],
@@ -58,8 +57,7 @@ class ManyCircleAvatar extends StatelessWidget {
                       padding: const EdgeInsets.all(3),
                       child: CircleAvatar(
                         radius: 10,
-                        foregroundImage:
-                            NetworkImage(comments[1].authorImgPath),
+                        foregroundImage: NetworkImage(imgPaths[1]),
                       ),
                     ),
                   ),
@@ -74,8 +72,7 @@ class ManyCircleAvatar extends StatelessWidget {
                       ),
                       child: CircleAvatar(
                         radius: 10,
-                        foregroundImage:
-                            NetworkImage(comments[0].authorImgPath),
+                        foregroundImage: NetworkImage(imgPaths[0]),
                       ),
                     ),
                   ),
@@ -88,14 +85,14 @@ class ManyCircleAvatar extends StatelessWidget {
                     right: 0,
                     child: CircleAvatar(
                       radius: 10,
-                      foregroundImage: NetworkImage(comments[0].authorImgPath),
+                      foregroundImage: NetworkImage(imgPaths[0]),
                     ),
                   ),
                   Positioned(
                     top: 10,
                     child: CircleAvatar(
                       radius: 8,
-                      foregroundImage: NetworkImage(comments[1].authorImgPath),
+                      foregroundImage: NetworkImage(imgPaths[1]),
                     ),
                   ),
                   Positioned(
@@ -103,7 +100,7 @@ class ManyCircleAvatar extends StatelessWidget {
                     left: 15,
                     child: CircleAvatar(
                       radius: 6,
-                      foregroundImage: NetworkImage(comments[2].authorImgPath),
+                      foregroundImage: NetworkImage(imgPaths[2]),
                     ),
                   ),
                 ],

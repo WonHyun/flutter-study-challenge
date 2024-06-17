@@ -63,7 +63,11 @@ class PostView extends StatelessWidget {
               ),
               Row(
                 children: [
-                  ManyCircleAvatar(comments: post.comments),
+                  ManyCircleAvatar(
+                    imgPaths: post.comments
+                        .map((comment) => comment.authorImgPath)
+                        .toList(),
+                  ),
                   const SizedBox(width: 10),
                   Text(
                     post.isAllowedComment
