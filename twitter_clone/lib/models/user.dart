@@ -14,6 +14,7 @@ class User {
   final List<User> followings;
   final int followerTotalCounts;
   final int follwingTotalCounts;
+  final String description;
 
   User({
     required this.userId,
@@ -29,6 +30,7 @@ class User {
     this.followings = const [],
     this.followerTotalCounts = 0,
     this.follwingTotalCounts = 0,
+    this.description = "",
   });
 
   User copyWith({
@@ -44,6 +46,7 @@ class User {
     List<User>? followings,
     int? followerTotalCounts,
     int? follwingTotalCounts,
+    String? description,
   }) {
     return User(
       userId: userId,
@@ -59,6 +62,7 @@ class User {
       followings: followings ?? this.followings,
       followerTotalCounts: followerTotalCounts ?? this.followerTotalCounts,
       follwingTotalCounts: follwingTotalCounts ?? this.follwingTotalCounts,
+      description: description ?? this.description,
     );
   }
 }

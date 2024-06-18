@@ -14,6 +14,9 @@ class UserMock {
     birthDate: DateTime(1991, 9, 4),
     userImgPath: "https://avatars.githubusercontent.com/u/34933982?v=4",
     isCertificatedUser: true,
+    description: "The master of avoid",
+    followers: UserGenerator.getRandomUsers(userCount: 12),
+    followerTotalCounts: 12,
   );
 }
 
