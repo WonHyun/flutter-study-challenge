@@ -98,7 +98,6 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.surface,
       child: SingleChildScrollView(
         child: Column(
           children: [

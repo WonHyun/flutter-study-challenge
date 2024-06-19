@@ -24,7 +24,6 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.surface,
       child: SingleChildScrollView(
         child: Column(
           children: [

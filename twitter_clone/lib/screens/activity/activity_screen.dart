@@ -16,7 +16,6 @@ class ActivityScreen extends ConsumerWidget {
     final activityState = ref.watch(activityProvider);
     final activityNotifier = ref.watch(activityProvider.notifier);
     return Material(
-      color: Theme.of(context).colorScheme.surface,
       child: CustomScrollView(
         slivers: [
           SliverAppBar(

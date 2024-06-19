@@ -21,7 +21,6 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(userInfoProvider);
     return Material(
-      color: Theme.of(context).colorScheme.surface,
       child: DefaultTabController(
         length: 2,
         child: NestedScrollView(

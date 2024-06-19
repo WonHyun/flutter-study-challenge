@@ -17,7 +17,6 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final postState = ref.watch(postProvider);
     return Material(
-      color: Theme.of(context).colorScheme.surface,
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
