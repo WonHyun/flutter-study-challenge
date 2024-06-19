@@ -18,10 +18,7 @@ class PostReportModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final postNotifier = ref.watch(postProvider.notifier);
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 15,
-        bottom: 30,
-      ),
+      padding: const EdgeInsets.only(top: 15),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -68,7 +65,7 @@ class PostReportModal extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 350,
+            height: 200,
             child: ListView.builder(
               itemCount: postReportReasons.length,
               itemBuilder: (context, index) {

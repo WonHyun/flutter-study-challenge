@@ -16,8 +16,11 @@ class PostHeader extends StatelessWidget {
   void _showModalBottomSheet(BuildContext context, Post post) {
     showModalBottomSheet(
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
       ),
       context: context,
       builder: (context) {
