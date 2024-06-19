@@ -32,17 +32,17 @@ class _ProfileIntroScreenState extends State<ProfileIntroScreen> {
     return PageView(
       physics: const NeverScrollableScrollPhysics(),
       controller: _controller,
-      children: [
-        ProfileScreen(
-          onTapSettings: () => _changePage(1),
-        ),
-        SettingScreen(
-          onTapBack: () => _changePage(0),
-          onTapPrivacy: () => _changePage(2),
-        ),
-        PrivacyScreen(
-          onTapBack: () => _changePage(1),
-        ),
+      children: const [
+        // ProfileScreen(
+        //   onTapSettings: () => _changePage(1),
+        // ),
+        // SettingScreen(
+        //   onTapBack: () => _changePage(0),
+        //   onTapPrivacy: () => _changePage(2),
+        // ),
+        // PrivacyScreen(
+        //   onTapBack: () => _changePage(1),
+        // ),
       ],
     );
   }

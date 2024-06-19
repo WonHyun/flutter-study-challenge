@@ -8,10 +8,10 @@ import 'package:twitter_clone/screens/setting/common/slash_heart_icon.dart';
 class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({
     super.key,
-    required this.onTapBack,
   });
 
-  final Function() onTapBack;
+  static const routeName = "privacy";
+  static const routePath = "/privacy";
 
   @override
   State<PrivacyScreen> createState() => _PrivacyScreenState();
@@ -27,7 +27,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         children: [
           SettingAppBar(
             title: "Privacy",
-            onTapLeading: widget.onTapBack,
+            onTapLeading: () => {},
           ),
           Divider(
             color: Colors.grey.shade300,

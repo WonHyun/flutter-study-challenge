@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/enum.dart';
 
-extension MainScreenIcon on MainScreenType {
+extension MainScreenExtension on MainScreenType {
   IconData get selectedIcon {
     switch (this) {
       case MainScreenType.home:

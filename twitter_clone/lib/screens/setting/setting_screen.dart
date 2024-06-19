@@ -9,12 +9,10 @@ import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
 class SettingScreen extends StatefulWidget {
   const SettingScreen({
     super.key,
-    required this.onTapPrivacy,
-    required this.onTapBack,
   });
 
-  final Function() onTapPrivacy;
-  final Function() onTapBack;
+  static const routeName = "setting";
+  static const routePath = "/setting";
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -79,7 +77,6 @@ class _SettingScreenState extends State<SettingScreen> {
       case SettingMenu.notifications:
         return;
       case SettingMenu.privacy:
-        widget.onTapPrivacy.call();
         return;
       case SettingMenu.account:
       case SettingMenu.help:
@@ -102,7 +99,7 @@ class _SettingScreenState extends State<SettingScreen> {
         children: [
           SettingAppBar(
             title: "Settings",
-            onTapLeading: widget.onTapBack,
+            onTapLeading: () => {},
           ),
           Divider(
             color: Colors.grey.shade300,
