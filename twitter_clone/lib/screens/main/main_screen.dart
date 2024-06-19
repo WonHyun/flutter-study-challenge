@@ -7,7 +7,7 @@ import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/widgets/bottom_navigation_tab.dart';
 import 'package:twitter_clone/screens/posting/posting_modal.dart';
-import 'package:twitter_clone/screens/profile/profile_screen.dart';
+import 'package:twitter_clone/screens/profile/profile_intro_screen.dart';
 import 'package:twitter_clone/screens/search/search_screen.dart';
 
 class MainScreen extends ConsumerWidget {
@@ -51,7 +51,7 @@ class MainScreen extends ConsumerWidget {
             case MainScreenType.activity:
               return const ActivityScreen();
             case MainScreenType.user:
-              return const ProfileScreen();
+              return const ProfileIntroScreen();
             default:
               return const HomeScreen();
           }

@@ -13,6 +13,7 @@ class TwitterTheme {
       onError: Colors.white,
       surface: Colors.white,
       onSurface: Colors.black,
+      surfaceTint: Colors.transparent,
     ),
   );
   static final dark = ThemeData(
@@ -26,6 +27,7 @@ class TwitterTheme {
       onError: Colors.white,
       surface: Colors.black,
       onSurface: Colors.white,
+      surfaceTint: Colors.transparent,
     ),
   );
 }

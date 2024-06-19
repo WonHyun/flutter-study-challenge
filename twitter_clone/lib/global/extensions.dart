@@ -57,6 +57,74 @@ extension ActivityTypeExtension on ActivityType {
   }
 }
 
+extension SettingMenuExtension on SettingMenu {
+  IconData get menuIcon {
+    switch (this) {
+      case SettingMenu.friends:
+        return FontAwesomeIcons.userPlus;
+      case SettingMenu.notifications:
+        return FontAwesomeIcons.bell;
+      case SettingMenu.privacy:
+        return FontAwesomeIcons.lock;
+      case SettingMenu.account:
+        return FontAwesomeIcons.circleUser;
+      case SettingMenu.help:
+        return FontAwesomeIcons.lifeRing;
+      case SettingMenu.about:
+        return FontAwesomeIcons.circleInfo;
+    }
+  }
+
+  String get menuText {
+    switch (this) {
+      case SettingMenu.friends:
+        return "Follow and invite friends";
+      case SettingMenu.notifications:
+        return "Notifications";
+      case SettingMenu.privacy:
+        return "Privacy";
+      case SettingMenu.account:
+        return "Account";
+      case SettingMenu.help:
+        return "Help";
+      case SettingMenu.about:
+        return "About";
+    }
+  }
+}
+
+extension PrivacyMenuExtension on PrivacyMenu {
+  IconData get menuIcon {
+    switch (this) {
+      case PrivacyMenu.private:
+        return FontAwesomeIcons.lock;
+      case PrivacyMenu.mentions:
+        return FontAwesomeIcons.threads;
+      case PrivacyMenu.muted:
+        return FontAwesomeIcons.bellSlash;
+      case PrivacyMenu.hiddenWords:
+        return FontAwesomeIcons.eyeSlash;
+      case PrivacyMenu.followerProfiles:
+        return FontAwesomeIcons.users;
+    }
+  }
+
+  String get menuText {
+    switch (this) {
+      case PrivacyMenu.private:
+        return "Private profile";
+      case PrivacyMenu.mentions:
+        return "Mentions";
+      case PrivacyMenu.muted:
+        return "Muted";
+      case PrivacyMenu.hiddenWords:
+        return "Hidden Words";
+      case PrivacyMenu.followerProfiles:
+        return "Profiles you follow";
+    }
+  }
+}
+
 extension DoubleExtension on double {
   double truncateToFirstDecimal() {
     return (this * 10).toInt() / 10.0;

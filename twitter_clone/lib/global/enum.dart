@@ -30,3 +30,20 @@ enum ActivityType {
   repost,
   quote,
 }
+
+enum SettingMenu {
+  friends,
+  notifications,
+  privacy,
+  account,
+  help,
+  about,
+}
+
+enum PrivacyMenu {
+  private,
+  mentions,
+  muted,
+  hiddenWords,
+  followerProfiles,
+}
