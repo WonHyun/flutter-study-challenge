@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/profile/components/persistent_tab_bar_header.dart';
 import 'package:twitter_clone/screens/profile/layouts/profile_replies_list_view.dart';
 import 'package:twitter_clone/screens/profile/layouts/profile_threads_list_view.dart';
 import 'package:twitter_clone/screens/profile/layouts/user_profile_header.dart';
+import 'package:twitter_clone/screens/setting/setting_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({
@@ -18,7 +20,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(userInfoProvider);
-    return Container(
+    return Material(
       color: Theme.of(context).colorScheme.surface,
       child: DefaultTabController(
         length: 2,
@@ -41,7 +43,7 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 20),
                   GestureDetector(
-                    onTap: () => {},
+                    onTap: () => context.push(SettingScreen.routePath),
                     child: const FaIcon(
                       FontAwesomeIcons.gripLines,
                       size: 30,

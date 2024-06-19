@@ -5,6 +5,8 @@ import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/main_screen.dart';
 import 'package:twitter_clone/screens/profile/profile_screen.dart';
 import 'package:twitter_clone/screens/search/search_screen.dart';
+import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
+import 'package:twitter_clone/screens/setting/setting_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -43,6 +45,16 @@ final routerConfig = GoRouter(
           name: ProfileScreen.routeName,
           path: ProfileScreen.routePath,
           builder: (context, state) => const ProfileScreen(),
+        ),
+        GoRoute(
+          name: SettingScreen.routeName,
+          path: SettingScreen.routePath,
+          builder: (context, state) => const SettingScreen(),
+        ),
+        GoRoute(
+          name: PrivacyScreen.routeName,
+          path: PrivacyScreen.routePath,
+          builder: (context, state) => const PrivacyScreen(),
         ),
       ],
     ),

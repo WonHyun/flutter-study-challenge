@@ -26,7 +26,7 @@ class _SearchscreenState extends State<Searchscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
       color: Theme.of(context).colorScheme.surface,
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,

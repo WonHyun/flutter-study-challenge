@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
 import 'package:twitter_clone/screens/common/adaptive_dialog_action.dart';
 import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
+import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({
@@ -77,6 +79,7 @@ class _SettingScreenState extends State<SettingScreen> {
       case SettingMenu.notifications:
         return;
       case SettingMenu.privacy:
+        context.push(PrivacyScreen.routePath);
         return;
       case SettingMenu.account:
       case SettingMenu.help:
@@ -94,53 +97,56 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SettingAppBar(
-            title: "Settings",
-            onTapLeading: () => {},
-          ),
-          Divider(
-            color: Colors.grey.shade300,
-            thickness: 0.5,
-            height: 0,
-          ),
-          ...SettingMenu.values.map(
-            (value) => ListTile(
-              onTap: () => _onTapMenu(context, value),
-              leading: FaIcon(
-                value.menuIcon,
-                size: 18,
-              ),
-              title: Text(
-                value.menuText,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w300,
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SettingAppBar(
+              title: "Settings",
+              onTapLeading: () => context.pop(),
+            ),
+            Divider(
+              color: Colors.grey.shade300,
+              thickness: 0.5,
+              height: 0,
+            ),
+            ...SettingMenu.values.map(
+              (value) => ListTile(
+                onTap: () => _onTapMenu(context, value),
+                leading: FaIcon(
+                  value.menuIcon,
+                  size: 18,
+                ),
+                title: Text(
+                  value.menuText,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.grey.shade300,
-            thickness: 0.5,
-            height: 0,
-          ),
-          ListTile(
-            onTap: () => _onLogActionTap(context),
-            title: Text(
-              _isAlreadyLogin ? "Log out" : "Log in",
-              style: const TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.w300,
-                fontSize: 16,
-              ),
+            Divider(
+              color: Colors.grey.shade300,
+              thickness: 0.5,
+              height: 0,
             ),
-            trailing: _isLoading
-                ? const CupertinoActivityIndicator(radius: 10)
-                : const SizedBox.shrink(),
-          ),
-        ],
+            ListTile(
+              onTap: () => _onLogActionTap(context),
+              title: Text(
+                _isAlreadyLogin ? "Log out" : "Log in",
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 16,
+                ),
+              ),
+              trailing: _isLoading
+                  ? const CupertinoActivityIndicator(radius: 10)
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
       ),
     );
   }
