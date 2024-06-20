@@ -16,6 +16,11 @@ class _PostingViewState extends State<PostingView> {
   final TextEditingController _controller = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -30,6 +35,7 @@ class _PostingViewState extends State<PostingView> {
         child: IntrinsicHeight(
           child: Consumer(builder: (context, ref, child) {
             final userState = ref.watch(userInfoProvider);
+            final postingState = ref.watch(postingProvider);
             final postingNotifier = ref.watch(postingProvider.notifier);
             return Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,11 +72,34 @@ class _PostingViewState extends State<PostingView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        userState.userInfo.userId,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              userState.userInfo.userId,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            if (postingState.post.content.isNotEmpty)
+                              GestureDetector(
+                                onTap: () {
+                                  postingNotifier.clearContent();
+                                  _controller.clear();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: FaIcon(
+                                    FontAwesomeIcons.x,
+                                    color: Colors.grey.shade500,
+                                    size: 14,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                       TextField(

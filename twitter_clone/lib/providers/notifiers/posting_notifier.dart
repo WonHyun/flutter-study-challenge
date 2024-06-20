@@ -81,4 +81,9 @@ class PostingNotifier extends StateNotifier<PostingState> {
     updateMedia([]);
     updateIsAllowedComment(true);
   }
+
+  void clearContent() {
+    updateContent("");
+    updateMedia([]);
+  }
 }
