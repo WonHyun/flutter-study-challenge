@@ -50,5 +50,11 @@
 		<string>sms</string>
 		<string>tel</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app can use photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app can use camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app can use microphone when record video</string>
 </dict>
 </plist>
