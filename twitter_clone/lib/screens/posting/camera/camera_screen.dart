@@ -1,9 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:twitter_clone/models/image_item.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/posting/camera/components/flash_button.dart';
 import 'package:twitter_clone/screens/posting/camera/photo_preview_screen.dart';
+import 'package:twitter_clone/util/generate_util.dart';
 
 import 'components/shutter_button.dart';
 
@@ -19,6 +23,8 @@ class _CameraScreenState extends State<CameraScreen>
   CameraController? _cameraController;
   CameraLensDirection _currentDirection = CameraLensDirection.back;
   FlashMode _flashMode = FlashMode.off;
+
+  bool _itWillBeDispose = false;
 
   Future<void> initCamera() async {
     final cameras = await availableCameras();
@@ -76,8 +82,22 @@ class _CameraScreenState extends State<CameraScreen>
     await initCamera();
   }
 
-  Future<void> _showGallery() async {
+  Future<void> _showGallery(WidgetRef ref) async {
+    final postingNotifier = ref.watch(postingProvider.notifier);
     final photos = await ImagePicker().pickMultiImage();
+    if (photos.isNotEmpty && mounted) {
+      final medias = photos
+          .map((file) => ImageItem(
+                mediaId: uuid.v4(),
+                url: "",
+                filePath: file.path,
+              ))
+          .toList();
+      postingNotifier.addMedias(medias);
+      _cameraController?.dispose();
+      _itWillBeDispose = true;
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -95,15 +115,17 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (mounted &&
-        _cameraController != null &&
-        _cameraController!.value.isInitialized) {
-      if (state == AppLifecycleState.inactive) {
-        _cameraController?.dispose();
-      } else if (state == AppLifecycleState.resumed) {
-        initCamera();
-      }
-    }
+    // if (mounted &&
+    //     _cameraController != null &&
+    //     _cameraController!.value.isInitialized) {
+    //   if (state == AppLifecycleState.inactive) {
+    //     _cameraController?.dispose();
+    //   } else if (state == AppLifecycleState.resumed) {
+    //     if (!_itWillBeDispose) {
+    //       initCamera();
+    //     }
+    //   }
+    // }
   }
 
   @override
@@ -210,20 +232,22 @@ class _CameraScreenState extends State<CameraScreen>
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: _showGallery,
-                          child: Text(
-                            "Library",
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                      Consumer(builder: (context, ref, child) {
+                        return Expanded(
+                          child: GestureDetector(
+                            onTap: () => _showGallery(ref),
+                            child: Text(
+                              "Library",
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                     ],
                   ),
                 ),

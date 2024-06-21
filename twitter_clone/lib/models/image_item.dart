@@ -4,5 +4,6 @@ class ImageItem extends MediaItem {
   ImageItem({
     required super.mediaId,
     required super.url,
+    super.filePath = "",
   });
 }

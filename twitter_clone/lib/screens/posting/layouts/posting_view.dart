@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twitter_clone/models/image_item.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/posting/camera/camera_screen.dart';
 
@@ -127,6 +130,68 @@ class _PostingViewState extends State<PostingView> {
                           ),
                         ),
                       ),
+                      if (postingState.post.media != null &&
+                          postingState.post.media!.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SizedBox(
+                            height: 200,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: postingState.post.media!.length,
+                              itemBuilder: (context, index) {
+                                final media = postingState.post.media![index];
+                                if (media is ImageItem) {
+                                  if (media.url.isEmpty) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            clipBehavior: Clip.hardEdge,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Image.file(
+                                              File(media.filePath),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 10,
+                                            right: 10,
+                                            child: GestureDetector(
+                                              onTap: () => postingNotifier
+                                                  .removeMedia(media),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.black
+                                                      .withOpacity(0.5),
+                                                ),
+                                                child: const FaIcon(
+                                                  FontAwesomeIcons.x,
+                                                  color: Colors.white,
+                                                  size: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  } else {
+                                    return Image.network(media.url);
+                                  }
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       GestureDetector(
                         onTap: _openCameraScreen,
                         child: FaIcon(
