@@ -56,5 +56,7 @@
 	<string>This app can use camera</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app can use microphone when record video</string>
+	<key>NSPhotoLibraryAddUsageDescription </key>
+	<string>This app can write to photo library</string>
 </dict>
 </plist>

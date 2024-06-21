@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/screens/posting/camera/camera_screen.dart';
 
 class PostingView extends StatefulWidget {
   const PostingView({
@@ -14,6 +15,15 @@ class PostingView extends StatefulWidget {
 
 class _PostingViewState extends State<PostingView> {
   final TextEditingController _controller = TextEditingController();
+
+  void _openCameraScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CameraScreen(),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -118,7 +128,7 @@ class _PostingViewState extends State<PostingView> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => {},
+                        onTap: _openCameraScreen,
                         child: FaIcon(
                           FontAwesomeIcons.paperclip,
                           color: Colors.grey.shade400,
