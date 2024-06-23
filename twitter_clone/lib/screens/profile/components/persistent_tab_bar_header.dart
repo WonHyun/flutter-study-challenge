@@ -2,26 +2,30 @@ import 'package:flutter/material.dart';
 
 class PersistentTabBarHeader extends SliverPersistentHeaderDelegate {
   final TabBar child;
+  final Color backgroundColor;
 
-  PersistentTabBarHeader({required this.child});
+  PersistentTabBarHeader({
+    required this.child,
+    required this.backgroundColor,
+  });
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: Theme.of(context).colorScheme.surface,
-      child: child,
+      color: backgroundColor,
+      child: SizedBox.expand(child: child),
     );
   }
 
   @override
-  double get maxExtent => 40;
+  double get maxExtent => child.preferredSize.height;
 
   @override
-  double get minExtent => 40;
+  double get minExtent => child.preferredSize.height;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+  bool shouldRebuild(covariant PersistentTabBarHeader oldDelegate) {
+    return oldDelegate.backgroundColor != backgroundColor;
   }
 }

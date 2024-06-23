@@ -9,7 +9,7 @@ import 'package:twitter_clone/screens/profile/layouts/profile_threads_list_view.
 import 'package:twitter_clone/screens/profile/layouts/user_profile_header.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
     super.key,
   });
@@ -18,81 +18,84 @@ class ProfileScreen extends ConsumerWidget {
   static const routePath = "/profile";
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userState = ref.watch(userInfoProvider);
+  Widget build(BuildContext context) {
     return Material(
-      child: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                surfaceTintColor: Colors.transparent,
-                pinned: true,
-                leading: const Center(
-                  child: FaIcon(FontAwesomeIcons.globe),
+      child: Consumer(builder: (context, ref, child) {
+        final userState = ref.watch(userInfoProvider);
+        return DefaultTabController(
+          length: 2,
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  surfaceTintColor: Colors.transparent,
+                  pinned: true,
+                  leading: const Center(
+                    child: FaIcon(FontAwesomeIcons.globe),
+                  ),
+                  actions: [
+                    GestureDetector(
+                      onTap: () => {},
+                      child: const FaIcon(
+                        FontAwesomeIcons.instagram,
+                        size: 30,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    GestureDetector(
+                      onTap: () => context.push(SettingScreen.routePath),
+                      child: const FaIcon(
+                        FontAwesomeIcons.gripLines,
+                        size: 30,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                  ],
                 ),
-                actions: [
-                  GestureDetector(
-                    onTap: () => {},
-                    child: const FaIcon(
-                      FontAwesomeIcons.instagram,
-                      size: 30,
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  GestureDetector(
-                    onTap: () => context.push(SettingScreen.routePath),
-                    child: const FaIcon(
-                      FontAwesomeIcons.gripLines,
-                      size: 30,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                ],
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  child: UserProfileHeader(user: userState.userInfo),
-                ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: PersistentTabBarHeader(
-                  child: TabBar(
-                    labelPadding: const EdgeInsets.symmetric(vertical: 10),
-                    labelColor: Theme.of(context).colorScheme.inverseSurface,
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                    unselectedLabelColor: Colors.grey.shade500,
-                    dividerColor: Colors.grey.shade300,
-                    indicatorColor:
-                        Theme.of(context).colorScheme.inverseSurface,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorWeight: 1.0,
-                    tabs: const [
-                      Text("Threads"),
-                      Text("Replies"),
-                    ],
+                    child: UserProfileHeader(user: userState.userInfo),
                   ),
                 ),
-              ),
-            ];
-          },
-          body: const TabBarView(
-            children: [
-              ProfileThreadsListView(),
-              ProfileRepliesListView(),
-            ],
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: PersistentTabBarHeader(
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    child: TabBar(
+                      labelPadding: const EdgeInsets.symmetric(vertical: 10),
+                      labelColor: Theme.of(context).colorScheme.inverseSurface,
+                      labelStyle: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                      unselectedLabelColor: Colors.grey.shade500,
+                      dividerColor: Colors.grey.shade300,
+                      indicatorColor:
+                          Theme.of(context).colorScheme.inverseSurface,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorWeight: 1.0,
+                      tabs: const [
+                        Text("Threads"),
+                        Text("Replies"),
+                      ],
+                    ),
+                  ),
+                ),
+              ];
+            },
+            body: const TabBarView(
+              children: [
+                ProfileThreadsListView(),
+                ProfileRepliesListView(),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
