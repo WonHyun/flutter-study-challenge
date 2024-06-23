@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/providers/providers.dart';
-import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/home/layouts/post_view.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -36,15 +35,11 @@ class HomeScreen extends ConsumerWidget {
               primary: false,
               itemCount: postState.posts.length,
               itemBuilder: (context, index) {
-                return PostView(
-                  post: postState.posts[index],
-                );
+                return PostView(post: postState.posts[index]);
               },
-              separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: HorizontalDivider(
-                  color: Colors.grey.shade200,
-                ),
+              separatorBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Divider(),
               ),
             ),
           ),

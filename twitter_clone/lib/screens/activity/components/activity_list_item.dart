@@ -49,7 +49,8 @@ class ActivityListItem extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: Colors.grey.shade200,
+                    color: Theme.of(context).dividerTheme.color ??
+                        Colors.grey.shade200,
                     width: 1,
                   ),
                 ),

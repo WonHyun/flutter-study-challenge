@@ -16,6 +16,9 @@ class TwitterTheme {
       onSurface: Colors.black,
       surfaceTint: Colors.transparent,
     ),
+    dividerTheme: DividerThemeData(
+      color: Colors.grey.shade300,
+    ),
   );
   static final dark = ThemeData(
     brightness: Brightness.dark,
@@ -30,6 +33,9 @@ class TwitterTheme {
       surface: Colors.black,
       onSurface: Colors.white,
       surfaceTint: Colors.transparent,
+    ),
+    dividerTheme: DividerThemeData(
+      color: Colors.grey.shade700,
     ),
   );
 }
