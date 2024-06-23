@@ -10,15 +10,15 @@ class PersistentTabBarHeader extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: Theme.of(context).colorScheme.surface,
-      child: child,
+      child: SizedBox.expand(child: child),
     );
   }
 
   @override
-  double get maxExtent => 40;
+  double get maxExtent => child.preferredSize.height;
 
   @override
-  double get minExtent => 40;
+  double get minExtent => child.preferredSize.height;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
