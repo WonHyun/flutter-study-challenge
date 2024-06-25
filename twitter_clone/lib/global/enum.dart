@@ -47,3 +47,8 @@ enum PrivacyMenu {
   hiddenWords,
   followerProfiles,
 }
+
+enum ProfileTab {
+  threads,
+  replies,
+}

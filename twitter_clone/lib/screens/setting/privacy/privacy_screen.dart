@@ -12,7 +12,7 @@ class PrivacyScreen extends StatefulWidget {
   });
 
   static const routeName = "privacy";
-  static const routePath = "/privacy";
+  static const routePath = "privacy";
 
   @override
   State<PrivacyScreen> createState() => _PrivacyScreenState();

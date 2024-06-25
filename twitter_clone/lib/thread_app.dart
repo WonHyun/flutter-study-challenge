@@ -17,7 +17,7 @@ class ThreadApp extends ConsumerWidget {
       themeMode: themeState.themeMode,
       theme: TwitterTheme.light,
       darkTheme: TwitterTheme.dark,
-      routerConfig: routerConfig,
+      routerConfig: router,
     );
   }
 }

@@ -81,7 +81,7 @@ class _SettingScreenState extends State<SettingScreen> {
       case SettingMenu.notifications:
         return;
       case SettingMenu.privacy:
-        context.push(PrivacyScreen.routePath);
+        context.pushNamed(PrivacyScreen.routeName);
         return;
       case SettingMenu.account:
       case SettingMenu.help:
