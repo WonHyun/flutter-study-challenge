@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/main_screen.dart';
@@ -26,7 +27,22 @@ final router = GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
-        return MainScreen(child: child);
+        late MainScreenType type;
+        switch (state.matchedLocation) {
+          case HomeScreen.routePath:
+            type = MainScreenType.home;
+          case Searchscreen.routePath:
+            type = MainScreenType.search;
+          case ActivityScreen.routePath:
+            type = MainScreenType.activity;
+          case ProfileScreen.routePath:
+          default:
+            type = MainScreenType.user;
+        }
+        return MainScreen(
+          type: type,
+          child: child,
+        );
       },
       routes: [
         GoRoute(
