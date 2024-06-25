@@ -32,7 +32,9 @@ class PostMoreActionList extends ConsumerWidget {
           Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey.shade100
+                  : Colors.grey.shade800,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Material(
@@ -64,11 +66,8 @@ class PostMoreActionList extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Positioned.fill(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey.shade300,
-                    ),
+                  const Positioned.fill(
+                    child: Divider(thickness: 0.5),
                   ),
                 ],
               ),
@@ -78,7 +77,9 @@ class PostMoreActionList extends ConsumerWidget {
           Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey.shade100
+                  : Colors.grey.shade800,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Material(
@@ -114,11 +115,8 @@ class PostMoreActionList extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Positioned.fill(
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey.shade300,
-                    ),
+                  const Positioned.fill(
+                    child: Divider(thickness: 0.5),
                   ),
                 ],
               ),
