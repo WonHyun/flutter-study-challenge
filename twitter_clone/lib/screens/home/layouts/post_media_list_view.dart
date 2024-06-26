@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/image_item.dart';
@@ -33,10 +35,15 @@ class PostMediaListView extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Image.network(
-                    medias[index].url,
-                    fit: BoxFit.cover,
-                  ),
+                  child: medias[index].url.isEmpty
+                      ? Image.file(
+                          File(medias[index].filePath),
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          medias[index].url,
+                          fit: BoxFit.cover,
+                        ),
                 );
               } else if (medias[index] is VideoItem) {
                 return Container(

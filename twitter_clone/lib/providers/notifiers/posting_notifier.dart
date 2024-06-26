@@ -86,4 +86,17 @@ class PostingNotifier extends StateNotifier<PostingState> {
     updateContent("");
     updateMedia([]);
   }
+
+  void addMedias(List<MediaItem> medias) {
+    updateMedia([...?state.post.media, ...medias]);
+  }
+
+  void removeMedia(MediaItem item) {
+    updateMedia(
+      state.post.media
+              ?.where((media) => media.mediaId != item.mediaId)
+              .toList() ??
+          [],
+    );
+  }
 }

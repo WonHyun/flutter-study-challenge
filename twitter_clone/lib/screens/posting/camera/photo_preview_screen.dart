@@ -2,7 +2,12 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:twitter_clone/models/image_item.dart';
+import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/util/generate_util.dart';
 
 class PhotoPreviewScreen extends StatefulWidget {
   const PhotoPreviewScreen({
@@ -17,6 +22,36 @@ class PhotoPreviewScreen extends StatefulWidget {
 }
 
 class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
+  bool _isSaved = false;
+
+  Future<void> _saveToGallery() async {
+    if (_isSaved) return;
+
+    await ImageGallerySaver.saveImage(
+      await widget.photo.readAsBytes(),
+      quality: 100,
+    );
+
+    setState(() {
+      _isSaved = true;
+    });
+  }
+
+  void _onSelectPhoto(BuildContext context, WidgetRef ref) {
+    final postingNotifier = ref.watch(postingProvider.notifier);
+    postingNotifier.addMedias(
+      [
+        ImageItem(
+          mediaId: uuid.v4(),
+          url: "",
+          filePath: widget.photo.path,
+        ),
+      ],
+    );
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,22 +85,25 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                       size: 20,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () => {},
-                    icon: const FaIcon(
-                      FontAwesomeIcons.check,
-                      color: Colors.white,
-                      size: 20,
+                  Consumer(builder: (context, ref, child) {
+                    return IconButton(
+                      onPressed: () => _onSelectPhoto(context, ref),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.check,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    );
+                  }),
+                  if (!_isSaved)
+                    IconButton(
+                      onPressed: _saveToGallery,
+                      icon: const FaIcon(
+                        FontAwesomeIcons.download,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () => {},
-                    icon: const FaIcon(
-                      FontAwesomeIcons.download,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
                 ],
               ),
             ),

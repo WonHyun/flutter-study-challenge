@@ -4,5 +4,6 @@ class VideoItem extends MediaItem {
   VideoItem({
     required super.mediaId,
     required super.url,
+    super.filePath = "",
   });
 }
