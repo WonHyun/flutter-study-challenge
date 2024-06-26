@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/main_screen.dart';
@@ -7,11 +8,12 @@ import 'package:twitter_clone/screens/profile/profile_screen.dart';
 import 'package:twitter_clone/screens/search/search_screen.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
+import 'package:twitter_clone/util/url_util.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
-final routerConfig = GoRouter(
+final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: HomeScreen.routePath,
   redirect: (context, state) {
@@ -24,7 +26,24 @@ final routerConfig = GoRouter(
     ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,
       navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) => MainScreen(child: child),
+      builder: (context, state, child) {
+        late MainScreenType type;
+        switch (state.matchedLocation) {
+          case HomeScreen.routePath:
+            type = MainScreenType.home;
+          case Searchscreen.routePath:
+            type = MainScreenType.search;
+          case ActivityScreen.routePath:
+            type = MainScreenType.activity;
+          case ProfileScreen.routePath:
+          default:
+            type = MainScreenType.user;
+        }
+        return MainScreen(
+          type: type,
+          child: child,
+        );
+      },
       routes: [
         GoRoute(
           name: HomeScreen.routeName,
@@ -44,17 +63,24 @@ final routerConfig = GoRouter(
         GoRoute(
           name: ProfileScreen.routeName,
           path: ProfileScreen.routePath,
-          builder: (context, state) => const ProfileScreen(),
+          builder: (context, state) {
+            final initTab = state.uri.queryParameters["show"];
+            return ProfileScreen(
+              initTab: convToInitTabFromUrlQuery(initTab),
+            );
+          },
         ),
         GoRoute(
           name: SettingScreen.routeName,
           path: SettingScreen.routePath,
           builder: (context, state) => const SettingScreen(),
-        ),
-        GoRoute(
-          name: PrivacyScreen.routeName,
-          path: PrivacyScreen.routePath,
-          builder: (context, state) => const PrivacyScreen(),
+          routes: [
+            GoRoute(
+              name: PrivacyScreen.routeName,
+              path: PrivacyScreen.routePath,
+              builder: (context, state) => const PrivacyScreen(),
+            ),
+          ],
         ),
       ],
     ),

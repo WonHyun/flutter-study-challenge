@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/global/theme.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/providers/notifiers/activity_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/main_screen_notifier.dart';
@@ -24,7 +24,7 @@ import 'package:twitter_clone/util/generate_util.dart';
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>((ref) {
   return ThemeNotifier(
-    theme: TwitterTheme.light,
+    themeMode: ThemeMode.system,
   );
 });
 

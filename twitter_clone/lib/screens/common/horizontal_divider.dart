@@ -4,12 +4,12 @@ class HorizontalDivider extends StatelessWidget {
   const HorizontalDivider({
     super.key,
     this.text,
-    this.color = Colors.grey,
+    this.color,
     this.thickness = 1,
   });
 
   final String? text;
-  final Color color;
+  final Color? color;
   final double thickness;
 
   @override
@@ -20,13 +20,13 @@ class HorizontalDivider extends StatelessWidget {
       children: [
         Expanded(
           child: Divider(
-            color: color,
+            color: color ??
+                Theme.of(context).colorScheme.inverseSurface.withOpacity(0.5),
             thickness: thickness,
           ),
         ),
-        Offstage(
-          offstage: text == null,
-          child: Padding(
+        if (text != null)
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
               text ?? "",
@@ -36,10 +36,10 @@ class HorizontalDivider extends StatelessWidget {
               ),
             ),
           ),
-        ),
         Expanded(
           child: Divider(
-            color: color,
+            color: color ??
+                Theme.of(context).colorScheme.inverseSurface.withOpacity(0.5),
             thickness: thickness,
           ),
         ),

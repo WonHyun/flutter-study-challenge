@@ -24,95 +24,95 @@ class SearchUserListItem extends StatelessWidget {
         ),
         const SizedBox(width: 20),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey.shade300,
-                  width: 1,
-                ),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 8,
-                                child: Text(
-                                  user.userId,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              flex: 8,
+                              child: Text(
+                                user.userId,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              if (user.isCertificatedUser ?? false)
-                                const Flexible(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    child: CertificationMark(),
-                                  ),
+                            ),
+                            if (user.isCertificatedUser ?? false)
+                              const Flexible(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: CertificationMark(),
                                 ),
-                            ],
+                              ),
+                          ],
+                        ),
+                        Text(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          user.userName ?? "",
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .inverseSurface
+                                .withOpacity(0.6),
+                            fontWeight: FontWeight.w300,
                           ),
-                          Text(
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            user.userName ?? "",
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
-                      child: GestureDetector(
-                        onTap: () => {},
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                    ),
+                    child: GestureDetector(
+                      onTap: () => {},
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .inverseSurface
+                                .withOpacity(0.7),
                           ),
-                          child: const Text(
-                            "Follow",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                            ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          "Follow",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .inverseSurface
+                                .withOpacity(0.7),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                      "${formatNumberWithSuffix(user.followerTotalCounts)} followers"),
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                    "${formatNumberWithSuffix(user.followerTotalCounts)} followers"),
+              ),
+              const Divider(),
+            ],
           ),
         ),
       ],

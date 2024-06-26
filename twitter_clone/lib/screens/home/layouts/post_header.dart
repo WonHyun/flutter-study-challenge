@@ -69,7 +69,7 @@ class PostHeader extends StatelessWidget {
                 color: Theme.of(context)
                     .colorScheme
                     .inverseSurface
-                    .withOpacity(0.4),
+                    .withOpacity(0.5),
               ),
             ),
             const SizedBox(width: 14),

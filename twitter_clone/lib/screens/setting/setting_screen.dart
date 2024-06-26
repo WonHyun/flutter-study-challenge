@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/adaptive_dialog_action.dart';
 import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
@@ -79,7 +81,7 @@ class _SettingScreenState extends State<SettingScreen> {
       case SettingMenu.notifications:
         return;
       case SettingMenu.privacy:
-        context.push(PrivacyScreen.routePath);
+        context.pushNamed(PrivacyScreen.routeName);
         return;
       case SettingMenu.account:
       case SettingMenu.help:
@@ -113,7 +115,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ...SettingMenu.values.map(
               (value) => ListTile(
                 onTap: () => _onTapMenu(context, value),
-                leading: FaIcon(
+                leading: Icon(
                   value.menuIcon,
                   size: 18,
                 ),
@@ -123,6 +125,22 @@ class _SettingScreenState extends State<SettingScreen> {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
+              ),
+            ),
+            const ListTile(
+              leading: Icon(
+                FontAwesomeIcons.palette,
+                size: 18,
+              ),
+              title: Text(
+                "Theme Mode",
+                style: TextStyle(
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              trailing: SizedBox(
+                width: 150,
+                child: ThemeSettingSelector(),
               ),
             ),
             Divider(
@@ -148,5 +166,51 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
     );
+  }
+}
+
+class ThemeSettingSelector extends StatelessWidget {
+  const ThemeSettingSelector({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, ref, child) {
+      final themeState = ref.watch(themeProvider);
+      final themeNotifier = ref.watch(themeProvider.notifier);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () => themeNotifier.updateThemeMode(ThemeMode.system),
+            icon: Icon(
+              FontAwesomeIcons.gear,
+              color: themeState.themeMode == ThemeMode.system
+                  ? Colors.amber
+                  : Theme.of(context).colorScheme.inverseSurface,
+            ),
+          ),
+          IconButton(
+            onPressed: () => themeNotifier.updateThemeMode(ThemeMode.dark),
+            icon: Icon(
+              FontAwesomeIcons.solidMoon,
+              color: themeState.themeMode == ThemeMode.dark
+                  ? Colors.amber
+                  : Theme.of(context).colorScheme.inverseSurface,
+            ),
+          ),
+          IconButton(
+            onPressed: () => themeNotifier.updateThemeMode(ThemeMode.light),
+            icon: Icon(
+              FontAwesomeIcons.solidSun,
+              color: themeState.themeMode == ThemeMode.light
+                  ? Colors.amber
+                  : Theme.of(context).colorScheme.inverseSurface,
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

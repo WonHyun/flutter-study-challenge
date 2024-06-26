@@ -12,7 +12,12 @@ import 'package:twitter_clone/screens/profile/profile_screen.dart';
 import 'package:twitter_clone/screens/search/search_screen.dart';
 
 class MainNavigaionBar extends StatefulWidget {
-  const MainNavigaionBar({super.key});
+  const MainNavigaionBar({
+    super.key,
+    required this.type,
+  });
+
+  final MainScreenType type;
 
   @override
   State<MainNavigaionBar> createState() => _MainNavigaionBarState();
@@ -66,9 +71,13 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-      final screenState = ref.watch(mainScreenProvider);
       return BottomAppBar(
         height: 70,
         child: Row(
@@ -78,7 +87,7 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
                 (type) => BottomNavigationTab(
                   selectedIcon: type.selectedIcon,
                   unselectedIcon: type.unselectedIcon,
-                  isSelected: screenState.currentScreen == type,
+                  isSelected: widget.type == type,
                   onTap: () => _onChangeScreens(context, ref, type),
                 ),
               )

@@ -12,7 +12,7 @@ class PrivacyScreen extends StatefulWidget {
   });
 
   static const routeName = "privacy";
-  static const routePath = "/privacy";
+  static const routePath = "privacy";
 
   @override
   State<PrivacyScreen> createState() => _PrivacyScreenState();
@@ -37,7 +37,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               height: 0,
             ),
             SwitchListTile.adaptive(
-              activeColor: Colors.black,
+              activeColor: Theme.of(context).colorScheme.inverseSurface,
               value: _isPrivateProfile,
               onChanged: (value) => setState(() {
                 _isPrivateProfile = value;

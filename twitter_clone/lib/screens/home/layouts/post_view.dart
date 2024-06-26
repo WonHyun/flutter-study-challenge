@@ -25,7 +25,8 @@ class PostView extends StatelessWidget {
           bottom: 50,
           child: VerticalDivider(
             thickness: 1.5,
-            color: Colors.grey.shade300,
+            color: Theme.of(context).dividerTheme.color ??
+                Theme.of(context).colorScheme.inverseSurface.withOpacity(0.5),
           ),
         ),
         SizedBox(
@@ -77,7 +78,7 @@ class PostView extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .inverseSurface
-                          .withOpacity(0.4),
+                          .withOpacity(0.5),
                     ),
                   ),
                 ],

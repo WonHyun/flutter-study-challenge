@@ -66,7 +66,10 @@ class _PostingViewState extends State<PostingView> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: VerticalDivider(
-                          color: Colors.grey.shade300,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .inverseSurface
+                              .withOpacity(0.5),
                           thickness: 1.5,
                         ),
                       ),
