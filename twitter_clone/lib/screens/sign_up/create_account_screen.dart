@@ -22,6 +22,9 @@ class CreateAccountScreen extends ConsumerStatefulWidget {
     this.initUserInfo,
   });
 
+  static const String routeName = "signUp";
+  static const String routePath = "/signup";
+
   final User? initUserInfo;
 
   @override

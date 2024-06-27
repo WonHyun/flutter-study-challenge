@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
+import 'package:twitter_clone/models/user.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
+import 'package:twitter_clone/screens/login/login_screen.dart';
 import 'package:twitter_clone/screens/main/main_screen.dart';
 import 'package:twitter_clone/screens/profile/profile_screen.dart';
 import 'package:twitter_clone/screens/search/search_screen.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
+import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 import 'package:twitter_clone/util/url_util.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -15,14 +18,29 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: HomeScreen.routePath,
+  initialLocation: LoginScreen.routePath,
   redirect: (context, state) {
     if (state.matchedLocation == "/") {
-      return HomeScreen.routePath;
+      return LoginScreen.routePath;
     }
     return null;
   },
   routes: [
+    GoRoute(
+      name: LoginScreen.routeName,
+      path: LoginScreen.routePath,
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      name: CreateAccountScreen.routeName,
+      path: CreateAccountScreen.routePath,
+      builder: (context, state) {
+        final extra = state.extra;
+        return CreateAccountScreen(
+          initUserInfo: extra != null && extra is User ? extra : null,
+        );
+      },
+    ),
     ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,
       navigatorKey: _shellNavigatorKey,
