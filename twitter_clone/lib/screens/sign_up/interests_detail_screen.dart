@@ -72,9 +72,24 @@ class InterestsDetailScreen extends ConsumerWidget {
                     },
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                    top: 20,
+                    bottom: 50,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .inverseSurface
+                            .withOpacity(0.5),
+                        width: 0.1,
+                      ),
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

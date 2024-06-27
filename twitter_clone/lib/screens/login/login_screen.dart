@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Flexible(
-                  flex: 1,
+                  flex: 2,
                   child: Center(
                     child: Text(
                       "See What's happening in the world right now.",
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -86,20 +86,23 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: PolicyGuideText(
-                    mdText: userAgreementGuideTextShort,
+                const Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: PolicyGuideText(
+                      mdText: userAgreementGuideTextShort,
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                Flexible(
+                  flex: 1,
                   child: RichText(
                     textAlign: TextAlign.start,
                     text: TextSpan(
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inverseSurface,
-                          fontSize: 12,
+                          fontSize: 14,
                           fontWeight: FontWeight.w300),
                       children: [
                         const TextSpan(text: "Have no an account? "),
@@ -107,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                           child: LinkedText(
                             onTap: () => _onSignUpTap(context),
                             text: "Sign up",
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w300,
                           ),
                         ),
