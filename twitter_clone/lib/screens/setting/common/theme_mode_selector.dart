@@ -115,11 +115,13 @@ class ThemeModeButton extends StatelessWidget {
     required this.onPressed,
     required this.themeMode,
     required this.isSelected,
+    this.size = 40,
   });
 
   final Function() onPressed;
   final ThemeMode themeMode;
   final bool isSelected;
+  final double size;
 
   IconData _iconSelector(ThemeMode themeMode) {
     switch (themeMode) {
@@ -152,13 +154,16 @@ class ThemeModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      hoverColor: Colors.transparent,
-      icon: Icon(
-        _iconSelector(themeMode),
-        color: _colorSelector(context, themeMode, isSelected),
-        size: 22,
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: Icon(
+          _iconSelector(themeMode),
+          color: _colorSelector(context, themeMode, isSelected),
+          size: 22,
+        ),
       ),
     );
   }
