@@ -107,9 +107,13 @@ class _PinTextFieldState extends State<PinTextField> {
                   LengthLimitingTextInputFormatter(2),
                 ],
                 decoration: InputDecoration(
-                  focusedBorder: const UnderlineInputBorder(
+                  focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       width: 1.5,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(0.3),
                     ),
                   ),
                   enabledBorder: UnderlineInputBorder(
@@ -118,7 +122,7 @@ class _PinTextFieldState extends State<PinTextField> {
                       color: Theme.of(context)
                           .colorScheme
                           .inverseSurface
-                          .withOpacity(0.2),
+                          .withOpacity(0.6),
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:twitter_clone/global/color.dart';
 
 class TwitterTheme {
   static final light = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
@@ -21,6 +22,7 @@ class TwitterTheme {
     ),
   );
   static final dark = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,

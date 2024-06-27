@@ -11,6 +11,7 @@ import 'package:twitter_clone/screens/search/search_screen.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
+import 'package:twitter_clone/screens/sign_up/interests_screen.dart';
 import 'package:twitter_clone/util/url_util.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -40,6 +41,11 @@ final router = GoRouter(
           initUserInfo: extra != null && extra is User ? extra : null,
         );
       },
+    ),
+    GoRoute(
+      name: InterestsScreen.routeName,
+      path: InterestsScreen.routePath,
+      builder: (context, state) => const InterestsScreen(),
     ),
     ShellRoute(
       parentNavigatorKey: _rootNavigatorKey,

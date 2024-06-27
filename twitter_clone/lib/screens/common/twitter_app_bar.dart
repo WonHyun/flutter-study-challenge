@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
+import 'package:twitter_clone/screens/login/login_screen.dart';
 
 class TwitterAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TwitterAppBar({
@@ -23,13 +25,13 @@ class TwitterAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 16,
           fontWeight: FontWeight.w400,
           color: Theme.of(context).colorScheme.inverseSurface,
-          onTap: () => Navigator.pop(context),
+          onTap: () => context.goNamed(LoginScreen.routeName),
         ),
       );
     }
     if (isUseBackArrowLeading) {
       return GestureDetector(
-        onTap: () => Navigator.pop(context),
+        onTap: context.pop,
         child: const Align(
             alignment: Alignment.centerLeft,
             child: FaIcon(FontAwesomeIcons.arrowLeft, size: 24)),

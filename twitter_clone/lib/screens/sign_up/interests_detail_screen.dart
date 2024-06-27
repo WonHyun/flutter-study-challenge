@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/value.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 
 class InterestsDetailScreen extends ConsumerWidget {
@@ -23,6 +26,10 @@ class InterestsDetailScreen extends ConsumerWidget {
     return totalCount >= _least;
   }
 
+  void _onNextTap(BuildContext context) {
+    context.goNamed(HomeScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PopScope(
@@ -30,58 +37,62 @@ class InterestsDetailScreen extends ConsumerWidget {
           ref.watch(userInfoProvider.notifier).resetAllInterests(),
       child: Scaffold(
         appBar: const TwitterAppBar(isUseBackArrowLeading: true),
-        body: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: ScreenGuideText(
-                title: "What do you want to see on Twitter?",
-                guideText:
-                    "Interests are used to personalize your experience and will be visible on your profile.",
-              ),
-            ),
-            const SizedBox(height: 10),
-            Divider(color: Colors.grey.shade200),
-            Expanded(
-              child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      Divider(color: Colors.grey.shade200),
-                  itemCount: interests.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 16,
-                        top: 20,
-                        bottom: 20,
-                      ),
-                      child: CategoryList(
-                        category: interests[index],
-                        details: interestsCategoryMap[interests[index]] ?? [],
-                      ),
-                    );
-                  }),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          shadowColor: Colors.black,
-          elevation: 8,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),
+            child: Column(
               children: [
-                RoundedButton(
-                  width: 70,
-                  height: 35,
-                  text: "Next",
-                  fontSize: 14,
-                  fontColor: Theme.of(context).colorScheme.surface,
-                  fontWeight: FontWeight.w500,
-                  backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-                  isActive: _isNextActive(
-                      ref.watch(userInfoProvider).userInfo.interests),
-                  onTap: () => {},
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: ScreenGuideText(
+                    title: "What do you want to see on Twitter?",
+                    guideText:
+                        "Interests are used to personalize your experience and will be visible on your profile.",
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Divider(color: Colors.grey.shade200),
+                Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        Divider(color: Colors.grey.shade200),
+                    itemCount: interests.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        child: CategoryList(
+                          category: interests[index],
+                          details: interestsCategoryMap[interests[index]] ?? [],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RoundedButton(
+                        width: 70,
+                        height: 35,
+                        text: "Next",
+                        fontSize: 14,
+                        fontColor: Theme.of(context).colorScheme.surface,
+                        fontWeight: FontWeight.w500,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.inverseSurface,
+                        isActive: _isNextActive(
+                            ref.watch(userInfoProvider).userInfo.interests),
+                        onTap: () => _onNextTap(context),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

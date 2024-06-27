@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/interests_screen.dart';
@@ -21,13 +23,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   void _onNextTap(BuildContext context) {
     //TODO: need to password submit logic.
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) => false,
-    );
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _isNextValidator() {
@@ -54,50 +50,56 @@ class _PasswordScreenState extends State<PasswordScreen> {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: const TwitterAppBar(),
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    children: [
-                      const ScreenGuideText(
-                        title: "You'll need a password",
-                        guideText: "Make sure it's 8 characters or more.",
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: [
+                          const ScreenGuideText(
+                            title: "You'll need a password",
+                            guideText: "Make sure it's 8 characters or more.",
+                          ),
+                          const SizedBox(height: 20),
+                          Form(
+                            onChanged: _isNextValidator,
+                            key: _formKey,
+                            child: UserInfoTextField(
+                              controller: _controller,
+                              labelText: "Password",
+                              floatingLabelText: "Password",
+                              validator: FormValidator.passwordValidator,
+                              guideText: "More than 8 characters",
+                              isObscure: true,
+                              textInputType: TextInputType.text,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
-                      Form(
-                        onChanged: _isNextValidator,
-                        key: _formKey,
-                        child: UserInfoTextField(
-                          controller: _controller,
-                          labelText: "Password",
-                          floatingLabelText: "Password",
-                          validator: FormValidator.passwordValidator,
-                          guideText: "More than 8 characters",
-                          isObscure: true,
-                          textInputType: TextInputType.text,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                Positioned(
+                  bottom: 30,
+                  left: 30,
+                  right: 30,
+                  child: RoundedButton(
+                    text: "Next",
+                    isActive: _isNextActive,
+                    fontColor: Theme.of(context).colorScheme.surface,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.inverseSurface,
+                    onTap: () => _onNextTap(context),
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              bottom: 30,
-              left: 30,
-              right: 30,
-              child: RoundedButton(
-                text: "Next",
-                isActive: _isNextActive,
-                fontColor: Theme.of(context).colorScheme.surface,
-                backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-                onTap: () => _onNextTap(context),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
