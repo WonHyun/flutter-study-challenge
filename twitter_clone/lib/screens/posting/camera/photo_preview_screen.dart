@@ -48,8 +48,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
         ),
       ],
     );
-    Navigator.pop(context);
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   @override
@@ -78,7 +77,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.pop(context, false),
                     icon: const FaIcon(
                       FontAwesomeIcons.trash,
                       color: Colors.white,

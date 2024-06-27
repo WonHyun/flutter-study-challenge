@@ -24,23 +24,30 @@ class _CameraScreenState extends State<CameraScreen>
   CameraLensDirection _currentDirection = CameraLensDirection.back;
   FlashMode _flashMode = FlashMode.off;
 
-  bool _itWillBeDispose = false;
+  bool _isNoCameraMode = false;
 
   Future<void> initCamera() async {
-    final cameras = await availableCameras();
-    if (cameras.isEmpty) return;
+    try {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) return;
 
-    final selectedCamera = cameras
-        .where((camera) => camera.lensDirection == _currentDirection)
-        .first;
+      final selectedCamera = cameras
+          .where((camera) => camera.lensDirection == _currentDirection)
+          .first;
 
-    _cameraController = CameraController(
-      selectedCamera,
-      ResolutionPreset.max,
-    );
-    await _cameraController?.initialize();
-    await _cameraController?.setFlashMode(_flashMode);
-    setState(() {});
+      _cameraController = CameraController(
+        selectedCamera,
+        ResolutionPreset.max,
+      );
+      await _cameraController?.initialize();
+      await _cameraController?.setFlashMode(_flashMode);
+      setState(() {});
+    } catch (err) {
+      print(err);
+      setState(() {
+        _isNoCameraMode = true;
+      });
+    }
   }
 
   Future<void> _takePhoto() async {
@@ -49,12 +56,15 @@ class _CameraScreenState extends State<CameraScreen>
 
     if (mounted) {
       if (photo != null) {
-        Navigator.push(
+        final isSelectPhoto = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => PhotoPreviewScreen(photo: photo),
           ),
         );
+        if (isSelectPhoto && mounted) {
+          Navigator.pop(context);
+        }
       }
     }
   }
@@ -95,7 +105,6 @@ class _CameraScreenState extends State<CameraScreen>
           .toList();
       postingNotifier.addMedias(medias);
       _cameraController?.dispose();
-      _itWillBeDispose = true;
       Navigator.pop(context);
     }
   }
@@ -115,17 +124,15 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    // if (mounted &&
-    //     _cameraController != null &&
-    //     _cameraController!.value.isInitialized) {
-    //   if (state == AppLifecycleState.inactive) {
-    //     _cameraController?.dispose();
-    //   } else if (state == AppLifecycleState.resumed) {
-    //     if (!_itWillBeDispose) {
-    //       initCamera();
-    //     }
-    //   }
-    // }
+    if (mounted &&
+        _cameraController != null &&
+        _cameraController!.value.isInitialized) {
+      if (state == AppLifecycleState.inactive) {
+        _cameraController?.dispose();
+      } else if (state == AppLifecycleState.resumed) {
+        initCamera();
+      }
+    }
   }
 
   @override
@@ -138,22 +145,6 @@ class _CameraScreenState extends State<CameraScreen>
               !_cameraController!.value.isInitialized) {
             return Stack(
               children: [
-                const Positioned.fill(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Initializing Camera...",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      CircularProgressIndicator.adaptive(strokeWidth: 5),
-                    ],
-                  ),
-                ),
                 AppBar(
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.white,
@@ -165,6 +156,51 @@ class _CameraScreenState extends State<CameraScreen>
                     ),
                   ),
                 ),
+                if (_isNoCameraMode)
+                  Positioned.fill(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Select Image from Gallery",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            return IconButton(
+                              onPressed: () => _showGallery(ref),
+                              icon: const Icon(
+                                FontAwesomeIcons.image,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  const Positioned.fill(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Initializing Camera...",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        CircularProgressIndicator.adaptive(strokeWidth: 5),
+                      ],
+                    ),
+                  ),
               ],
             );
           } else {
@@ -232,22 +268,24 @@ class _CameraScreenState extends State<CameraScreen>
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Consumer(builder: (context, ref, child) {
-                        return Expanded(
-                          child: GestureDetector(
-                            onTap: () => _showGallery(ref),
-                            child: Text(
-                              "Library",
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                      Consumer(
+                        builder: (context, ref, child) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () => _showGallery(ref),
+                              child: Text(
+                                "Library",
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
