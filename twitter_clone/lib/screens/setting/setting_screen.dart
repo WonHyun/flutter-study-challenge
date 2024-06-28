@@ -100,76 +100,76 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SettingAppBar(
-              title: "Settings",
-              onTapLeading: () => context.pop(),
-            ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 0.5,
-              height: 0,
-            ),
-            ...SettingMenu.values.map(
-              (value) => ListTile(
-                onTap: () => _onTapMenu(context, value),
-                leading: Icon(
-                  value.menuIcon,
-                  size: 18,
-                ),
-                title: Text(
-                  value.menuText,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
+    return Consumer(builder: (context, ref, child) {
+      final settingState = ref.watch(settingProvider);
+      final settingNotifier = ref.read(settingProvider.notifier);
+      return Material(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SettingAppBar(
+                title: "Settings",
+                onTapLeading: () => context.pop(),
+              ),
+              Divider(
+                color: Colors.grey.shade300,
+                thickness: 0.5,
+                height: 0,
+              ),
+              ...SettingMenu.values.map(
+                (value) => ListTile(
+                  onTap: () => _onTapMenu(context, value),
+                  leading: Icon(
+                    value.menuIcon,
+                    size: 18,
+                  ),
+                  title: Text(
+                    value.menuText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(
-                FontAwesomeIcons.palette,
-                size: 18,
-              ),
-              title: const Text(
-                "Theme Mode",
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
+              ListTile(
+                leading: const Icon(
+                  FontAwesomeIcons.palette,
+                  size: 18,
+                ),
+                title: const Text(
+                  "Theme Mode",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                trailing: ThemeModeSelector(
+                  onThemeChanged: settingNotifier.updateThemeMode,
+                  currentThemeMode: settingState.themeMode,
                 ),
               ),
-              trailing: Consumer(builder: (context, ref, child) {
-                final themeState = ref.watch(themeProvider);
-                final themeNotifier = ref.watch(themeProvider.notifier);
-                return ThemeModeSelector(
-                  onThemeChanged: themeNotifier.updateThemeMode,
-                  currentThemeMode: themeState.themeMode,
-                );
-              }),
-            ),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 0.5,
-              height: 0,
-            ),
-            ListTile(
-              onTap: () => _onLogActionTap(context),
-              title: Text(
-                _isAlreadyLogin ? "Log out" : "Log in",
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                ),
+              Divider(
+                color: Colors.grey.shade300,
+                thickness: 0.5,
+                height: 0,
               ),
-              trailing: _isLoading
-                  ? const CupertinoActivityIndicator(radius: 10)
-                  : const SizedBox.shrink(),
-            ),
-          ],
+              ListTile(
+                onTap: () => _onLogActionTap(context),
+                title: Text(
+                  _isAlreadyLogin ? "Log out" : "Log in",
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16,
+                  ),
+                ),
+                trailing: _isLoading
+                    ? const CupertinoActivityIndicator(radius: 10)
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

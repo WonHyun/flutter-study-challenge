@@ -52,3 +52,12 @@ enum ProfileTab {
   threads,
   replies,
 }
+
+enum BoxName {
+  settings,
+}
+
+enum UserSetting {
+  themeMode,
+  privateProfile,
+}
