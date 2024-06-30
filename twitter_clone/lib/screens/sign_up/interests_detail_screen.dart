@@ -5,7 +5,7 @@ import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/value.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 
@@ -36,7 +36,7 @@ class InterestsDetailScreen extends ConsumerWidget {
       onPopInvoked: (didPop) =>
           ref.watch(userInfoProvider.notifier).resetAllInterests(),
       child: Scaffold(
-        appBar: const TwitterAppBar(isUseBackArrowLeading: true),
+        appBar: const ThreadAppBar(isUseBackArrowLeading: true),
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),

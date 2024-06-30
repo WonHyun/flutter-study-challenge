@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/login/login_screen.dart';
 
-class TwitterAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TwitterAppBar({
+class ThreadAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const ThreadAppBar({
     super.key,
     this.leading,
     this.isUseBackArrowLeading = false,
@@ -50,8 +49,8 @@ class TwitterAppBar extends StatelessWidget implements PreferredSizeWidget {
         surfaceTintColor: Colors.transparent,
         leading: _getLeading(context),
         title: const FaIcon(
-          FontAwesomeIcons.twitter,
-          color: ThemeColors.twitterColor,
+          FontAwesomeIcons.threads,
+          size: 32,
         ),
         centerTitle: true,
       ),

@@ -105,4 +105,8 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
       ),
     );
   }
+
+  void resetUserInfo() {
+    state = state.copyWith(userInfo: null);
+  }
 }

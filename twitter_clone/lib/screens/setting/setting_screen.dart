@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,13 +6,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/providers/notifiers/login_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/adaptive_dialog_action.dart';
+import 'package:twitter_clone/screens/login/login_screen.dart';
 import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
 import 'package:twitter_clone/screens/setting/common/theme_mode_selector.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends ConsumerStatefulWidget {
   const SettingScreen({
     super.key,
   });
@@ -20,23 +23,26 @@ class SettingScreen extends StatefulWidget {
   static const routePath = "/setting";
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
+  ConsumerState<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
-  bool _isLoading = false;
-  bool _isAlreadyLogin = true;
-
-  //TODO: will be remove, This is for test
+class _SettingScreenState extends ConsumerState<SettingScreen> {
   Future<void> _onLogout() async {
-    setState(() {
-      _isLoading = true;
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      _isLoading = false;
-      _isAlreadyLogin = !_isAlreadyLogin;
-    });
+    await ref.read(loginProvider.notifier).logout();
+
+    if (ref.read(loginProvider).hasError) {
+      final erroMsg = ref.read(loginProvider).error as FirebaseException;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            showCloseIcon: true,
+            content: Text(erroMsg.message ?? "Something is wrong"),
+          ),
+        );
+      }
+    } else if (mounted) {
+      context.goNamed(LoginScreen.routeName);
+    }
   }
 
   Future<void> _onLogActionTap(BuildContext context) async {
@@ -44,9 +50,9 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (context) {
         return AlertDialog.adaptive(
-          title: Text(_isAlreadyLogin ? "Confirm Logout" : "Login"),
-          content: Text(
-            _isAlreadyLogin ? "Are you sure you want to log out?" : "Do login",
+          title: const Text("Confirm Logout"),
+          content: const Text(
+            "Are you sure you want to log out?",
           ),
           actions: [
             AdaptiveDialogAction(
@@ -64,9 +70,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   Navigator.pop(context);
                   _onLogout();
                 },
-                child: Text(
-                  _isAlreadyLogin ? "Logout" : "Login",
-                  style: const TextStyle(
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(
                     color: Colors.red,
                   ),
                 )),
@@ -100,6 +106,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loginState = ref.watch(loginProvider);
     return Consumer(builder: (context, ref, child) {
       final settingState = ref.watch(settingProvider);
       final settingNotifier = ref.read(settingProvider.notifier);
@@ -154,15 +161,15 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               ListTile(
                 onTap: () => _onLogActionTap(context),
-                title: Text(
-                  _isAlreadyLogin ? "Log out" : "Log in",
-                  style: const TextStyle(
+                title: const Text(
+                  "Log out",
+                  style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.w300,
                     fontSize: 16,
                   ),
                 ),
-                trailing: _isLoading
+                trailing: loginState.isLoading
                     ? const CupertinoActivityIndicator(radius: 10)
                     : const SizedBox.shrink(),
               ),

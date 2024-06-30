@@ -11,12 +11,11 @@ class ThreadApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(settingProvider).themeMode;
     return MaterialApp.router(
-      themeMode: themeState,
+      themeMode: ref.watch(settingProvider).themeMode,
       theme: TwitterTheme.light,
       darkTheme: TwitterTheme.dark,
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

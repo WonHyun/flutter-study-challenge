@@ -8,7 +8,7 @@ import 'package:twitter_clone/models/user.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 
 class PersonalizeAgreementScreen extends ConsumerWidget {
@@ -30,7 +30,7 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
     final userState = ref.watch(userInfoProvider);
     final userNotifier = ref.watch(userInfoProvider.notifier);
     return Scaffold(
-      appBar: const TwitterAppBar(isUseBackArrowLeading: true),
+      appBar: const ThreadAppBar(isUseBackArrowLeading: true),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),

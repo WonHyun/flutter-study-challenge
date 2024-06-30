@@ -7,7 +7,7 @@ import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/password_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/pin_text_field.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
@@ -53,7 +53,7 @@ class _ConfirmationCodeScreenState
       child: GestureDetector(
         onTap: () => _onScaffoldTap(context),
         child: Scaffold(
-          appBar: const TwitterAppBar(isUseBackArrowLeading: true),
+          appBar: const ThreadAppBar(isUseBackArrowLeading: true),
           body: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),

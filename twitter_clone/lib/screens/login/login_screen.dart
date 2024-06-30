@@ -9,7 +9,8 @@ import 'package:twitter_clone/screens/common/horizontal_divider.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
+import 'package:twitter_clone/screens/login/email_login_screen.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
 import 'package:twitter_clone/tests/mock.dart';
 
@@ -28,10 +29,19 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  void _onEmailTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EmailLoginScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TwitterAppBar(),
+      appBar: const ThreadAppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -58,6 +68,13 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RoundedButton(
+                        leading: const FaIcon(FontAwesomeIcons.solidEnvelope,
+                            size: 24),
+                        text: "Continue with Email",
+                        onTap: () => _onEmailTap(context),
+                      ),
+                      const SizedBox(height: 10),
+                      RoundedButton(
                         leading: SvgPicture.asset(
                           googleLogoPath,
                           width: 22,
@@ -65,15 +82,13 @@ class LoginScreen extends StatelessWidget {
                         text: "Continue with Google",
                         onTap: () => {},
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: RoundedButton(
-                          leading:
-                              const FaIcon(FontAwesomeIcons.apple, size: 24),
-                          text: "Continue with Apple",
-                          onTap: () => {},
-                        ),
+                      const SizedBox(height: 10),
+                      RoundedButton(
+                        leading: const FaIcon(FontAwesomeIcons.apple, size: 24),
+                        text: "Continue with Apple",
+                        onTap: () => {},
                       ),
+                      const SizedBox(height: 10),
                       HorizontalDivider(
                           text: "or", color: Colors.grey.shade300),
                       RoundedButton(

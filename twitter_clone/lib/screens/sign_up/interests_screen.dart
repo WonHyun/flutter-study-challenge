@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/value.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/interests_detail_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 
@@ -47,7 +47,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TwitterAppBar(),
+      appBar: const ThreadAppBar(),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),

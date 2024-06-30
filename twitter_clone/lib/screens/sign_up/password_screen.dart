@@ -1,29 +1,47 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
+import 'package:twitter_clone/providers/notifiers/sign_up_notifier.dart';
+import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/interests_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/user_info_text_field.dart';
 import 'package:twitter_clone/util/valid_util.dart';
 
-class PasswordScreen extends StatefulWidget {
+class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  ConsumerState<PasswordScreen> createState() => _PasswordScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
+class _PasswordScreenState extends ConsumerState<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _controller = TextEditingController();
 
   bool _isNextActive = false;
 
-  void _onNextTap(BuildContext context) {
-    //TODO: need to password submit logic.
-    context.goNamed(InterestsScreen.routeName);
+  Future<void> _onNextTap() async {
+    final email = ref.read(userInfoProvider).userInfo.email;
+    await ref.read(signUpProvider.notifier).signUp(email!, _controller.text);
+    if (ref.read(signUpProvider).hasError) {
+      final erroMsg = ref.read(signUpProvider).error as FirebaseException;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            showCloseIcon: true,
+            content: Text(erroMsg.message ?? "Something is wrong"),
+          ),
+        );
+      }
+    } else if (mounted) {
+      context.goNamed(InterestsScreen.routeName);
+    }
   }
 
   void _isNextValidator() {
@@ -46,10 +64,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final signUpState = ref.watch(signUpProvider);
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: const TwitterAppBar(),
+        appBar: const ThreadAppBar(),
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),
@@ -90,11 +109,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   right: 30,
                   child: RoundedButton(
                     text: "Next",
-                    isActive: _isNextActive,
+                    centerWidget: signUpState.isLoading
+                        ? const CupertinoActivityIndicator()
+                        : null,
+                    isActive: _isNextActive && !signUpState.isLoading,
                     fontColor: Theme.of(context).colorScheme.surface,
                     backgroundColor:
                         Theme.of(context).colorScheme.inverseSurface,
-                    onTap: () => _onNextTap(context),
+                    onTap: () => _onNextTap(),
                   ),
                 ),
               ],

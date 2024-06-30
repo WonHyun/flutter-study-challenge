@@ -9,7 +9,7 @@ import 'package:twitter_clone/providers/notifiers/user_info_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
-import 'package:twitter_clone/screens/common/twitter_app_bar.dart';
+import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/confirmation_code_screen.dart';
 import 'package:twitter_clone/screens/sign_up/personalize_agreement_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/bottom_date_picker_bar.dart';
@@ -143,7 +143,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       child: Consumer(builder: (context, ref, child) {
         final userNotifier = ref.watch(userInfoProvider.notifier);
         return Scaffold(
-          appBar: TwitterAppBar(
+          appBar: ThreadAppBar(
             isUseCancelLeading: !_isReadyToSignUp,
             isUseBackArrowLeading: _isReadyToSignUp,
           ),
