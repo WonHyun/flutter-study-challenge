@@ -27,6 +27,7 @@ class _ConfirmationCodeScreenState
   }
 
   void _onNextTap(BuildContext context) {
+    ref.read(pinVerifyProvider.notifier).resetVerifyState();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
