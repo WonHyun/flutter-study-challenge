@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/providers/notifiers/login_notifier.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
@@ -75,100 +76,107 @@ class _EmailLoginScreenState extends ConsumerState<EmailLoginScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: const ThreadAppBar(isUseBackArrowLeading: true),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              const Flexible(
-                flex: 2,
-                child: Center(
-                  child: Text(
-                    "Log in with Email or Phone number",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 5,
-                child: Form(
-                  key: _formKey,
-                  onChanged: _isNextValidator,
-                  child: Column(
-                    children: [
-                      UserInfoTextField(
-                        controller: _emailController,
-                        isEnabled: true,
-                        textInputType: TextInputType.emailAddress,
-                        labelText: "Phone number or email address",
-                        guideText: "Phone number or email address",
-                        floatingLabelText: "Email",
-                        validator: FormValidator.emailValidator,
-                        onSaved: (value) => {},
-                      ),
-                      const SizedBox(height: 10),
-                      UserInfoTextField(
-                        controller: _passwordController,
-                        labelText: "Password",
-                        floatingLabelText: "Password",
-                        validator: FormValidator.passwordValidator,
-                        guideText: "More than 8 characters",
-                        isObscure: true,
-                        textInputType: TextInputType.text,
-                      ),
-                      const SizedBox(height: 26),
-                      RoundedButton(
-                        centerWidget: loginState.isLoading
-                            ? const CupertinoActivityIndicator()
-                            : null,
-                        text: "Log in",
-                        onTap: _onLoginTap,
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        fontColor: Colors.white,
-                        isActive: _isNextActive && !loginState.isLoading,
-                      ),
-                      const SizedBox(height: 20),
-                      LinkedText(
-                        text: "Forgot password?",
-                        color: Theme.of(context).colorScheme.inverseSurface,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              RoundedButton(
-                text: "Create new acctount",
-                onTap: () => context.pushNamed(CreateAccountScreen.routeName),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.meta,
-                        size: 22,
-                        color: Colors.grey.shade600,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Meta",
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: ScreenWidth.sm),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Flexible(
+                    flex: 2,
+                    child: Center(
+                      child: Text(
+                        "Log in with Email or Phone number",
                         style: TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  Flexible(
+                    flex: 5,
+                    child: Form(
+                      key: _formKey,
+                      onChanged: _isNextValidator,
+                      child: Column(
+                        children: [
+                          UserInfoTextField(
+                            controller: _emailController,
+                            isEnabled: true,
+                            textInputType: TextInputType.emailAddress,
+                            labelText: "Phone number or email address",
+                            guideText: "Phone number or email address",
+                            floatingLabelText: "Email",
+                            validator: FormValidator.emailValidator,
+                            onSaved: (value) => {},
+                          ),
+                          const SizedBox(height: 10),
+                          UserInfoTextField(
+                            controller: _passwordController,
+                            labelText: "Password",
+                            floatingLabelText: "Password",
+                            validator: FormValidator.passwordValidator,
+                            guideText: "More than 8 characters",
+                            isObscure: true,
+                            textInputType: TextInputType.text,
+                          ),
+                          const SizedBox(height: 26),
+                          RoundedButton(
+                            centerWidget: loginState.isLoading
+                                ? const CupertinoActivityIndicator()
+                                : null,
+                            text: "Log in",
+                            onTap: _onLoginTap,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            fontColor: Colors.white,
+                            isActive: _isNextActive && !loginState.isLoading,
+                          ),
+                          const SizedBox(height: 20),
+                          LinkedText(
+                            text: "Forgot password?",
+                            color: Theme.of(context).colorScheme.inverseSurface,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  RoundedButton(
+                    text: "Create new acctount",
+                    onTap: () =>
+                        context.pushNamed(CreateAccountScreen.routeName),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.meta,
+                            size: 22,
+                            color: Colors.grey.shade600,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            "Meta",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
