@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/theme.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/setting_notifier.dart';
 import 'package:twitter_clone/router.dart';
 
 class ThreadApp extends ConsumerWidget {

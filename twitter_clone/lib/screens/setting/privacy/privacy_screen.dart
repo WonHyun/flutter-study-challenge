@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/setting_notifier.dart';
 import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
 import 'package:twitter_clone/screens/setting/common/slash_heart_icon.dart';
 

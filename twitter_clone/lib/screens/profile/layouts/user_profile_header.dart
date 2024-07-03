@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/home/components/many_circle_avatar.dart';
+import 'package:twitter_clone/util/generate_util.dart';
 
 class UserProfileHeader extends StatelessWidget {
   const UserProfileHeader({
@@ -34,7 +35,10 @@ class UserProfileHeader extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        user.userId,
+                        UserGenerator.generateUserId(
+                          baseId: user.userName,
+                          selector: ".",
+                        ),
                         style: const TextStyle(fontSize: 16),
                       ),
                       const SizedBox(width: 10),

@@ -30,3 +30,9 @@ class SettingNotifier extends Notifier<SettingState> {
     );
   }
 }
+
+final settingProvider = NotifierProvider<SettingNotifier, SettingState>(
+  () => SettingNotifier(
+    repository: SettingRepository(),
+  ),
+);

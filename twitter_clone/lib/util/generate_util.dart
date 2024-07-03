@@ -15,17 +15,22 @@ final faker = Faker();
 class UserGenerator {
   static String generateUserId({
     String? baseId,
+    String? selector,
   }) {
     late final String spaceSeperator;
-    switch (faker.randomGenerator.integer(3)) {
-      case 0:
-        spaceSeperator = "_";
-      case 1:
-        spaceSeperator = ".";
-      case 2:
-        spaceSeperator = "";
-      default:
-        spaceSeperator = "";
+    if (selector != null) {
+      spaceSeperator = selector;
+    } else {
+      switch (faker.randomGenerator.integer(3)) {
+        case 0:
+          spaceSeperator = "_";
+        case 1:
+          spaceSeperator = ".";
+        case 2:
+          spaceSeperator = "";
+        default:
+          spaceSeperator = "";
+      }
     }
 
     return baseId == null

@@ -6,7 +6,6 @@ import 'package:twitter_clone/providers/notifiers/main_screen_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/pin_verify_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
-import 'package:twitter_clone/providers/notifiers/setting_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/user_search_notifier.dart';
 import 'package:twitter_clone/providers/states/activity_state.dart';
@@ -14,9 +13,7 @@ import 'package:twitter_clone/providers/states/main_screen_state.dart';
 import 'package:twitter_clone/providers/states/pin_verify_state.dart';
 import 'package:twitter_clone/providers/states/post_state.dart';
 import 'package:twitter_clone/providers/states/posting_state.dart';
-import 'package:twitter_clone/providers/states/setting_state.dart';
 import 'package:twitter_clone/providers/states/user_search_state.dart';
-import 'package:twitter_clone/repository/setting_repository.dart';
 import 'package:twitter_clone/tests/mock.dart';
 import 'package:twitter_clone/util/date_util.dart';
 import 'package:twitter_clone/util/generate_util.dart';
@@ -83,10 +80,4 @@ final searchProvider =
       UserSearchState(result: UserMock.users),
     );
   },
-);
-
-final settingProvider = NotifierProvider<SettingNotifier, SettingState>(
-  () => SettingNotifier(
-    repository: SettingRepository(),
-  ),
 );

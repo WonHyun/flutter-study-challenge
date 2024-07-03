@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
 import 'package:twitter_clone/providers/notifiers/login_notifier.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/setting_notifier.dart';
 import 'package:twitter_clone/screens/common/adaptive_dialog_action.dart';
 import 'package:twitter_clone/screens/login/login_screen.dart';
 import 'package:twitter_clone/screens/setting/common/setting_app_bar.dart';
