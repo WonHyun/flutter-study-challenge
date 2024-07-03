@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/models/image_item.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/posting/camera/camera_screen.dart';
 
@@ -47,9 +48,9 @@ class _PostingViewState extends State<PostingView> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: IntrinsicHeight(
           child: Consumer(builder: (context, ref, child) {
-            final userState = ref.watch(userInfoProvider);
+            final userState = ref.watch(userProvider);
             final postingState = ref.watch(postingProvider);
-            final postingNotifier = ref.watch(postingProvider.notifier);
+            final postingNotifier = ref.read(postingProvider.notifier);
             return Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -59,7 +60,7 @@ class _PostingViewState extends State<PostingView> {
                     CircleAvatar(
                       radius: 25,
                       foregroundImage: NetworkImage(
-                        userState.userInfo.avatarPath ?? "",
+                        userState.value?.avatarPath ?? "",
                       ),
                     ),
                     Expanded(
@@ -77,7 +78,7 @@ class _PostingViewState extends State<PostingView> {
                     CircleAvatar(
                       radius: 15,
                       foregroundImage: NetworkImage(
-                        userState.userInfo.avatarPath ?? "",
+                        userState.value?.avatarPath ?? "",
                       ),
                     ),
                   ],
@@ -94,7 +95,7 @@ class _PostingViewState extends State<PostingView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              userState.userInfo.userId,
+                              userState.value?.userId ?? "",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,

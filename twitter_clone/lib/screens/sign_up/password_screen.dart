@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/providers/notifiers/sign_up_notifier.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/sign_up/interests_screen.dart';
@@ -27,7 +27,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen> {
   bool _isNextActive = false;
 
   Future<void> _onNextTap() async {
-    final email = ref.read(userInfoProvider).userInfo.email;
+    final email = ref.read(userProvider).value?.email;
     await ref.read(signUpProvider.notifier).signUp(email!, _controller.text);
     if (ref.read(signUpProvider).hasError) {
       final erroMsg = ref.read(signUpProvider).error as FirebaseException;

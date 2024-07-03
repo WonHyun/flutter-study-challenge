@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/screens/profile/components/persistent_tab_bar_header.dart';
 import 'package:twitter_clone/screens/profile/layouts/profile_post_list.dart';
 import 'package:twitter_clone/screens/profile/layouts/user_profile_header.dart';
@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     return Material(
       child: Consumer(
         builder: (context, ref, child) {
-          final userState = ref.watch(userInfoProvider);
+          final userState = ref.watch(userProvider);
           return NestedScrollView(
             physics: const BouncingScrollPhysics(),
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -84,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       horizontal: 15,
                       vertical: 10,
                     ),
-                    child: UserProfileHeader(user: userState.userInfo),
+                    child: UserProfileHeader(user: userState.value!),
                   ),
                 ),
                 SliverPersistentHeader(

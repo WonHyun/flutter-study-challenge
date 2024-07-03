@@ -7,7 +7,7 @@ import 'package:twitter_clone/providers/notifiers/pin_verify_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/setting_notifier.dart';
-import 'package:twitter_clone/providers/notifiers/user_info_notifier.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/user_search_notifier.dart';
 import 'package:twitter_clone/providers/states/activity_state.dart';
 import 'package:twitter_clone/providers/states/main_screen_state.dart';
@@ -15,22 +15,11 @@ import 'package:twitter_clone/providers/states/pin_verify_state.dart';
 import 'package:twitter_clone/providers/states/post_state.dart';
 import 'package:twitter_clone/providers/states/posting_state.dart';
 import 'package:twitter_clone/providers/states/setting_state.dart';
-import 'package:twitter_clone/providers/states/user_info_state.dart';
 import 'package:twitter_clone/providers/states/user_search_state.dart';
 import 'package:twitter_clone/repository/setting_repository.dart';
 import 'package:twitter_clone/tests/mock.dart';
 import 'package:twitter_clone/util/date_util.dart';
 import 'package:twitter_clone/util/generate_util.dart';
-
-final userInfoProvider =
-    StateNotifierProvider<UserInfoNotifier, UserInfoState>((ref) {
-  return UserInfoNotifier(
-    UserInfoState(
-      // TODO: should be replace to login user info
-      userInfo: UserMock.me,
-    ),
-  );
-});
 
 final pinVerifyProvider =
     StateNotifierProvider<PinVerifyNotifier, PinVerifyState>((ref) {
@@ -63,9 +52,9 @@ final postingProvider = StateNotifierProvider<PostingNotifier, PostingState>(
       state: PostingState(
         post: Post(
           postId: uuid.v4(),
-          authorId: ref.watch(userInfoProvider).userInfo.userId,
-          authorName: ref.watch(userInfoProvider).userInfo.userName ?? "",
-          authorImgPath: ref.watch(userInfoProvider).userInfo.avatarPath ?? "",
+          authorId: ref.read(userProvider).value?.userId ?? "",
+          authorName: ref.read(userProvider).value?.userName ?? "",
+          authorImgPath: ref.read(userProvider).value?.avatarPath ?? "",
         ),
       ),
       ref: ref,

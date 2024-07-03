@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/color.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
@@ -46,9 +47,9 @@ class _ConfirmationCodeScreenState
 
   @override
   Widget build(BuildContext context) {
-    final userInfoState = ref.watch(userInfoProvider);
+    final userInfoState = ref.watch(userProvider);
     final pinVerifyState = ref.watch(pinVerifyProvider);
-    final pinVerifyNotifier = ref.watch(pinVerifyProvider.notifier);
+    final pinVerifyNotifier = ref.read(pinVerifyProvider.notifier);
     return PopScope(
       onPopInvoked: (didPop) => pinVerifyNotifier.resetVerifyState(),
       child: GestureDetector(
@@ -70,7 +71,7 @@ class _ConfirmationCodeScreenState
                             ScreenGuideText(
                               title: "We sent you a code",
                               guideText:
-                                  "Enter it below to verify\n${userInfoState.userInfo.email}.",
+                                  "Enter it below to verify\n${userInfoState.value?.email}.",
                             ),
                             const SizedBox(height: 20),
                             PinTextField(

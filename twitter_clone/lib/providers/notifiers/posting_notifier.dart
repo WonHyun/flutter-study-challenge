@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/providers/states/posting_state.dart';
 import 'package:twitter_clone/util/generate_util.dart';
@@ -58,16 +59,16 @@ class PostingNotifier extends StateNotifier<PostingState> {
   }
 
   void completePosting() {
-    final userInfo = ref.watch(userInfoProvider).userInfo;
+    final userInfo = ref.watch(userProvider).value;
     final postNotifier = ref.watch(postProvider.notifier);
 
     state = state.copyWith(
       post: state.post.copyWith(
         postId: uuid.v4(),
-        authorId: userInfo.userId,
-        authorName: userInfo.userName,
-        authorImgPath: userInfo.avatarPath,
-        isCertificatedUser: userInfo.isCertificatedUser,
+        authorId: userInfo?.userId,
+        authorName: userInfo?.userName,
+        authorImgPath: userInfo?.avatarPath,
+        isCertificatedUser: userInfo?.isCertificatedUser,
         timestamp: DateTime.now(),
       ),
     );

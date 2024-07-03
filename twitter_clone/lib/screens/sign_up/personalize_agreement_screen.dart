@@ -5,7 +5,7 @@ import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/strings.dart';
 import 'package:twitter_clone/models/user_profile.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/thread_app_bar.dart';
@@ -27,8 +27,8 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userState = ref.watch(userInfoProvider);
-    final userNotifier = ref.watch(userInfoProvider.notifier);
+    final userState = ref.watch(userProvider);
+    final userNotifier = ref.read(userProvider.notifier);
     return Scaffold(
       appBar: const ThreadAppBar(isUseBackArrowLeading: true),
       body: Center(
@@ -74,7 +74,7 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
                             ),
                             const SizedBox(width: 10),
                             CupertinoSwitch(
-                              value: userState.userInfo.agreementStatus[
+                              value: userState.value?.agreementStatus[
                                       PolicyType.personalize] ??
                                   false,
                               onChanged: (value) =>
@@ -103,12 +103,12 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
                   child: RoundedButton(
                     text: "Next",
                     isActive: userState
-                            .userInfo.agreementStatus[PolicyType.personalize] ??
+                            .value?.agreementStatus[PolicyType.personalize] ??
                         false,
                     fontColor: Theme.of(context).colorScheme.surface,
                     backgroundColor:
                         Theme.of(context).colorScheme.inverseSurface,
-                    onTap: () => _onNextTap(context, userState.userInfo),
+                    onTap: () => _onNextTap(context, userState.value!),
                   ),
                 ),
               ],

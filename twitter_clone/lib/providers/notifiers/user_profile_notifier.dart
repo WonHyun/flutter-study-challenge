@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/models/user_profile.dart';
-import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/repository/authentication_repository.dart';
 import 'package:twitter_clone/repository/user_profile_repository.dart';
 
@@ -29,24 +29,132 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
   }
 
   Future<void> createProfile(UserCredential credential) async {
-    if (credential.user == null) {
-      throw Exception("Account not created");
-    }
+    if (credential.user == null || state.value == null) return;
     state = const AsyncValue.loading();
-    final profile = ref.read(userInfoProvider).userInfo.copyWith(
-          userId: credential.user?.uid,
-          email: credential.user?.email,
-          avatarPath: credential.user?.photoURL,
-          createdAt: DateTime.now(),
-        );
-    await _userRepository.createProfile(profile);
-    state = AsyncData(profile);
+    state = AsyncData(
+      state.value!.copyWith(
+        userId: credential.user?.uid,
+        email: credential.user?.email,
+        avatarPath: credential.user?.photoURL,
+        createdAt: DateTime.now(),
+      ),
+    );
+    await _userRepository.createProfile(state.value!);
   }
 
   Future<void> updateUserProfileInfo(Map<String, dynamic> data) async {
     if (state.value == null) return;
-    state = AsyncValue.data(state.value!.copyWithMap(map: data));
+    state = const AsyncValue.loading();
     await _userRepository.updateProfileInfo(state.value!.userId, data);
+    state = AsyncValue.data(state.value!.copyWithMap(map: data));
+  }
+
+  void updateUserName(String? userName) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        userName: userName,
+      ),
+    );
+  }
+
+  void updateEmail(String? email) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        email: email,
+      ),
+    );
+  }
+
+  void updatePhoneNum(String? phoneNum) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        phoneNum: phoneNum,
+      ),
+    );
+  }
+
+  void updateBirthDate(DateTime? birthday) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        birthday: birthday,
+      ),
+    );
+  }
+
+  void updateAgreementStatus(PolicyType policyType, bool isAgree) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        agreementStatus: {
+          ...state.value!.agreementStatus,
+          policyType: isAgree,
+        },
+      ),
+    );
+  }
+
+  void updateInterests(Map<String, List<String>> interests) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        interests: interests,
+      ),
+    );
+  }
+
+  void updateDetails(String category, List<String> details) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        interests: {
+          ...state.value!.interests,
+          category: details,
+        },
+      ),
+    );
+  }
+
+  void addDetail(String category, String detail) {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        interests: {
+          ...state.value!.interests,
+          category: [...state.value!.interests[category] ?? [], detail],
+        },
+      ),
+    );
+  }
+
+  void removeDetail(String category, String detail) {
+    if (state.value == null || state.value!.interests[category] == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        interests: {
+          ...state.value!.interests,
+          category: state.value!.interests[category]!
+              .where((value) => value != detail)
+              .toList(),
+        },
+      ),
+    );
+  }
+
+  void resetAllInterests() {
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
+        interests: {},
+      ),
+    );
+  }
+
+  void resetUserInfo() {
+    state = AsyncData(UserProfile.empty());
   }
 }
 

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/value.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
@@ -26,7 +26,10 @@ class InterestsDetailScreen extends ConsumerWidget {
     return totalCount >= _least;
   }
 
-  void _onNextTap(BuildContext context) {
+  Future<void> _onNextTap(BuildContext context, WidgetRef ref) async {
+    ref.read(userProvider.notifier).updateUserProfileInfo({
+      "interests": ref.read(userProvider).value?.interests,
+    });
     context.goNamed(HomeScreen.routeName);
   }
 
@@ -34,7 +37,7 @@ class InterestsDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return PopScope(
       onPopInvoked: (didPop) =>
-          ref.watch(userInfoProvider.notifier).resetAllInterests(),
+          ref.read(userProvider.notifier).resetAllInterests(),
       child: Scaffold(
         appBar: const ThreadAppBar(isUseBackArrowLeading: true),
         body: Center(
@@ -103,8 +106,8 @@ class InterestsDetailScreen extends ConsumerWidget {
                         backgroundColor:
                             Theme.of(context).colorScheme.inverseSurface,
                         isActive: _isNextActive(
-                            ref.watch(userInfoProvider).userInfo.interests),
-                        onTap: () => _onNextTap(context),
+                            ref.watch(userProvider).value!.interests),
+                        onTap: () => _onNextTap(context, ref),
                       ),
                     ],
                   ),
@@ -148,8 +151,8 @@ class CategoryList extends StatelessWidget {
               .map(
                 (detail) => Consumer(
                   builder: (context, ref, child) {
-                    final userInfo = ref.watch(userInfoProvider).userInfo;
-                    final userNotifier = ref.watch(userInfoProvider.notifier);
+                    final userInfo = ref.watch(userProvider).value!;
+                    final userNotifier = ref.read(userProvider.notifier);
                     final isSelected =
                         userInfo.interests[category]?.contains(detail) ?? false;
 
