@@ -4,13 +4,27 @@ import 'package:twitter_clone/global/extensions.dart';
 import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 
-class PostingModalBottomPanel extends ConsumerWidget {
+class PostingModalBottomPanel extends ConsumerStatefulWidget {
   const PostingModalBottomPanel({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PostingModalBottomPanel> createState() =>
+      _PostingModalBottomPanelState();
+}
+
+class _PostingModalBottomPanelState
+    extends ConsumerState<PostingModalBottomPanel> {
+  Future<void> _onPostTap(WidgetRef ref) async {
+    await ref.read(postingProvider.notifier).completePosting();
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final postingState = ref.watch(postingProvider);
     final postingNotifier = ref.read(postingProvider.notifier);
     return Positioned(
@@ -40,16 +54,15 @@ class PostingModalBottomPanel extends ConsumerWidget {
                   Theme.of(context).colorScheme.inverseSurface.withOpacity(0.8),
             ),
             LinkedText(
-              onTap: postingState.value?.content.isEmpty ?? true
+              onTap: (postingState.value?.content.isEmpty ?? true) ||
+                      postingState.isLoading
                   ? null
-                  : () {
-                      postingNotifier.completePosting();
-                      Navigator.pop(context);
-                    },
+                  : () => _onPostTap(ref),
               text: "Post",
               fontWeight: FontWeight.w700,
               fontSize: 20,
-              color: postingState.value?.content.isEmpty ?? true
+              color: (postingState.value?.content.isEmpty ?? true) ||
+                      postingState.isLoading
                   ? Colors.grey
                   : Theme.of(context).colorScheme.primary.withOpacity(0.8),
             ),

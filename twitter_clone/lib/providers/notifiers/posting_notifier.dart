@@ -64,12 +64,11 @@ class PostingNotifier extends AsyncNotifier<Post> {
   Future<void> completePosting() async {
     if (state.value == null) return;
     state = const AsyncLoading();
-    state = AsyncData(
-      state.value!.copyWith(
-        timestamp: DateTime.now(),
-      ),
-    );
-    await _repository.createPost(state.value!);
+    state = await AsyncValue.guard(() async {
+      final newPost = state.value!.copyWith(timestamp: DateTime.now());
+      await _repository.createPost(newPost);
+      return newPost;
+    });
   }
 
   @override

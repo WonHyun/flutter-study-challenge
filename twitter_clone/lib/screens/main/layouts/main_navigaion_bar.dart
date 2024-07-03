@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
@@ -49,6 +50,8 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
     if (type == MainScreenType.posting) {
       await showModalBottomSheet(
         isScrollControlled: true,
+        enableDrag: !ref.watch(postingProvider).isLoading,
+        isDismissible: !ref.watch(postingProvider).isLoading,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -57,9 +60,10 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
           return const PostingModal();
         },
       ).then((value) {
+        ref.read(postingProvider.notifier).resetPostingInfo();
+        screenNotifier.updateCurrentScreen(MainScreenType.home);
+        ref.read(postProvider.notifier).refresh();
         if (mounted) {
-          ref.read(postingProvider.notifier).resetPostingInfo();
-          screenNotifier.updateCurrentScreen(MainScreenType.home);
           context.go(_getRoutePath(MainScreenType.home));
         }
       });

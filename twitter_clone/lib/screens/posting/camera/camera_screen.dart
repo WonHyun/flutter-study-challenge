@@ -127,21 +127,21 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (mounted) {
-      switch (state) {
-        case AppLifecycleState.paused:
-          if (_cameraController != null &&
-              _cameraController!.value.isInitialized) {
-            await _cameraController!.dispose();
-            _cameraController = null;
-          }
-        case AppLifecycleState.resumed:
-          if (_cameraController == null) {
-            await initCamera();
-          }
-        default:
-      }
-    }
+    // if (mounted) {
+    //   switch (state) {
+    //     case AppLifecycleState.paused:
+    //       if (_cameraController != null &&
+    //           _cameraController!.value.isInitialized) {
+    //         await _cameraController!.dispose();
+    //         _cameraController = null;
+    //       }
+    //     case AppLifecycleState.resumed:
+    //       if (_cameraController == null) {
+    //         await initCamera();
+    //       }
+    //     default:
+    //   }
+    // }
   }
 
   @override
