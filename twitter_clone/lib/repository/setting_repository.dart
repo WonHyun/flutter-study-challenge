@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:twitter_clone/global/enum.dart';
 
@@ -31,3 +32,5 @@ class SettingRepository {
     return isPrivateProfileMode;
   }
 }
+
+final settingRepo = Provider((ref) => SettingRepository());

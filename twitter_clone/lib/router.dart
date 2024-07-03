@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/repository/authentication_repository.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
@@ -46,7 +46,8 @@ final routerProvider = Provider(
           builder: (context, state) {
             final extra = state.extra;
             return CreateAccountScreen(
-              initUserInfo: extra != null && extra is User ? extra : null,
+              initUserInfo:
+                  extra != null && extra is UserProfile ? extra : null,
             );
           },
         ),

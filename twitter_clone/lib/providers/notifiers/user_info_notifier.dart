@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/providers/states/user_info_state.dart';
 
 class UserInfoNotifier extends StateNotifier<UserInfoState> {
   UserInfoNotifier(super.state);
 
-  void updateUserInfo(User userInfo) {
+  void updateUserInfo(UserProfile userInfo) {
     state = state.copyWith(userInfo: userInfo);
   }
 
@@ -34,10 +34,10 @@ class UserInfoNotifier extends StateNotifier<UserInfoState> {
     );
   }
 
-  void updateBirthDate(DateTime? birthdate) {
+  void updateBirthDate(DateTime? birthday) {
     state = state.copyWith(
       userInfo: state.userInfo.copyWith(
-        birthDate: birthdate,
+        birthday: birthday,
       ),
     );
   }

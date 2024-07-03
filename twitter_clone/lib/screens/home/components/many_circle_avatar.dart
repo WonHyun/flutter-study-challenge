@@ -30,7 +30,7 @@ class ManyCircleAvatar extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 15,
                       foregroundImage:
-                          NetworkImage(userState.userInfo.userImgPath ?? ""),
+                          NetworkImage(userState.userInfo.avatarPath ?? ""),
                     ),
                   ),
                 ],

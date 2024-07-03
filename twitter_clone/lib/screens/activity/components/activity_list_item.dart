@@ -32,7 +32,7 @@ class ActivityListItem extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 16,
                   foregroundImage: NetworkImage(
-                    activity.user.userImgPath ?? "",
+                    activity.user.avatarPath ?? "",
                   ),
                 ),
               ),

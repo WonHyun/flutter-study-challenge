@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/screens/home/components/certification_mark.dart';
 import 'package:twitter_clone/util/format_util.dart';
 
@@ -9,7 +9,7 @@ class SearchUserListItem extends StatelessWidget {
     required this.user,
   });
 
-  final User user;
+  final UserProfile user;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SearchUserListItem extends StatelessWidget {
         CircleAvatar(
           radius: 18,
           foregroundImage: NetworkImage(
-            user.userImgPath ?? "",
+            user.avatarPath ?? "",
           ),
         ),
         const SizedBox(width: 20),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/strings.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
@@ -16,7 +16,7 @@ class PersonalizeAgreementScreen extends ConsumerWidget {
     super.key,
   });
 
-  void _onNextTap(BuildContext context, User userInfo) {
+  void _onNextTap(BuildContext context, UserProfile userInfo) {
     Navigator.push(
       context,
       MaterialPageRoute(

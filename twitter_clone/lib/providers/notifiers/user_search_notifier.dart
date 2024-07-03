@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/providers/states/user_search_state.dart';
 import 'package:twitter_clone/util/generate_util.dart';
 
 class UserSearchNotifier extends StateNotifier<UserSearchState> {
   UserSearchNotifier(super.state);
 
-  void updateResult(List<User> result) {
+  void updateResult(List<UserProfile> result) {
     state = state.copyWith(result: result);
   }
 

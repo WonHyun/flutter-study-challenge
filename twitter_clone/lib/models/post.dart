@@ -67,4 +67,47 @@ class Post {
       commentTotalCounts: commentTotalCounts ?? this.commentTotalCounts,
     );
   }
+
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'postId': postId,
+  //     'authorId': authorId,
+  //     'authorName': authorName,
+  //     'authorImgPath': authorImgPath,
+  //     'isCertificatedUser': isCertificatedUser,
+  //     'content': content,
+  //     'media': media?.map((m) => m.toJson()).toList(),
+  //     'timestamp': timestamp?.toIso8601String(),
+  //     'isLiked': isLiked,
+  //     'comments': comments.map((c) => c.toJson()).toList(),
+  //     'likes': likes,
+  //     'shares': shares,
+  //     'isAllowedComment': isAllowedComment,
+  //     'commentTotalCounts': commentTotalCounts,
+  //   };
+  // }
+
+  // Post fromJson(Map<String, dynamic> json) {
+  //   return Post(
+  //     postId: json['postId'],
+  //     authorId: json['authorId'],
+  //     authorName: json['authorName'],
+  //     authorImgPath: json['authorImgPath'],
+  //     isCertificatedUser: json['isCertificatedUser'],
+  //     content: json['content'],
+  //     media: json['media'] != null
+  //         ? List<MediaItem>.from(
+  //             json['media'].map((m) => MediaItem.fromJson(m)))
+  //         : null,
+  //     timestamp:
+  //         json['timestamp'] != null ? DateTime.parse(json['timestamp']) : null,
+  //     isLiked: json['isLiked'],
+  //     comments:
+  //         List<Comment>.from(json['comments'].map((c) => Comment.fromJson(c))),
+  //     likes: json['likes'],
+  //     shares: json['shares'],
+  //     isAllowedComment: json['isAllowedComment'],
+  //     commentTotalCounts: json['commentTotalCounts'],
+  //   );
+  // }
 }

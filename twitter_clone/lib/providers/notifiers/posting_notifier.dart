@@ -66,7 +66,7 @@ class PostingNotifier extends StateNotifier<PostingState> {
         postId: uuid.v4(),
         authorId: userInfo.userId,
         authorName: userInfo.userName,
-        authorImgPath: userInfo.userImgPath,
+        authorImgPath: userInfo.avatarPath,
         isCertificatedUser: userInfo.isCertificatedUser,
         timestamp: DateTime.now(),
       ),

@@ -59,7 +59,7 @@ class _PostingViewState extends State<PostingView> {
                     CircleAvatar(
                       radius: 25,
                       foregroundImage: NetworkImage(
-                        userState.userInfo.userImgPath ?? "",
+                        userState.userInfo.avatarPath ?? "",
                       ),
                     ),
                     Expanded(
@@ -77,7 +77,7 @@ class _PostingViewState extends State<PostingView> {
                     CircleAvatar(
                       radius: 15,
                       foregroundImage: NetworkImage(
-                        userState.userInfo.userImgPath ?? "",
+                        userState.userInfo.avatarPath ?? "",
                       ),
                     ),
                   ],

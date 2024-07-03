@@ -4,7 +4,7 @@ import 'package:twitter_clone/global/breakpoint.dart';
 import 'package:twitter_clone/global/color.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/strings.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/providers/notifiers/user_info_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/common/policy_guide_text.dart';
@@ -26,7 +26,7 @@ class CreateAccountScreen extends StatefulWidget {
   static const String routeName = "signUp";
   static const String routePath = "/signup";
 
-  final User? initUserInfo;
+  final UserProfile? initUserInfo;
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
@@ -113,7 +113,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       _emailController.value =
           TextEditingValue(text: widget.initUserInfo?.email ?? "");
       _birthDateController.value = TextEditingValue(
-          text: getMMMMdyFormat(widget.initUserInfo?.birthDate));
+          text: getMMMMdyFormat(widget.initUserInfo?.birthday));
       _isReadyToSignUp =
           widget.initUserInfo?.agreementStatus[PolicyType.personalize] ?? false;
       _isNextValidator();

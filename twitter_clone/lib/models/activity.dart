@@ -1,11 +1,11 @@
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 
 class Activity {
   final String activityId;
   final ActivityType type;
   final DateTime timestamp;
-  final User user;
+  final UserProfile user;
   final String content;
   final String originalPostContent;
 
@@ -22,7 +22,7 @@ class Activity {
     String? activityId,
     ActivityType? type,
     DateTime? timestamp,
-    User? user,
+    UserProfile? user,
     String? content,
     String? originalPostContent,
   }) {

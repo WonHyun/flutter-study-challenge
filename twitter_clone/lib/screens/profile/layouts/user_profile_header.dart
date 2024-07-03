@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/home/components/many_circle_avatar.dart';
 
@@ -9,7 +9,7 @@ class UserProfileHeader extends StatelessWidget {
     required this.user,
   });
 
-  final User user;
+  final UserProfile user;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class UserProfileHeader extends StatelessWidget {
                                 user.followers.length > 2
                                     ? 2
                                     : user.followers.length)
-                            .map((user) => user.userImgPath ?? "")
+                            .map((user) => user.avatarPath ?? "")
                             .toList(),
                       ),
                       const SizedBox(width: 5),
@@ -98,7 +98,7 @@ class UserProfileHeader extends StatelessWidget {
             ),
             CircleAvatar(
               radius: 28,
-              foregroundImage: NetworkImage(user.userImgPath ?? ""),
+              foregroundImage: NetworkImage(user.avatarPath ?? ""),
             ),
           ],
         ),

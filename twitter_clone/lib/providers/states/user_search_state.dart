@@ -1,7 +1,7 @@
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 
 class UserSearchState {
-  final List<User> result;
+  final List<UserProfile> result;
   final String keyword;
   final List<String> recentlyKeyword;
   final bool isSearching;
@@ -14,7 +14,7 @@ class UserSearchState {
   });
 
   UserSearchState copyWith({
-    List<User>? result,
+    List<UserProfile>? result,
     String? keyword,
     List<String>? recentlyKeyword,
     bool? isSearching,

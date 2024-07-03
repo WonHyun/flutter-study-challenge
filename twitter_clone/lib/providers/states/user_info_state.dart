@@ -1,14 +1,14 @@
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 
 class UserInfoState {
-  final User userInfo;
+  final UserProfile userInfo;
 
   UserInfoState({
     required this.userInfo,
   });
 
   UserInfoState copyWith({
-    User? userInfo,
+    UserProfile? userInfo,
   }) {
     return UserInfoState(
       userInfo: userInfo ?? this.userInfo,

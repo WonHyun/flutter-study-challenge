@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/repository/authentication_repository.dart';
 
 class SignUpNotifier extends AsyncNotifier<void> {
@@ -12,12 +13,16 @@ class SignUpNotifier extends AsyncNotifier<void> {
   }
 
   Future<void> signUp(String email, String password) async {
+    final user = ref.read(userProvider.notifier);
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
-      () async => await _authRepo.signUp(
-        email,
-        password,
-      ),
+      () async {
+        final userCredential = await _authRepo.signUp(
+          email,
+          password,
+        );
+        await user.createProfile(userCredential);
+      },
     );
   }
 }

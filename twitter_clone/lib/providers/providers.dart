@@ -65,7 +65,7 @@ final postingProvider = StateNotifierProvider<PostingNotifier, PostingState>(
           postId: uuid.v4(),
           authorId: ref.watch(userInfoProvider).userInfo.userId,
           authorName: ref.watch(userInfoProvider).userInfo.userName ?? "",
-          authorImgPath: ref.watch(userInfoProvider).userInfo.userImgPath ?? "",
+          authorImgPath: ref.watch(userInfoProvider).userInfo.avatarPath ?? "",
         ),
       ),
       ref: ref,

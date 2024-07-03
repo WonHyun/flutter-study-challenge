@@ -11,15 +11,15 @@ class AuthenticationRepository {
 
   Future<void> sendEmailVerifyCode() async {}
 
-  Future<void> signUp(String email, String password) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
+  Future<UserCredential> signUp(String email, String password) async {
+    return await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-  Future<void> login(String email, String password) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
+  Future<UserCredential> login(String email, String password) async {
+    return await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );

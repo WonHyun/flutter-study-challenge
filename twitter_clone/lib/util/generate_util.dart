@@ -5,7 +5,7 @@ import 'package:twitter_clone/models/base/media_item.dart';
 import 'package:twitter_clone/models/comment.dart';
 import 'package:twitter_clone/models/image_item.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/models/user.dart';
+import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/tests/mock.dart';
 import 'package:uuid/uuid.dart';
 
@@ -37,7 +37,7 @@ class UserGenerator {
             .replaceAll(" ", spaceSeperator);
   }
 
-  static List<User> getRandomUsers({int userCount = 10}) {
+  static List<UserProfile> getRandomUsers({int userCount = 10}) {
     return List.generate(
       userCount,
       (index) {
@@ -67,15 +67,15 @@ class UserGenerator {
             randomId = color + name;
         }
 
-        return User(
+        return UserProfile(
           userId: UserGenerator.generateUserId(baseId: randomId),
           userName: name,
           email: faker.internet.email(),
           phoneNum: faker.phoneNumber.us(),
-          birthDate: faker.date.dateTime(minYear: 1950, maxYear: 2010),
+          birthday: faker.date.dateTime(minYear: 1950, maxYear: 2010),
           agreementStatus: {},
           interests: {},
-          userImgPath:
+          avatarPath:
               "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}",
           isCertificatedUser: faker.randomGenerator.boolean(),
           followers: [],
@@ -88,12 +88,13 @@ class UserGenerator {
 }
 
 class PostGenerator {
-  static List<Post> getRandomPosts({int postCount = 10, List<User>? users}) {
+  static List<Post> getRandomPosts(
+      {int postCount = 10, List<UserProfile>? users}) {
     return List.generate(
       postCount,
       (index) {
         final now = DateTime.now();
-        late final User user;
+        late final UserProfile user;
         if (users != null && users.isEmpty) {
           user = users[faker.randomGenerator.integer(users.length)];
         } else {
@@ -103,7 +104,7 @@ class PostGenerator {
         String postId = uuid.v4();
         String authorId = user.userId;
         String authorName = user.userName ?? user.userId;
-        String authorImgPath = user.userImgPath ??
+        String authorImgPath = user.avatarPath ??
             "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}";
         bool isCertificatedUser = user.isCertificatedUser ?? false;
 
@@ -144,7 +145,7 @@ class PostGenerator {
           comments = List.generate(
             commentCounts > 5 ? 5 : commentCounts,
             (index) {
-              late final User commentUser;
+              late final UserProfile commentUser;
               if (users != null && users.isEmpty) {
                 commentUser =
                     users[faker.randomGenerator.integer(users.length)];
@@ -153,7 +154,7 @@ class PostGenerator {
               }
               return Comment(
                 authorId: commentUser.userId,
-                authorImgPath: commentUser.userImgPath ??
+                authorImgPath: commentUser.avatarPath ??
                     "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}",
                 content: faker.lorem
                     .sentences(faker.randomGenerator.integer(3, min: 1))
