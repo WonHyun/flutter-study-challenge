@@ -44,7 +44,7 @@ class PostHeader extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 5),
                   child: Text(
                     maxLines: 1,
-                    post.authorId,
+                    post.authorName,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),

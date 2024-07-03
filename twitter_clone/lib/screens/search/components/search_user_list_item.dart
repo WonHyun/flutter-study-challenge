@@ -39,7 +39,7 @@ class SearchUserListItem extends StatelessWidget {
                             Flexible(
                               flex: 8,
                               child: Text(
-                                user.userId,
+                                user.displayUserId ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

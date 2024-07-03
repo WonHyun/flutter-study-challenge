@@ -73,7 +73,7 @@ class UserGenerator {
         }
 
         return UserProfile(
-          userId: UserGenerator.generateUserId(baseId: randomId),
+          userId: uuid.v4(),
           userName: name,
           email: faker.internet.email(),
           phoneNum: faker.phoneNumber.us(),
@@ -86,6 +86,7 @@ class UserGenerator {
           followers: [],
           followerTotalCounts: followerTotalCounts,
           follwingTotalCounts: followingTotalCounts,
+          displayUserId: UserGenerator.generateUserId(baseId: randomId),
         );
       },
     );
@@ -108,7 +109,7 @@ class PostGenerator {
 
         String postId = uuid.v4();
         String authorId = user.userId;
-        String authorName = user.userName ?? user.userId;
+        String authorName = user.userName ?? user.displayUserId ?? "";
         String authorImgPath = user.avatarPath ??
             "https://picsum.photos/200?random=${faker.randomGenerator.integer(500)}";
         bool isCertificatedUser = user.isCertificatedUser ?? false;

@@ -8,15 +8,14 @@ class UserMock {
       UserGenerator.getRandomUsers(userCount: 30);
 
   static final me = UserProfile(
-    // userId: UserGenerator.generateUserId(baseId: "Umm Jun Sick"),
     userName: "Umm Jun Sick",
     // email: "dongtan.sugundoduk@umjun.sick",
     email: "a@naver.com",
     phoneNum: "1577-1577",
     birthday: DateTime(1991, 9, 4),
-    // avatarPath: "https://avatars.githubusercontent.com/u/34933982?v=4",
-    // isCertificatedUser: true,
-    // description: "The master of avoid",
+    avatarPath: "https://avatars.githubusercontent.com/u/34933982?v=4",
+    isCertificatedUser: true,
+    description: "The master of avoid",
     // followers: UserGenerator.getRandomUsers(userCount: 12),
     // followerTotalCounts: 12,
   );

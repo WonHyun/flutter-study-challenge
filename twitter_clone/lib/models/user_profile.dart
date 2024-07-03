@@ -16,6 +16,7 @@ class UserProfile {
   final int follwingTotalCounts;
   final String description;
   final DateTime? createdAt;
+  final String? displayUserId;
 
   UserProfile({
     this.userId = "",
@@ -33,6 +34,7 @@ class UserProfile {
     this.follwingTotalCounts = 0,
     this.description = "",
     this.createdAt,
+    this.displayUserId = "",
   });
 
   UserProfile copyWith({
@@ -51,6 +53,7 @@ class UserProfile {
     int? follwingTotalCounts,
     String? description,
     DateTime? createdAt,
+    String? displayUserId,
   }) {
     return UserProfile(
       userId: userId ?? this.userId,
@@ -68,6 +71,7 @@ class UserProfile {
       follwingTotalCounts: follwingTotalCounts ?? this.follwingTotalCounts,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
+      displayUserId: displayUserId ?? this.displayUserId,
     );
   }
 
@@ -88,6 +92,7 @@ class UserProfile {
       follwingTotalCounts: map["follwingTotalCounts"] ?? follwingTotalCounts,
       description: map["description"] ?? description,
       createdAt: map["createdAt"] ?? createdAt,
+      displayUserId: map["displayUserId"] ?? displayUserId,
     );
   }
 
@@ -109,6 +114,7 @@ class UserProfile {
       "follwingTotalCounts": follwingTotalCounts,
       "description": description,
       "createdAt": createdAt?.toIso8601String(),
+      "displayUserId": displayUserId,
     };
   }
 
@@ -138,7 +144,8 @@ class UserProfile {
         description = json["description"],
         createdAt = json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
-            : null;
+            : null,
+        displayUserId = json["displayUserId"];
 
   UserProfile.empty()
       : userId = "",
@@ -155,5 +162,6 @@ class UserProfile {
         followerTotalCounts = 0,
         follwingTotalCounts = 0,
         description = "",
-        createdAt = null;
+        createdAt = null,
+        displayUserId = "";
 }

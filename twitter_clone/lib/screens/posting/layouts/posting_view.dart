@@ -95,7 +95,7 @@ class _PostingViewState extends State<PostingView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              userState.value?.userId ?? "",
+                              userState.value?.displayUserId ?? "",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,

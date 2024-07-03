@@ -32,7 +32,7 @@ class _SearchscreenState extends State<Searchscreen> {
         child: Consumer(
           builder: (context, ref, child) {
             final searchState = ref.watch(searchProvider);
-            final searchNotifier = ref.watch(searchProvider.notifier);
+            final searchNotifier = ref.read(searchProvider.notifier);
             return CustomScrollView(
               slivers: [
                 SliverAppBar(

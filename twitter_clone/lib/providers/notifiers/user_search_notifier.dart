@@ -35,7 +35,8 @@ class UserSearchNotifier extends StateNotifier<UserSearchState> {
       UserGenerator.getRandomUsers(userCount: 100)
           .where(
             (user) =>
-                user.userId.contains(keyword) ||
+                user.displayUserId != null &&
+                    user.displayUserId!.contains(keyword) ||
                 (user.userName?.contains(keyword) ?? false),
           )
           .toList(),

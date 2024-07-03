@@ -6,6 +6,7 @@ import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/repository/authentication_repository.dart';
 import 'package:twitter_clone/repository/user_profile_repository.dart';
+import 'package:twitter_clone/util/generate_util.dart';
 
 class UserProfileNotifier extends AsyncNotifier<UserProfile> {
   late final UserProfileRepository _userRepository;
@@ -37,6 +38,8 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
         email: credential.user?.email,
         avatarPath: credential.user?.photoURL,
         createdAt: DateTime.now(),
+        displayUserId:
+            UserGenerator.generateUserId(baseId: state.value!.userName),
       ),
     );
     await _userRepository.createProfile(state.value!);

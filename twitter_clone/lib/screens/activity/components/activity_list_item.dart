@@ -66,7 +66,7 @@ class ActivityListItem extends StatelessWidget {
                             Flexible(
                               flex: 4,
                               child: Text(
-                                activity.user.userId,
+                                activity.user.displayUserId ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
