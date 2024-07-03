@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,7 +44,9 @@ class _CameraScreenState extends State<CameraScreen>
       await _cameraController?.setFlashMode(_flashMode);
       setState(() {});
     } catch (err) {
-      print(err);
+      if (kDebugMode) {
+        print(err);
+      }
       setState(() {
         _isNoCameraMode = true;
       });
@@ -101,10 +104,10 @@ class _CameraScreenState extends State<CameraScreen>
                 type: MediaType.image,
                 mediaId: uuid.v4(),
                 url: "",
+                fileUrl: file.path,
               ))
           .toList();
       postingNotifier.addMedias(medias);
-      _cameraController?.dispose();
       Navigator.pop(context);
     }
   }
@@ -124,13 +127,19 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (mounted &&
-        _cameraController != null &&
-        _cameraController!.value.isInitialized) {
-      if (state == AppLifecycleState.inactive) {
-        _cameraController?.dispose();
-      } else if (state == AppLifecycleState.resumed) {
-        initCamera();
+    if (mounted) {
+      switch (state) {
+        case AppLifecycleState.paused:
+          if (_cameraController != null &&
+              _cameraController!.value.isInitialized) {
+            await _cameraController!.dispose();
+            _cameraController = null;
+          }
+        case AppLifecycleState.resumed:
+          if (_cameraController == null) {
+            await initCamera();
+          }
+        default:
       }
     }
   }
