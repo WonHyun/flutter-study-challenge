@@ -5,9 +5,11 @@ class AuthorProfileImage extends StatelessWidget {
   const AuthorProfileImage({
     super.key,
     required this.imgPath,
+    this.size = 20,
   });
 
   final String imgPath;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,8 @@ class AuthorProfileImage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10, bottom: 10),
             child: CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(
-                imgPath,
-              ),
+              radius: size,
+              backgroundImage: imgPath.isEmpty ? null : NetworkImage(imgPath),
             ),
           ),
           Positioned(

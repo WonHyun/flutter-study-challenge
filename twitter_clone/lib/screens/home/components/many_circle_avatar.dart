@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 
-class ManyCircleAvatar extends StatelessWidget {
+class ManyCircleAvatar extends ConsumerWidget {
   const ManyCircleAvatar({
     super.key,
     required this.imgPaths,
@@ -11,16 +11,16 @@ class ManyCircleAvatar extends StatelessWidget {
   final List<String> imgPaths;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userState = ref.watch(userProvider);
     return Container(
       width: 40,
       height: 40,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
-      child: Consumer(
-        builder: (context, ref, child) {
-          final userState = ref.watch(userProvider);
+      child: Builder(
+        builder: (context) {
           switch (imgPaths.length) {
             case 0:
               return Stack(
@@ -29,8 +29,10 @@ class ManyCircleAvatar extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CircleAvatar(
                       radius: 15,
-                      foregroundImage:
-                          NetworkImage(userState.value?.avatarPath ?? ""),
+                      foregroundImage: userState.value == null ||
+                              userState.value!.avatarPath!.isEmpty
+                          ? null
+                          : NetworkImage(userState.value?.avatarPath ?? ""),
                     ),
                   ),
                 ],
