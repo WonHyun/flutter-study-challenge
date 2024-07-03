@@ -1,86 +1,57 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/models/base/media_item.dart';
+import 'package:twitter_clone/models/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
-import 'package:twitter_clone/providers/states/posting_state.dart';
 import 'package:twitter_clone/util/generate_util.dart';
 
-class PostingNotifier extends StateNotifier<PostingState> {
-  PostingNotifier({
-    required PostingState state,
-    required this.ref,
-  }) : super(state);
-
-  final Ref ref;
-
-  void updatePost(Post post) {
-    state = state.copyWith(post: post);
-  }
-
+class PostingNotifier extends AsyncNotifier<Post> {
   void updateContent(String content) {
-    updatePost(
-      state.post.copyWith(
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
         content: content,
       ),
     );
   }
 
   void updateMedia(List<MediaItem> media) {
-    updatePost(
-      state.post.copyWith(
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
         media: media,
       ),
     );
   }
 
   void updateIsAllowedComment(bool isAllowedComment) {
-    updatePost(
-      state.post.copyWith(
+    if (state.value == null) return;
+    state = AsyncData(
+      state.value!.copyWith(
         isAllowedComment: isAllowedComment,
       ),
     );
   }
 
-  void updateTimestamp(DateTime timestamp) {
-    updatePost(
-      state.post.copyWith(
-        timestamp: timestamp,
-      ),
-    );
-  }
-
-  void updatePostId(String postId) {
-    updatePost(
-      state.post.copyWith(
-        postId: postId,
-      ),
-    );
-  }
-
   void completePosting() {
-    final userInfo = ref.watch(userProvider).value;
+    if (state.value == null) return;
     final postNotifier = ref.watch(postProvider.notifier);
 
-    state = state.copyWith(
-      post: state.post.copyWith(
-        postId: uuid.v4(),
-        authorId: userInfo?.userId,
-        authorName: userInfo?.userName,
-        authorImgPath: userInfo?.avatarPath,
-        isCertificatedUser: userInfo?.isCertificatedUser,
+    state = const AsyncLoading();
+    state = AsyncData(
+      state.value!.copyWith(
         timestamp: DateTime.now(),
       ),
     );
 
     //TODO: will be posting to server
-    postNotifier.addPost(state.post);
+    postNotifier.addPost(state.value!);
   }
 
   void resetPostingInfo() {
-    updateContent("");
-    updateMedia([]);
-    updateIsAllowedComment(true);
+    state = AsyncData(Post.empty());
   }
 
   void clearContent() {
@@ -89,15 +60,34 @@ class PostingNotifier extends StateNotifier<PostingState> {
   }
 
   void addMedias(List<MediaItem> medias) {
-    updateMedia([...?state.post.media, ...medias]);
+    if (state.value == null) return;
+    updateMedia([...?state.value!.media, ...medias]);
   }
 
   void removeMedia(MediaItem item) {
+    if (state.value == null) return;
     updateMedia(
-      state.post.media
+      state.value!.media
               ?.where((media) => media.mediaId != item.mediaId)
               .toList() ??
           [],
     );
   }
+
+  @override
+  FutureOr<Post> build() {
+    final user = ref.read(userProvider).value;
+    return Post.empty().copyWith(
+      postId: uuid.v4(),
+      authorId: user?.userId ?? "",
+      authorName: user?.userName ?? "",
+      authorImgPath: user?.avatarPath ?? "",
+      isCertificatedUser: user?.isCertificatedUser ?? false,
+      isAllowedComment: true,
+    );
+  }
 }
+
+final postingProvider = AsyncNotifierProvider<PostingNotifier, Post>(
+  () => PostingNotifier(),
+);

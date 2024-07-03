@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:twitter_clone/models/image_item.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/models/media_item.dart';
+import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/screens/posting/camera/components/flash_button.dart';
 import 'package:twitter_clone/screens/posting/camera/photo_preview_screen.dart';
 import 'package:twitter_clone/util/generate_util.dart';
@@ -93,14 +93,14 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Future<void> _showGallery(WidgetRef ref) async {
-    final postingNotifier = ref.watch(postingProvider.notifier);
+    final postingNotifier = ref.read(postingProvider.notifier);
     final photos = await ImagePicker().pickMultiImage();
     if (photos.isNotEmpty && mounted) {
       final medias = photos
-          .map((file) => ImageItem(
+          .map((file) => MediaItem(
+                type: MediaType.image,
                 mediaId: uuid.v4(),
                 url: "",
-                filePath: file.path,
               ))
           .toList();
       postingNotifier.addMedias(medias);

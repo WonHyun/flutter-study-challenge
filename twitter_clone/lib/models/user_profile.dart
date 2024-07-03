@@ -106,7 +106,7 @@ class UserProfile {
       "agreementStatus": agreementStatus
           .map((key, value) => MapEntry(key.toString().split(".").last, value)),
       "interests": interests,
-      "userImgPath": avatarPath,
+      "avatarPath": avatarPath,
       "isCertificatedUser": isCertificatedUser,
       "followers": const [],
       "followings": const [],
@@ -135,7 +135,7 @@ class UserProfile {
         interests = (json["interests"] as Map<String, dynamic>).map(
           (key, value) => MapEntry(key, List<String>.from(value)),
         ),
-        avatarPath = json["userImgPath"],
+        avatarPath = json["avatarPath"],
         isCertificatedUser = json["isCertificatedUser"],
         followers = const [],
         followings = const [],

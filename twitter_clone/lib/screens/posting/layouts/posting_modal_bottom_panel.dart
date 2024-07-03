@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/extensions.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/screens/common/linked_text.dart';
 
 class PostingModalBottomPanel extends ConsumerWidget {
@@ -12,7 +12,7 @@ class PostingModalBottomPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final postingState = ref.watch(postingProvider);
-    final postingNotifier = ref.watch(postingProvider.notifier);
+    final postingNotifier = ref.read(postingProvider.notifier);
     return Positioned(
       bottom: 0,
       left: 0,
@@ -31,16 +31,16 @@ class PostingModalBottomPanel extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             LinkedText(
-              onTap: () => postingNotifier
-                  .updateIsAllowedComment(!postingState.post.isAllowedComment),
-              text: postingState.post.isAllowedComment
+              onTap: () => postingNotifier.updateIsAllowedComment(
+                  !(postingState.value?.isAllowedComment ?? true)),
+              text: postingState.value?.isAllowedComment ?? true
                   ? "Anyone can reply"
                   : "Not allowed reply",
               color:
                   Theme.of(context).colorScheme.inverseSurface.withOpacity(0.8),
             ),
             LinkedText(
-              onTap: postingState.post.content.isEmpty
+              onTap: postingState.value?.content.isEmpty ?? true
                   ? null
                   : () {
                       postingNotifier.completePosting();
@@ -49,7 +49,7 @@ class PostingModalBottomPanel extends ConsumerWidget {
               text: "Post",
               fontWeight: FontWeight.w700,
               fontSize: 20,
-              color: postingState.post.content.isEmpty
+              color: postingState.value?.content.isEmpty ?? true
                   ? Colors.grey
                   : Theme.of(context).colorScheme.primary.withOpacity(0.8),
             ),

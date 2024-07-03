@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/global/extensions.dart';
+import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/activity/activity_screen.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
@@ -57,7 +58,7 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
         },
       ).then((value) {
         if (mounted) {
-          ref.watch(postingProvider.notifier).resetPostingInfo();
+          ref.read(postingProvider.notifier).resetPostingInfo();
           screenNotifier.updateCurrentScreen(MainScreenType.home);
           context.go(_getRoutePath(MainScreenType.home));
         }

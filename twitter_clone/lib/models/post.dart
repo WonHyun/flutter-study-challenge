@@ -1,4 +1,4 @@
-import 'package:twitter_clone/models/base/media_item.dart';
+import 'package:twitter_clone/models/media_item.dart';
 import 'package:twitter_clone/models/comment.dart';
 
 class Post {
@@ -68,46 +68,66 @@ class Post {
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'postId': postId,
-  //     'authorId': authorId,
-  //     'authorName': authorName,
-  //     'authorImgPath': authorImgPath,
-  //     'isCertificatedUser': isCertificatedUser,
-  //     'content': content,
-  //     'media': media?.map((m) => m.toJson()).toList(),
-  //     'timestamp': timestamp?.toIso8601String(),
-  //     'isLiked': isLiked,
-  //     'comments': comments.map((c) => c.toJson()).toList(),
-  //     'likes': likes,
-  //     'shares': shares,
-  //     'isAllowedComment': isAllowedComment,
-  //     'commentTotalCounts': commentTotalCounts,
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      'postId': postId,
+      'authorId': authorId,
+      'authorName': authorName,
+      'authorImgPath': authorImgPath,
+      'isCertificatedUser': isCertificatedUser,
+      'content': content,
+      'media': media?.map((media) => media.toJson()).toList(),
+      'timestamp': timestamp?.toIso8601String(),
+      'isLiked': isLiked,
+      'comments': comments.map((comment) => comment.toJson()).toList(),
+      'likes': likes,
+      'shares': shares,
+      'isAllowedComment': isAllowedComment,
+      'commentTotalCounts': commentTotalCounts,
+    };
+  }
 
-  // Post fromJson(Map<String, dynamic> json) {
-  //   return Post(
-  //     postId: json['postId'],
-  //     authorId: json['authorId'],
-  //     authorName: json['authorName'],
-  //     authorImgPath: json['authorImgPath'],
-  //     isCertificatedUser: json['isCertificatedUser'],
-  //     content: json['content'],
-  //     media: json['media'] != null
-  //         ? List<MediaItem>.from(
-  //             json['media'].map((m) => MediaItem.fromJson(m)))
-  //         : null,
-  //     timestamp:
-  //         json['timestamp'] != null ? DateTime.parse(json['timestamp']) : null,
-  //     isLiked: json['isLiked'],
-  //     comments:
-  //         List<Comment>.from(json['comments'].map((c) => Comment.fromJson(c))),
-  //     likes: json['likes'],
-  //     shares: json['shares'],
-  //     isAllowedComment: json['isAllowedComment'],
-  //     commentTotalCounts: json['commentTotalCounts'],
-  //   );
-  // }
+  Post fromJson(Map<String, dynamic> json) {
+    return Post(
+      postId: json['postId'],
+      authorId: json['authorId'],
+      authorName: json['authorName'] ?? "",
+      authorImgPath: json['authorImgPath'] ?? "",
+      isCertificatedUser: json['isCertificatedUser'] ?? false,
+      content: json['content'] ?? "",
+      media: List<MediaItem>.from(
+        json['media'].map(
+          (media) => MediaItem.fromJson(media),
+        ),
+      ),
+      timestamp:
+          json['timestamp'] != null ? DateTime.parse(json['timestamp']) : null,
+      isLiked: json['isLiked'],
+      comments: List<Comment>.from(
+        json['comments'].map(
+          (comment) => Comment.fromJson(comment),
+        ),
+      ),
+      likes: json['likes'] ?? 0,
+      shares: json['shares'] ?? 0,
+      isAllowedComment: json['isAllowedComment'] ?? true,
+      commentTotalCounts: json['commentTotalCounts'] ?? 0,
+    );
+  }
+
+  Post.empty()
+      : postId = "",
+        authorId = "",
+        authorName = "",
+        authorImgPath = "",
+        isCertificatedUser = false,
+        content = "",
+        media = const [],
+        timestamp = null,
+        isLiked = false,
+        comments = const [],
+        likes = 0,
+        shares = 0,
+        isAllowedComment = true,
+        commentTotalCounts = 0;
 }

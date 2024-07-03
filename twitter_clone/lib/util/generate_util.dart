@@ -1,9 +1,8 @@
 import 'package:faker/faker.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/models/activity.dart';
-import 'package:twitter_clone/models/base/media_item.dart';
+import 'package:twitter_clone/models/media_item.dart';
 import 'package:twitter_clone/models/comment.dart';
-import 'package:twitter_clone/models/image_item.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/tests/mock.dart';
@@ -121,7 +120,8 @@ class PostGenerator {
         List<MediaItem> media = List.generate(
           faker.randomGenerator.integer(3),
           (index) {
-            return ImageItem(
+            return MediaItem(
+              type: MediaType.image,
               mediaId: uuid.v4(),
               url:
                   "https://picsum.photos/500?random=${faker.randomGenerator.integer(500)}",

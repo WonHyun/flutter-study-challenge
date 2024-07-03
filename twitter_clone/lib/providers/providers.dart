@@ -1,22 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/providers/notifiers/activity_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/main_screen_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/pin_verify_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
-import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
-import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/user_search_notifier.dart';
 import 'package:twitter_clone/providers/states/activity_state.dart';
 import 'package:twitter_clone/providers/states/main_screen_state.dart';
 import 'package:twitter_clone/providers/states/pin_verify_state.dart';
 import 'package:twitter_clone/providers/states/post_state.dart';
-import 'package:twitter_clone/providers/states/posting_state.dart';
 import 'package:twitter_clone/providers/states/user_search_state.dart';
 import 'package:twitter_clone/tests/mock.dart';
 import 'package:twitter_clone/util/date_util.dart';
-import 'package:twitter_clone/util/generate_util.dart';
 
 final pinVerifyProvider =
     StateNotifierProvider<PinVerifyNotifier, PinVerifyState>((ref) {
@@ -42,22 +37,6 @@ final postProvider = StateNotifierProvider<PostNotifier, PostState>((ref) {
     ),
   );
 });
-
-final postingProvider = StateNotifierProvider<PostingNotifier, PostingState>(
-  (ref) {
-    return PostingNotifier(
-      state: PostingState(
-        post: Post(
-          postId: uuid.v4(),
-          authorId: ref.read(userProvider).value?.userId ?? "",
-          authorName: ref.read(userProvider).value?.userName ?? "",
-          authorImgPath: ref.read(userProvider).value?.avatarPath ?? "",
-        ),
-      ),
-      ref: ref,
-    );
-  },
-);
 
 final activityProvider = StateNotifierProvider<ActivityNotifier, ActivityState>(
   (ref) {

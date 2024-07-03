@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:twitter_clone/models/image_item.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/models/media_item.dart';
+import 'package:twitter_clone/providers/notifiers/posting_notifier.dart';
 import 'package:twitter_clone/util/generate_util.dart';
 
 class PhotoPreviewScreen extends StatefulWidget {
@@ -38,13 +38,13 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
   }
 
   void _onSelectPhoto(BuildContext context, WidgetRef ref) {
-    final postingNotifier = ref.watch(postingProvider.notifier);
+    final postingNotifier = ref.read(postingProvider.notifier);
     postingNotifier.addMedias(
       [
-        ImageItem(
+        MediaItem(
+          type: MediaType.image,
           mediaId: uuid.v4(),
           url: "",
-          filePath: widget.photo.path,
         ),
       ],
     );
