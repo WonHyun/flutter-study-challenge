@@ -19,7 +19,7 @@ class PostRepository {
         if (media.fileUrl != null) {
           final fileRef = _storage
               .ref()
-              .child("posts/${post.postId}/medias/${media.mediaId}");
+              .child("/posts/${post.postId}/medias/${media.mediaId}");
           final result = await fileRef.putFile(File(media.fileUrl!));
           if (result.metadata != null) {
             final mediaUrl = await result.ref.getDownloadURL();
