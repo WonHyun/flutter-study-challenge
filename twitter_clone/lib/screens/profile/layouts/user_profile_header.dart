@@ -3,6 +3,8 @@ import 'package:twitter_clone/models/user_profile.dart';
 import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/home/components/many_circle_avatar.dart';
 
+import '../components/avatar.dart';
+
 class UserProfileHeader extends StatelessWidget {
   const UserProfileHeader({
     super.key,
@@ -96,10 +98,7 @@ class UserProfileHeader extends StatelessWidget {
                 ],
               ),
             ),
-            CircleAvatar(
-              radius: 28,
-              foregroundImage: NetworkImage(user.avatarPath ?? ""),
-            ),
+            Avatar(user: user),
           ],
         ),
         const SizedBox(height: 20),

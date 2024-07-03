@@ -52,6 +52,17 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
     state = AsyncValue.data(state.value!.copyWithMap(map: data));
   }
 
+  Future<void> onAvatarUpload(String avatarPath) async {
+    if (state.value == null) return;
+    state = AsyncValue.data(
+      state.value!.copyWith(avatarPath: avatarPath),
+    );
+    await _userRepository.updateProfileInfo(
+      state.value!.userId,
+      {"avatarPath": avatarPath},
+    );
+  }
+
   void updateUserName(String? userName) {
     if (state.value == null) return;
     state = AsyncData(
