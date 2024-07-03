@@ -30,7 +30,12 @@ class _CameraScreenState extends State<CameraScreen>
   Future<void> initCamera() async {
     try {
       final cameras = await availableCameras();
-      if (cameras.isEmpty) return;
+      if (cameras.isEmpty) {
+        setState(() {
+          _isNoCameraMode = true;
+        });
+        return;
+      }
 
       final selectedCamera = cameras
           .where((camera) => camera.lensDirection == _currentDirection)
