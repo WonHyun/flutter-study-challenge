@@ -8,6 +8,13 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
   List<Post> _posts = [];
   late final PostRepository _repository;
 
+  @override
+  FutureOr<List<Post>> build() async {
+    _repository = ref.read(postRepo);
+    _posts = await _fetchPosts(lastItemTimestamp: null);
+    return _posts;
+  }
+
   Future<List<Post>> _fetchPosts({
     DateTime? lastItemTimestamp,
   }) async {
@@ -44,7 +51,7 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
     if (state.value != null) return;
     state =
         AsyncData(state.value!.where((e) => e.postId != post.postId).toList());
-    _posts = state.value ?? [];
+    _posts = state.value!;
   }
 
   void reportPost(Post post, String reason) {
@@ -52,11 +59,16 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
     hidePost(post);
   }
 
-  @override
-  FutureOr<List<Post>> build() async {
-    _repository = ref.read(postRepo);
-    _posts = await _fetchPosts(lastItemTimestamp: null);
-    return _posts;
+  Future<void> fetchNextPosts() async {
+    final nextPosts =
+        await _fetchPosts(lastItemTimestamp: _posts.last.timestamp);
+    state = AsyncValue.data([..._posts, ...nextPosts]);
+  }
+
+  Future<void> refresh() async {
+    final posts = await _fetchPosts(lastItemTimestamp: null);
+    _posts = posts;
+    state = AsyncValue.data(posts);
   }
 }
 
