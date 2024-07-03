@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/global/value.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/screens/common/drag_handle.dart';
 
 class PostReportModal extends ConsumerWidget {
@@ -16,7 +16,7 @@ class PostReportModal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postNotifier = ref.watch(postProvider.notifier);
+    final postNotifier = ref.read(postProvider.notifier);
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Column(

@@ -31,6 +31,20 @@ class PostRepository {
     }
     await _db.collection("posts").doc(post.postId).set(newPost.toJson());
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchPosts({
+    DateTime? lastItemTimestamp,
+  }) async {
+    final query =
+        _db.collection("posts").orderBy("timestamp", descending: true).limit(3);
+
+    if (lastItemTimestamp == null) {
+      return await query.get();
+    } else {
+      return await query
+          .startAfter([lastItemTimestamp.toIso8601String()]).get();
+    }
+  }
 }
 
 final postRepo = Provider((ref) => PostRepository());

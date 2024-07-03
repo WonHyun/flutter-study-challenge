@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 
 class PostActionButtons extends ConsumerWidget {
   const PostActionButtons({
@@ -16,7 +16,7 @@ class PostActionButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postNotifier = ref.watch(postProvider.notifier);
+    final postNotifier = ref.read(postProvider.notifier);
     return Row(
       children: [
         GestureDetector(

@@ -87,33 +87,31 @@ class Post {
     };
   }
 
-  Post fromJson(Map<String, dynamic> json) {
-    return Post(
-      postId: json['postId'],
-      authorId: json['authorId'],
-      authorName: json['authorName'] ?? "",
-      authorImgPath: json['authorImgPath'] ?? "",
-      isCertificatedUser: json['isCertificatedUser'] ?? false,
-      content: json['content'] ?? "",
-      media: List<MediaItem>.from(
-        json['media'].map(
-          (media) => MediaItem.fromJson(media),
+  Post.fromJson(Map<String, dynamic> json)
+      : postId = json['postId'],
+        authorId = json['authorId'],
+        authorName = json['authorName'] ?? "",
+        authorImgPath = json['authorImgPath'] ?? "",
+        isCertificatedUser = json['isCertificatedUser'] ?? false,
+        content = json['content'] ?? "",
+        media = List<MediaItem>.from(
+          json['media'].map(
+            (media) => MediaItem.fromJson(media),
+          ),
         ),
-      ),
-      timestamp:
-          json['timestamp'] != null ? DateTime.parse(json['timestamp']) : null,
-      isLiked: json['isLiked'],
-      comments: List<Comment>.from(
-        json['comments'].map(
-          (comment) => Comment.fromJson(comment),
+        timestamp = json['timestamp'] != null
+            ? DateTime.parse(json['timestamp'])
+            : null,
+        isLiked = json['isLiked'],
+        comments = List<Comment>.from(
+          json['comments'].map(
+            (comment) => Comment.fromJson(comment),
+          ),
         ),
-      ),
-      likes: json['likes'] ?? 0,
-      shares: json['shares'] ?? 0,
-      isAllowedComment: json['isAllowedComment'] ?? true,
-      commentTotalCounts: json['commentTotalCounts'] ?? 0,
-    );
-  }
+        likes = json['likes'] ?? 0,
+        shares = json['shares'] ?? 0,
+        isAllowedComment = json['isAllowedComment'] ?? true,
+        commentTotalCounts = json['commentTotalCounts'] ?? 0;
 
   Post.empty()
       : postId = "",

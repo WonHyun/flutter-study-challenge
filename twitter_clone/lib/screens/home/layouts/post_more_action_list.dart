@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/providers/notifiers/post_notifier.dart';
 import 'package:twitter_clone/screens/common/drag_handle.dart';
 
 class PostMoreActionList extends ConsumerWidget {
@@ -16,7 +16,7 @@ class PostMoreActionList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postNotifier = ref.watch(postProvider.notifier);
+    final postNotifier = ref.read(postProvider.notifier);
     return Padding(
       padding: const EdgeInsets.only(
         left: 15,

@@ -1,18 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/post.dart';
-import 'package:twitter_clone/providers/states/post_state.dart';
+import 'package:twitter_clone/repository/post_repository.dart';
 
-class PostNotifier extends StateNotifier<PostState> {
-  PostNotifier(super.state);
+class PostNotifier extends AsyncNotifier<List<Post>> {
+  List<Post> _posts = [];
+  late final PostRepository _repository;
 
-  void updatePosts(List<Post> posts) {
-    state = state.copyWith(posts: posts);
+  Future<List<Post>> _fetchPosts({
+    DateTime? lastItemTimestamp,
+  }) async {
+    final result = await _repository.fetchPosts(
+      lastItemTimestamp: lastItemTimestamp,
+    );
+    final videos = result.docs
+        .map(
+          (doc) => Post.fromJson(doc.data()),
+        )
+        .toList();
+    return videos;
   }
 
   void toggleLike(String postId) {
     //TODO: will be send like info to server
-    updatePosts(
-      state.posts.map(
+    if (state.value != null) return;
+    state = AsyncData(
+      state.value!.map(
         (post) {
           if (post.postId == postId) {
             return post.copyWith(
@@ -26,18 +40,26 @@ class PostNotifier extends StateNotifier<PostState> {
     );
   }
 
-  void addPost(Post post) {
-    final newPosts = [post, ...state.posts];
-    updatePosts(newPosts);
-  }
-
   void hidePost(Post post) {
-    final newPosts = state.posts.where((e) => e.postId != post.postId).toList();
-    updatePosts(newPosts);
+    if (state.value != null) return;
+    state =
+        AsyncData(state.value!.where((e) => e.postId != post.postId).toList());
+    _posts = state.value ?? [];
   }
 
   void reportPost(Post post, String reason) {
     //TODO: send report
     hidePost(post);
   }
+
+  @override
+  FutureOr<List<Post>> build() async {
+    _repository = ref.read(postRepo);
+    _posts = await _fetchPosts(lastItemTimestamp: null);
+    return _posts;
+  }
 }
+
+final postProvider = AsyncNotifierProvider<PostNotifier, List<Post>>(
+  () => PostNotifier(),
+);
