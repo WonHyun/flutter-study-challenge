@@ -45,6 +45,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
           type: MediaType.image,
           mediaId: uuid.v4(),
           url: "",
+          fileUrl: widget.photo.path,
         ),
       ],
     );

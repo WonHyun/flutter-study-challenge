@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
-import 'package:twitter_clone/providers/providers.dart';
+import 'package:twitter_clone/repository/post_repository.dart';
 import 'package:twitter_clone/util/generate_util.dart';
 
 class PostingNotifier extends AsyncNotifier<Post> {
+  late final PostRepository _repository;
+
   void updateContent(String content) {
     if (state.value == null) return;
     state = AsyncData(
@@ -35,21 +37,6 @@ class PostingNotifier extends AsyncNotifier<Post> {
     );
   }
 
-  void completePosting() {
-    if (state.value == null) return;
-    final postNotifier = ref.watch(postProvider.notifier);
-
-    state = const AsyncLoading();
-    state = AsyncData(
-      state.value!.copyWith(
-        timestamp: DateTime.now(),
-      ),
-    );
-
-    //TODO: will be posting to server
-    postNotifier.addPost(state.value!);
-  }
-
   void resetPostingInfo() {
     state = AsyncData(Post.empty());
   }
@@ -74,9 +61,23 @@ class PostingNotifier extends AsyncNotifier<Post> {
     );
   }
 
+  Future<void> completePosting() async {
+    if (state.value == null) return;
+    state = const AsyncLoading();
+    state = AsyncData(
+      state.value!.copyWith(
+        timestamp: DateTime.now(),
+      ),
+    );
+    await _repository.createPost(state.value!);
+  }
+
   @override
   FutureOr<Post> build() {
     final user = ref.read(userProvider).value;
+
+    _repository = ref.read(postRepo);
+
     return Post.empty().copyWith(
       postId: uuid.v4(),
       authorId: user?.userId ?? "",

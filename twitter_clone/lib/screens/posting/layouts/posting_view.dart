@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -144,7 +146,8 @@ class _PostingViewState extends State<PostingView> {
                               itemCount: postingState.value!.media!.length,
                               itemBuilder: (context, index) {
                                 final media = postingState.value!.media![index];
-                                if (media.type == MediaType.image) {
+                                if (media.type == MediaType.image &&
+                                    media.fileUrl != null) {
                                   return Padding(
                                     padding: const EdgeInsets.only(right: 10),
                                     child: Stack(
@@ -155,7 +158,8 @@ class _PostingViewState extends State<PostingView> {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          child: Image.network(media.url),
+                                          child:
+                                              Image.file(File(media.fileUrl!)),
                                         ),
                                         Positioned(
                                           top: 10,
