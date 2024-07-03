@@ -38,7 +38,17 @@ class PostingNotifier extends AsyncNotifier<Post> {
   }
 
   void resetPostingInfo() {
-    state = AsyncData(Post.empty());
+    final user = ref.read(userProvider).value;
+    state = AsyncData(
+      Post.empty().copyWith(
+        postId: uuid.v4(),
+        authorId: user?.userId ?? "",
+        authorName: user?.userName ?? "",
+        authorImgPath: user?.avatarPath ?? "",
+        isCertificatedUser: user?.isCertificatedUser ?? false,
+        isAllowedComment: true,
+      ),
+    );
   }
 
   void clearContent() {
