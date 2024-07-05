@@ -81,10 +81,14 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
   }
 
   Future<void> editUserProfile({
+    required String username,
     required String description,
   }) async {
     if (state.value == null) return;
-    await _updateUserProfileInfo({"description": description});
+    await _updateUserProfileInfo({
+      "username": username,
+      "description": description,
+    });
   }
 
   Future<void> editInterests({

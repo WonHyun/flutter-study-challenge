@@ -14,13 +14,28 @@ class ProfileEditScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
-  late final TextEditingController _controller;
+  late final TextEditingController _descController;
+  late final TextEditingController _nameController;
 
   bool _isEditActive = false;
 
+  void _onChangedField() {
+    setState(() {
+      final description = ref.read(userProvider).value?.description;
+      final username = ref.read(userProvider).value?.userName;
+      final typedDesc = _descController.text;
+      final typedName = _nameController.text;
+
+      _isEditActive = ((description != typedDesc && typedDesc.isNotEmpty) ||
+              (username != typedName)) &&
+          typedName.isNotEmpty;
+    });
+  }
+
   Future<void> _onEditTap() async {
     await ref.read(userProvider.notifier).editUserProfile(
-          description: _controller.text,
+          username: _nameController.text,
+          description: _descController.text,
         );
     if (mounted) {
       context.pop();
@@ -30,17 +45,21 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(
+    _descController = TextEditingController(
       text: ref.read(userProvider).value?.description,
     );
+    _nameController = TextEditingController(
+      text: ref.read(userProvider).value?.userName,
+    );
     _isEditActive =
-        ref.read(userProvider).value?.description != _controller.text &&
-            _controller.text.isNotEmpty;
+        ref.read(userProvider).value?.description != _descController.text &&
+            _descController.text.isNotEmpty;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _descController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -62,30 +81,38 @@ class _ProfileEditScreenState extends ConsumerState<ProfileEditScreen> {
                         Avatar(user: user, size: 40),
                         const SizedBox(height: 20),
                         Text(
-                          user.userName ?? "",
+                          user.displayUserId ?? "",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          user.displayUserId ?? "",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
+                        const SizedBox(height: 30),
+                        TextField(
+                          controller: _nameController,
+                          maxLines: 1,
+                          onChanged: (value) => _onChangedField(),
+                          decoration: const InputDecoration(
+                            label: Text("nickname"),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            hintText: "Type your nickname",
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30),
                         TextField(
-                          controller: _controller,
+                          controller: _descController,
                           maxLines: 5,
-                          onChanged: (value) {
-                            setState(() {
-                              _isEditActive =
-                                  user.description != _controller.text &&
-                                      _controller.text.isNotEmpty;
-                            });
-                          },
+                          onChanged: (value) => _onChangedField(),
                           decoration: const InputDecoration(
                             label: Text("Description"),
                             labelStyle: TextStyle(color: Colors.grey),
