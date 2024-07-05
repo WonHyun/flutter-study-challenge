@@ -50,12 +50,15 @@ class PostingModal extends ConsumerWidget {
           ),
         ),
         if (ref.watch(postingProvider).isLoading)
-          Container(
-            width: double.infinity,
-            height: context.deviceHeight * 0.9,
-            color: Colors.black.withOpacity(0.1),
-            alignment: Alignment.center,
-            child: const CircularProgressIndicator.adaptive(),
+          GestureDetector(
+            onTap: () => {},
+            child: Container(
+              width: double.infinity,
+              height: context.deviceHeight * 0.9,
+              color: Colors.black.withOpacity(0.1),
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator.adaptive(),
+            ),
           )
       ],
     );

@@ -17,6 +17,7 @@ class PostingModalBottomPanel extends ConsumerStatefulWidget {
 class _PostingModalBottomPanelState
     extends ConsumerState<PostingModalBottomPanel> {
   Future<void> _onPostTap(WidgetRef ref) async {
+    FocusScope.of(context).unfocus();
     await ref.read(postingProvider.notifier).completePosting();
     if (mounted) {
       Navigator.pop(context);

@@ -21,12 +21,16 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
     final result = await _repository.fetchPosts(
       lastItemTimestamp: lastItemTimestamp,
     );
-    final videos = result.docs
-        .map(
-          (doc) => Post.fromJson(doc.data()),
-        )
-        .toList();
-    return videos;
+    if (result != null) {
+      final videos = result.docs
+          .map(
+            (doc) => Post.fromJson(doc.data()),
+          )
+          .toList();
+      return videos;
+    } else {
+      return [];
+    }
   }
 
   void toggleLike(String postId) {

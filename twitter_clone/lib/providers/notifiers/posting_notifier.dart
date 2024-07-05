@@ -10,6 +10,18 @@ import 'package:twitter_clone/util/generate_util.dart';
 class PostingNotifier extends AsyncNotifier<Post> {
   late final PostRepository _repository;
 
+  Post getEmptyPost() {
+    final user = ref.read(userProvider).value;
+    return Post.empty().copyWith(
+      postId: uuid.v4(),
+      authorId: user?.userId ?? "",
+      authorName: user?.userName ?? "",
+      authorImgPath: user?.avatarPath ?? "",
+      isCertificatedUser: user?.isCertificatedUser ?? false,
+      isAllowedComment: true,
+    );
+  }
+
   void updateContent(String content) {
     if (state.value == null) return;
     state = AsyncData(
@@ -38,17 +50,7 @@ class PostingNotifier extends AsyncNotifier<Post> {
   }
 
   void resetPostingInfo() {
-    final user = ref.read(userProvider).value;
-    state = AsyncData(
-      Post.empty().copyWith(
-        postId: uuid.v4(),
-        authorId: user?.userId ?? "",
-        authorName: user?.userName ?? "",
-        authorImgPath: user?.avatarPath ?? "",
-        isCertificatedUser: user?.isCertificatedUser ?? false,
-        isAllowedComment: true,
-      ),
-    );
+    state = AsyncData(getEmptyPost());
   }
 
   void clearContent() {
@@ -72,10 +74,16 @@ class PostingNotifier extends AsyncNotifier<Post> {
   }
 
   Future<void> completePosting() async {
-    if (state.value == null) return;
+    final user = ref.read(userProvider).value;
+    if (state.value == null || user == null) return;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final newPost = state.value!.copyWith(timestamp: DateTime.now());
+      final newPost = state.value!.copyWith(
+          authorId: user.userId,
+          authorName: user.userName,
+          authorImgPath: user.avatarPath,
+          isCertificatedUser: user.isCertificatedUser,
+          timestamp: DateTime.now());
       await _repository.createPost(newPost);
       return newPost;
     });
@@ -83,18 +91,8 @@ class PostingNotifier extends AsyncNotifier<Post> {
 
   @override
   FutureOr<Post> build() {
-    final user = ref.read(userProvider).value;
-
     _repository = ref.read(postRepo);
-
-    return Post.empty().copyWith(
-      postId: uuid.v4(),
-      authorId: user?.userId ?? "",
-      authorName: user?.userName ?? "",
-      authorImgPath: user?.avatarPath ?? "",
-      isCertificatedUser: user?.isCertificatedUser ?? false,
-      isAllowedComment: true,
-    );
+    return getEmptyPost();
   }
 }
 

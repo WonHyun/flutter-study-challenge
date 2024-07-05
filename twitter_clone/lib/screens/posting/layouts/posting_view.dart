@@ -59,9 +59,11 @@ class _PostingViewState extends State<PostingView> {
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      foregroundImage: NetworkImage(
-                        userState.value?.avatarPath ?? "",
-                      ),
+                      foregroundImage: userState.value?.avatarPath == null
+                          ? null
+                          : NetworkImage(
+                              userState.value!.avatarPath!,
+                            ),
                     ),
                     Expanded(
                       child: Padding(
@@ -77,9 +79,11 @@ class _PostingViewState extends State<PostingView> {
                     ),
                     CircleAvatar(
                       radius: 15,
-                      foregroundImage: NetworkImage(
-                        userState.value?.avatarPath ?? "",
-                      ),
+                      foregroundImage: userState.value?.avatarPath == null
+                          ? null
+                          : NetworkImage(
+                              userState.value!.avatarPath!,
+                            ),
                     ),
                   ],
                 ),
