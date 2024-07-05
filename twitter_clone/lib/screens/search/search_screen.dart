@@ -26,7 +26,6 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
 
   @override
   Widget build(BuildContext context) {
-    final searchNotifier = ref.read(searchProvider.notifier);
     return Material(
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
@@ -49,7 +48,9 @@ class _SearchscreenState extends ConsumerState<Searchscreen> {
                   ),
                   const SizedBox(height: 10),
                   CupertinoTextField(
-                    onChanged: (value) => searchNotifier.searchUsers(value),
+                    onChanged: (value) => ref
+                        .read(searchProvider.notifier)
+                        .onUpdateKeywords(value),
                     controller: _controller,
                     placeholder: "Search",
                     placeholderStyle: TextStyle(color: Colors.grey.shade500),
