@@ -7,6 +7,7 @@ import 'package:twitter_clone/providers/notifiers/user_profile_notifier.dart';
 import 'package:twitter_clone/screens/profile/components/persistent_tab_bar_header.dart';
 import 'package:twitter_clone/screens/profile/layouts/profile_post_list.dart';
 import 'package:twitter_clone/screens/profile/layouts/user_profile_header.dart';
+import 'package:twitter_clone/screens/profile/profile_edit_screen.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -63,7 +64,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                         ),
                         actions: [
                           GestureDetector(
-                            onTap: () => {},
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileEditScreen(),
+                              ),
+                            ),
                             child: const FaIcon(
                               FontAwesomeIcons.instagram,
                               size: 30,

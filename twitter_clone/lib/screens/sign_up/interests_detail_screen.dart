@@ -9,13 +9,20 @@ import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/sign_up/widgets/screen_guide_text.dart';
 
-class InterestsDetailScreen extends ConsumerWidget {
+class InterestsDetailScreen extends ConsumerStatefulWidget {
   const InterestsDetailScreen({
     super.key,
     required this.interests,
   });
 
   final List<String> interests;
+
+  @override
+  ConsumerState<InterestsDetailScreen> createState() =>
+      _InterestsDetailScreenState();
+}
+
+class _InterestsDetailScreenState extends ConsumerState<InterestsDetailScreen> {
   final int _least = 3;
 
   bool _isNextActive(Map<String, List<String>> maps) {
@@ -26,15 +33,17 @@ class InterestsDetailScreen extends ConsumerWidget {
     return totalCount >= _least;
   }
 
-  Future<void> _onNextTap(BuildContext context, WidgetRef ref) async {
-    ref.read(userProvider.notifier).updateUserProfileInfo({
-      "interests": ref.read(userProvider).value?.interests,
-    });
-    context.goNamed(HomeScreen.routeName);
+  Future<void> _onNextTap() async {
+    await ref
+        .read(userProvider.notifier)
+        .editInterests(interests: ref.read(userProvider).value?.interests);
+    if (mounted) {
+      context.goNamed(HomeScreen.routeName);
+    }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (didPop) =>
           ref.read(userProvider.notifier).resetAllInterests(),
@@ -59,7 +68,7 @@ class InterestsDetailScreen extends ConsumerWidget {
                   child: ListView.separated(
                     separatorBuilder: (context, index) =>
                         Divider(color: Colors.grey.shade200),
-                    itemCount: interests.length,
+                    itemCount: widget.interests.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -68,8 +77,10 @@ class InterestsDetailScreen extends ConsumerWidget {
                           bottom: 20,
                         ),
                         child: CategoryList(
-                          category: interests[index],
-                          details: interestsCategoryMap[interests[index]] ?? [],
+                          category: widget.interests[index],
+                          details:
+                              interestsCategoryMap[widget.interests[index]] ??
+                                  [],
                         ),
                       );
                     },
@@ -107,7 +118,7 @@ class InterestsDetailScreen extends ConsumerWidget {
                             Theme.of(context).colorScheme.inverseSurface,
                         isActive: _isNextActive(
                             ref.watch(userProvider).value!.interests),
-                        onTap: () => _onNextTap(context, ref),
+                        onTap: () => _onNextTap(),
                       ),
                     ],
                   ),

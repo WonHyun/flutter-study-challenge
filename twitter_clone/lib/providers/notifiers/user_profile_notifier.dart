@@ -60,11 +60,13 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
     await _userRepository.createProfile(state.value!);
   }
 
-  Future<void> updateUserProfileInfo(Map<String, dynamic> data) async {
+  Future<void> _updateUserProfileInfo(Map<String, dynamic> data) async {
     if (state.value == null) return;
     state = const AsyncValue.loading();
-    await _userRepository.updateProfileInfo(state.value!.userId, data);
-    state = AsyncValue.data(state.value!.copyWithMap(map: data));
+    state = await AsyncValue.guard(() async {
+      await _userRepository.updateProfileInfo(state.value!.userId, data);
+      return state.value!.copyWithMap(map: data);
+    });
   }
 
   Future<void> onAvatarUpload(String avatarPath) async {
@@ -76,6 +78,20 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
       state.value!.userId,
       {"avatarPath": avatarPath},
     );
+  }
+
+  Future<void> editUserProfile({
+    required String description,
+  }) async {
+    if (state.value == null) return;
+    await _updateUserProfileInfo({"description": description});
+  }
+
+  Future<void> editInterests({
+    required Map<String, List<String>>? interests,
+  }) async {
+    if (state.value == null || interests == null) return;
+    await _updateUserProfileInfo({"interests": interests});
   }
 
   void updateUserName(String? userName) {
