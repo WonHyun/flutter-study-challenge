@@ -25,6 +25,11 @@ class _SearchPostScreenState extends ConsumerState<SearchPostScreen> {
   late final TextEditingController _keywordController =
       TextEditingController(text: widget.keyword);
 
+  void _onClear() {
+    _keywordController.clear();
+    ref.read(searchPostProvider(widget.keyword).notifier).onUpdateKeywords("");
+  }
+
   @override
   void dispose() {
     _keywordController.dispose();
@@ -68,7 +73,7 @@ class _SearchPostScreenState extends ConsumerState<SearchPostScreen> {
                         child: CupertinoTextField(
                           suffixMode: OverlayVisibilityMode.editing,
                           suffix: GestureDetector(
-                            onTap: () => _keywordController.clear(),
+                            onTap: _onClear,
                             child: const Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 10,

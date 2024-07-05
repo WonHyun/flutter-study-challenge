@@ -37,7 +37,7 @@ class SearchPostNotifier extends FamilyAsyncNotifier<SearchState, String> {
 
     return const SearchState().copyWith(
       postResult: await _repository.searchPosts(arg),
-      keyword: "",
+      keyword: arg,
     );
   }
 }

@@ -24,6 +24,11 @@ class _SearchUserScreenState extends ConsumerState<SearchUserScreen> {
     context.pushNamed(SearchPostScreen.routeName, extra: value);
   }
 
+  void _onClear() {
+    _keywordController.clear();
+    ref.read(searchUserProvider.notifier).onUpdateKeywords("");
+  }
+
   @override
   void dispose() {
     _keywordController.dispose();
@@ -59,7 +64,7 @@ class _SearchUserScreenState extends ConsumerState<SearchUserScreen> {
                         child: CupertinoTextField(
                           suffixMode: OverlayVisibilityMode.editing,
                           suffix: GestureDetector(
-                            onTap: () => _keywordController.clear(),
+                            onTap: _onClear,
                             child: const Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 10,
