@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/providers/providers.dart';
 import 'package:twitter_clone/screens/activity/components/activity_list_item.dart';
-import 'package:twitter_clone/screens/activity/components/activity_type_list_item.dart';
+import 'package:twitter_clone/screens/common/type_list_item.dart';
 
 class ActivityScreen extends ConsumerWidget {
   const ActivityScreen({super.key});
@@ -42,8 +42,8 @@ class ActivityScreen extends ConsumerWidget {
                         .map(
                           (value) => Padding(
                             padding: const EdgeInsets.only(right: 5),
-                            child: ActivityTypeListItem(
-                              type: value,
+                            child: TypeListItem(
+                              text: value.name,
                               isSelected: value == activityState.currentType,
                               onTap: () => activityNotifier.changeFilter(value),
                             ),

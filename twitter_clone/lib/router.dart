@@ -9,7 +9,8 @@ import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/login/login_screen.dart';
 import 'package:twitter_clone/screens/main/main_screen.dart';
 import 'package:twitter_clone/screens/profile/profile_screen.dart';
-import 'package:twitter_clone/screens/search/search_screen.dart';
+import 'package:twitter_clone/screens/search/search_post_screen.dart';
+import 'package:twitter_clone/screens/search/search_user_screen.dart';
 import 'package:twitter_clone/screens/setting/privacy/privacy_screen.dart';
 import 'package:twitter_clone/screens/setting/setting_screen.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
@@ -64,7 +65,7 @@ final routerProvider = Provider(
             switch (state.matchedLocation) {
               case HomeScreen.routePath:
                 type = MainScreenType.home;
-              case Searchscreen.routePath:
+              case SearchUserScreen.routePath:
                 type = MainScreenType.search;
               case ActivityScreen.routePath:
                 type = MainScreenType.activity;
@@ -84,9 +85,19 @@ final routerProvider = Provider(
               builder: (context, state) => const HomeScreen(),
             ),
             GoRoute(
-              name: Searchscreen.routeName,
-              path: Searchscreen.routePath,
-              builder: (context, state) => const Searchscreen(),
+              name: SearchUserScreen.routeName,
+              path: SearchUserScreen.routePath,
+              builder: (context, state) => const SearchUserScreen(),
+              routes: [
+                GoRoute(
+                  path: SearchPostScreen.routePath,
+                  name: SearchPostScreen.routeName,
+                  builder: (context, state) {
+                    final keyword = state.extra as String?;
+                    return SearchPostScreen(keyword: keyword ?? "");
+                  },
+                ),
+              ],
             ),
             GoRoute(
               name: ActivityScreen.routeName,

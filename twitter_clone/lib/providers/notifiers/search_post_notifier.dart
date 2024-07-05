@@ -5,24 +5,13 @@ import 'package:twitter_clone/providers/debouncer.dart';
 import 'package:twitter_clone/providers/states/user_search_state.dart';
 import 'package:twitter_clone/repository/search_repository.dart';
 
-class SearchNotifier extends AsyncNotifier<SearchState> {
+class SearchPostNotifier extends FamilyAsyncNotifier<SearchState, String> {
   late final SearchRepository _repository;
   late final StreamSubscription _subscription;
 
   void onUpdateKeywords(String keyword) {
     state = const AsyncValue.loading();
-    ref.read(searchDebouncer).add(keyword);
-  }
-
-  Future<void> searchUsers(String keyword) async {
-    if (state.value == null) return;
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final result = await _repository.searchUsers(keyword);
-      return state.value!.copyWith(
-        userResult: [...result],
-      );
-    });
+    ref.read(searchPostDebouncer).add(keyword);
   }
 
   Future<void> searchPosts(String keyword) async {
@@ -32,30 +21,32 @@ class SearchNotifier extends AsyncNotifier<SearchState> {
       final result = await _repository.searchPosts(keyword);
       return state.value!.copyWith(
         postResult: [...result],
+        recentlyKeyword: [...state.value!.recentlyKeyword, keyword],
       );
     });
   }
 
   @override
-  FutureOr<SearchState> build() async {
+  FutureOr<SearchState> build(String arg) async {
     _repository = ref.read(searchRepo);
 
-    _subscription = ref.read(searchDebouncer).stream.listen((keyword) {
-      searchUsers(keyword);
+    _subscription = ref.read(searchPostDebouncer).stream.listen((keyword) {
+      searchPosts(keyword);
     });
     ref.onDispose(_subscription.cancel);
 
     return const SearchState().copyWith(
-      userResult: await _repository.searchUsers(""),
+      postResult: await _repository.searchPosts(arg),
       keyword: "",
     );
   }
 }
 
-final searchProvider = AsyncNotifierProvider<SearchNotifier, SearchState>(
-  () => SearchNotifier(),
+final searchPostProvider =
+    AsyncNotifierProvider.family<SearchPostNotifier, SearchState, String>(
+  () => SearchPostNotifier(),
 );
 
-final searchDebouncer = Provider(
+final searchPostDebouncer = Provider(
   (ref) => Debouncer(const Duration(seconds: 1)),
 );

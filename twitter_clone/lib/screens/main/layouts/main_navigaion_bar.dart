@@ -11,7 +11,7 @@ import 'package:twitter_clone/screens/home/home_screen.dart';
 import 'package:twitter_clone/screens/main/components/bottom_navigation_tab.dart';
 import 'package:twitter_clone/screens/posting/posting_modal.dart';
 import 'package:twitter_clone/screens/profile/profile_screen.dart';
-import 'package:twitter_clone/screens/search/search_screen.dart';
+import 'package:twitter_clone/screens/search/search_user_screen.dart';
 
 class MainNavigaionBar extends StatefulWidget {
   const MainNavigaionBar({
@@ -31,7 +31,7 @@ class _MainNavigaionBarState extends State<MainNavigaionBar> {
       case MainScreenType.home:
         return HomeScreen.routePath;
       case MainScreenType.search:
-        return Searchscreen.routePath;
+        return SearchUserScreen.routePath;
       case MainScreenType.activity:
         return ActivityScreen.routePath;
       case MainScreenType.user:

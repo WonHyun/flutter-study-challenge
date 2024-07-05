@@ -11,7 +11,7 @@ class SearchRepository {
         .collection("users")
         .where("displayUserId", isGreaterThanOrEqualTo: keyword)
         .where("displayUserId", isLessThanOrEqualTo: "$keyword\uf8ff")
-        .limit(5)
+        .limit(10)
         .get();
 
     final result = await query;

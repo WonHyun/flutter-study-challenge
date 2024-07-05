@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/global/enum.dart';
-import 'package:twitter_clone/global/extensions.dart';
 
-class ActivityTypeListItem extends StatelessWidget {
-  const ActivityTypeListItem({
+class TypeListItem extends StatelessWidget {
+  const TypeListItem({
     super.key,
-    required this.type,
+    required this.text,
     required this.isSelected,
     required this.onTap,
     this.width = 100,
+    this.height = 30,
   });
 
-  final ActivityType type;
+  final String text;
   final bool isSelected;
   final Function() onTap;
   final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class ActivityTypeListItem extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         width: width,
+        height: height,
         duration: const Duration(milliseconds: 150),
         decoration: BoxDecoration(
           color: isSelected
@@ -44,7 +45,7 @@ class ActivityTypeListItem extends StatelessWidget {
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
-            child: Text(type.labelName),
+            child: Text(text),
           ),
         ),
       ),
