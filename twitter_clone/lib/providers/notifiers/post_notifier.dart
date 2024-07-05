@@ -11,26 +11,8 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
   @override
   FutureOr<List<Post>> build() async {
     _repository = ref.read(postRepo);
-    _posts = await _fetchPosts(lastItemTimestamp: null);
+    _posts = await _repository.fetchPosts(isRefresh: true);
     return _posts;
-  }
-
-  Future<List<Post>> _fetchPosts({
-    DateTime? lastItemTimestamp,
-  }) async {
-    final result = await _repository.fetchPosts(
-      lastItemTimestamp: lastItemTimestamp,
-    );
-    if (result != null) {
-      final videos = result.docs
-          .map(
-            (doc) => Post.fromJson(doc.data()),
-          )
-          .toList();
-      return videos;
-    } else {
-      return [];
-    }
   }
 
   void toggleLike(String postId) {
@@ -64,13 +46,13 @@ class PostNotifier extends AsyncNotifier<List<Post>> {
   }
 
   Future<void> fetchNextPosts() async {
-    final nextPosts =
-        await _fetchPosts(lastItemTimestamp: _posts.last.timestamp);
-    state = AsyncValue.data([..._posts, ...nextPosts]);
+    final nextPosts = await _repository.fetchPosts();
+    _posts = [..._posts, ...nextPosts];
+    state = AsyncValue.data(_posts);
   }
 
   Future<void> refresh() async {
-    final posts = await _fetchPosts(lastItemTimestamp: null);
+    final posts = await _repository.fetchPosts(isRefresh: true);
     _posts = posts;
     state = AsyncValue.data(posts);
   }

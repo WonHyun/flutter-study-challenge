@@ -12,6 +12,8 @@ class PostRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  DocumentSnapshot? lastDocument;
+
   Future<void> createPost(Post post) async {
     try {
       Post newPost = post.copyWith();
@@ -63,28 +65,60 @@ class PostRepository {
     }
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>?> fetchPosts({
-    DateTime? lastItemTimestamp,
-  }) async {
+  Future<List<Post>> fetchPosts({bool isRefresh = false}) async {
     try {
-      final query = _db
+      var query = _db
           .collection("posts")
           .orderBy("timestamp", descending: true)
           .limit(3);
 
-      if (lastItemTimestamp == null) {
-        return await query.get();
-      } else {
-        return await query
-            .startAfter([lastItemTimestamp.toIso8601String()]).get();
+      if (lastDocument != null && !isRefresh) {
+        query = query.startAfterDocument(lastDocument!);
       }
+
+      final result = await query.get();
+
+      if (result.docs.isNotEmpty) {
+        lastDocument = result.docs.last;
+      }
+
+      final posts = result.docs
+          .map(
+            (doc) => Post.fromJson(doc.data()),
+          )
+          .toList();
+
+      return posts;
     } catch (err) {
       if (kDebugMode) {
         print(err);
       }
-      return null;
+      return [];
     }
   }
+
+  // Future<QuerySnapshot<Map<String, dynamic>>?> fetchPosts({
+  //   DateTime? lastItemTimestamp,
+  // }) async {
+  //   try {
+  //     final query = _db
+  //         .collection("posts")
+  //         .orderBy("timestamp", descending: true)
+  //         .limit(3);
+
+  //     if (lastItemTimestamp == null) {
+  //       return await query.get();
+  //     } else {
+  //       return await query
+  //           .startAfter([lastItemTimestamp.toIso8601String()]).get();
+  //     }
+  //   } catch (err) {
+  //     if (kDebugMode) {
+  //       print(err);
+  //     }
+  //     return null;
+  //   }
+  // }
 }
 
 final postRepo = Provider((ref) => PostRepository());
