@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/models/user_profile.dart';
+import 'package:twitter_clone/util/file_util.dart';
 
 class UserProfileRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -23,8 +24,13 @@ class UserProfileRepository {
   }
 
   Future<String> uploadAvatar(File file, String fileName) async {
+    final compressedFile = await getCompressedImage(
+      image: file,
+      fileName: fileName,
+      quality: 20,
+    );
     final fileRef = _storage.ref().child("avatars/$fileName");
-    await fileRef.putFile(file);
+    await fileRef.putFile(compressedFile);
     return await fileRef.getDownloadURL();
   }
 

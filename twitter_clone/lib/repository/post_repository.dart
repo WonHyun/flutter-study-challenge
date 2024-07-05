@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:twitter_clone/models/media_item.dart';
 import 'package:twitter_clone/models/post.dart';
+import 'package:twitter_clone/util/file_util.dart';
 
 class PostRepository {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -39,7 +38,10 @@ class PostRepository {
             var file = File(media.fileUrl!);
 
             if (media.type == MediaType.image) {
-              file = await getCompressedImage(file, media.mediaId);
+              file = await getCompressedImage(
+                image: file,
+                fileName: media.mediaId,
+              );
             }
 
             final result = await fileRef.putFile(file);
@@ -58,31 +60,6 @@ class PostRepository {
         print(err);
       }
       return [];
-    }
-  }
-
-  Future<File> getCompressedImage(File image, String mediaId) async {
-    try {
-      var compressedImage = await FlutterImageCompress.compressWithList(
-        await image.readAsBytes(),
-        quality: 30,
-      );
-
-      final directory = await getApplicationDocumentsDirectory();
-      final tempDirectory = Directory('${directory.path}/temp');
-
-      if (!await tempDirectory.exists()) {
-        await tempDirectory.create(recursive: true);
-      }
-
-      final path = '${tempDirectory.path}/$mediaId.png';
-
-      return await File(path).writeAsBytes(compressedImage);
-    } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-      return File(image.path);
     }
   }
 
