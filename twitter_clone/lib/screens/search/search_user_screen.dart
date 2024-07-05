@@ -57,6 +57,21 @@ class _SearchUserScreenState extends ConsumerState<SearchUserScreen> {
                     children: [
                       Expanded(
                         child: CupertinoTextField(
+                          suffixMode: OverlayVisibilityMode.editing,
+                          suffix: GestureDetector(
+                            onTap: () => _keywordController.clear(),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              child: Icon(
+                                FontAwesomeIcons.solidCircleXmark,
+                                size: 18,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
                           onSubmitted: _onSumitted,
                           onChanged: (value) => ref
                               .read(searchUserProvider.notifier)
