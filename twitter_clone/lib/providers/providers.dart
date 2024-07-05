@@ -3,11 +3,9 @@ import 'package:twitter_clone/global/enum.dart';
 import 'package:twitter_clone/providers/notifiers/activity_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/main_screen_notifier.dart';
 import 'package:twitter_clone/providers/notifiers/pin_verify_notifier.dart';
-import 'package:twitter_clone/providers/notifiers/user_search_notifier.dart';
 import 'package:twitter_clone/providers/states/activity_state.dart';
 import 'package:twitter_clone/providers/states/main_screen_state.dart';
 import 'package:twitter_clone/providers/states/pin_verify_state.dart';
-import 'package:twitter_clone/providers/states/user_search_state.dart';
 import 'package:twitter_clone/tests/mock.dart';
 import 'package:twitter_clone/util/date_util.dart';
 
@@ -35,15 +33,6 @@ final activityProvider = StateNotifierProvider<ActivityNotifier, ActivityState>(
         activitys: ActivityMock.testActivitys,
         filteredActivitys: ActivityMock.testActivitys,
       ),
-    );
-  },
-);
-
-final searchProvider =
-    StateNotifierProvider<UserSearchNotifier, UserSearchState>(
-  (ref) {
-    return UserSearchNotifier(
-      UserSearchState(result: UserMock.users),
     );
   },
 );

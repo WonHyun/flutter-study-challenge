@@ -1,29 +1,30 @@
+import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/models/user_profile.dart';
 
-class UserSearchState {
-  final List<UserProfile> result;
+class SearchState {
+  final List<UserProfile> userResult;
+  final List<Post> postResult;
   final String keyword;
   final List<String> recentlyKeyword;
-  final bool isSearching;
 
-  const UserSearchState({
-    this.result = const [],
+  const SearchState({
+    this.userResult = const [],
+    this.postResult = const [],
     this.keyword = "",
     this.recentlyKeyword = const [],
-    this.isSearching = false,
   });
 
-  UserSearchState copyWith({
-    List<UserProfile>? result,
+  SearchState copyWith({
+    List<UserProfile>? userResult,
+    List<Post>? postResult,
     String? keyword,
     List<String>? recentlyKeyword,
-    bool? isSearching,
   }) {
-    return UserSearchState(
-      result: result ?? this.result,
+    return SearchState(
+      userResult: userResult ?? this.userResult,
+      postResult: postResult ?? this.postResult,
       keyword: keyword ?? this.keyword,
       recentlyKeyword: recentlyKeyword ?? this.recentlyKeyword,
-      isSearching: isSearching ?? this.isSearching,
     );
   }
 }
