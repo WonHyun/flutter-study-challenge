@@ -12,7 +12,6 @@ import 'package:twitter_clone/screens/common/rounded_button.dart';
 import 'package:twitter_clone/screens/common/thread_app_bar.dart';
 import 'package:twitter_clone/screens/login/email_login_screen.dart';
 import 'package:twitter_clone/screens/sign_up/create_account_screen.dart';
-import 'package:twitter_clone/tests/mock.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
@@ -23,10 +22,7 @@ class LoginScreen extends StatelessWidget {
   static const String routePath = "/login";
 
   void _onSignUpTap(BuildContext context) {
-    context.pushNamed(
-      CreateAccountScreen.routeName,
-      extra: UserMock.me,
-    );
+    context.pushNamed(CreateAccountScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {

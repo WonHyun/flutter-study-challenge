@@ -66,9 +66,8 @@ class _SettingScreenState extends ConsumerState<SettingScreen> {
                 )),
             AdaptiveDialogAction(
                 context: context,
-                onPressed: () {
-                  Navigator.pop(context);
-                  _onLogout();
+                onPressed: () async {
+                  await _onLogout();
                 },
                 child: const Text(
                   "Logout",

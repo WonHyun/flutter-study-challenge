@@ -29,6 +29,21 @@ class UserProfileNotifier extends AsyncNotifier<UserProfile> {
     return UserProfile.empty();
   }
 
+  Future<void> fetchUserProfile() async {
+    state = await AsyncValue.guard(
+      () async {
+        final profile = await _userRepository.findProfile(
+          _authenticationRepository.user!.uid,
+        );
+        if (profile != null) {
+          return UserProfile.fromJson(profile);
+        } else {
+          return UserProfile.empty();
+        }
+      },
+    );
+  }
+
   Future<void> createProfile(UserCredential credential) async {
     if (credential.user == null || state.value == null) return;
     state = const AsyncValue.loading();
