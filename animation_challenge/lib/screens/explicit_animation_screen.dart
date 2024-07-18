@@ -16,8 +16,14 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
 
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 5),
-  )..repeat();
+    duration: const Duration(milliseconds: 3000),
+  )..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(seconds: 1), () {
+          _animationController.forward(from: 0.0);
+        });
+      }
+    });
 
   late final _tweens = List.generate(totalItems, (index) {
     int y = index ~/ columnCount;
@@ -26,8 +32,9 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
     int zigzagX = y.isEven ? x : columnCount - 1 - x;
     int position = y * columnCount + zigzagX;
 
-    double start = (totalItems - 1 - position) / totalItems;
-    double end = start + (1.0 / totalItems);
+    double start =
+        (((totalItems - 1 - position) / totalItems) / 2).clamp(0.0, 1.0);
+    double end = ((start + 1.0 / totalItems) * 2.0).clamp(start, 1.0);
 
     return TweenSequence([
       TweenSequenceItem(
@@ -44,7 +51,7 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
         curve: Interval(
           start,
           end,
-          curve: Curves.bounceOut,
+          curve: Curves.easeIn,
         ),
       ),
     );
@@ -53,6 +60,7 @@ class _ExplicitAnimationScreenState extends State<ExplicitAnimationScreen>
   @override
   void initState() {
     super.initState();
+    _animationController.forward();
   }
 
   @override
