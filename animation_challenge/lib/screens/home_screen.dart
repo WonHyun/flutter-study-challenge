@@ -1,3 +1,4 @@
+import 'package:animation_challenge/screens/explicit_animation_screen.dart';
 import 'package:animation_challenge/screens/implicit_animation_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,11 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _onTap(context, const ImplicitAnimationScreen()),
               child: const Text("Implicit animation"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => _onTap(context, const ExplicitAnimationScreen()),
+              child: const Text("Explicit animation"),
             ),
           ],
         ),
