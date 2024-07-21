@@ -39,7 +39,7 @@ class _CustomPainterAnimationState extends State<CustomPainterAnimation>
   }
 
   void _startTimer() {
-    if (_animationController.isDismissed) {
+    if (_animationController.isDismissed || _animationController.isCompleted) {
       _animationController.forward(from: 0.0);
     } else {
       _animationController.forward();
