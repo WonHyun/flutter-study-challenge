@@ -1,5 +1,6 @@
 import 'package:animation_challenge/screens/custom_painter_animation.dart';
 import 'package:animation_challenge/screens/explicit_animation_screen.dart';
+import 'package:animation_challenge/screens/flash_cards_screen.dart';
 import 'package:animation_challenge/screens/implicit_animation_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,11 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _onTap(context, const CustomPainterAnimation()),
               child: const Text("Custom Painter"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => _onTap(context, const FlashCardsScreen()),
+              child: const Text("Flash Cards"),
             ),
           ],
         ),
