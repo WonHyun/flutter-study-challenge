@@ -183,8 +183,8 @@ class _FlashCardsScreenState extends State<FlashCardsScreen>
                       child: Opacity(
                         opacity: min(behindCardOpacity, 1.0),
                         child: FlashCard(
-                          width: 250,
-                          height: 300,
+                          width: size.width * 0.8,
+                          height: size.height * 0.5,
                           quiz: quizs[(_quizIndex + 1) % quizs.length],
                           backgroundColor: Colors.white,
                         ),
@@ -202,8 +202,8 @@ class _FlashCardsScreenState extends State<FlashCardsScreen>
                       child: Transform.rotate(
                         angle: angle,
                         child: FlashCard(
-                          width: 250,
-                          height: 300,
+                          width: size.width * 0.8,
+                          height: size.height * 0.5,
                           quiz: quizs[_quizIndex],
                           backgroundColor: Colors.white,
                         ),
@@ -212,9 +212,9 @@ class _FlashCardsScreenState extends State<FlashCardsScreen>
                   ),
                 ),
                 Positioned(
-                  left: 30,
-                  right: 30,
-                  bottom: 30,
+                  left: 50,
+                  right: 50,
+                  bottom: 50,
                   child: AnimatedProgressBar(
                     duration: const Duration(milliseconds: 300),
                     progress: (_quizIndex + 1) / quizs.length,
